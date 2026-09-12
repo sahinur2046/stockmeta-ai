@@ -27,6 +27,11 @@ button{
   cursor:pointer;
 }
 
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
 .header{
   height:72px;
   border-bottom:1px solid #242424;
@@ -75,11 +80,6 @@ button{
 
 .btn:hover{
   background:#222;
-}
-
-.btn:disabled{
-  opacity:.55;
-  cursor:not-allowed;
 }
 
 .btn-red{
@@ -444,7 +444,9 @@ input,select,textarea{
   outline:none;
 }
 
-input:focus,select:focus,textarea:focus{
+input:focus,
+select:focus,
+textarea:focus{
   border-color:#e50914;
 }
 
@@ -669,11 +671,25 @@ textarea{
   </div>
 
   <div class="nav">
-    <button class="btn" onclick="openSettings()">⚙ Settings</button>
-    <button class="btn btn-red" onclick="openFilePicker()">＋ Upload</button>
+
+    <button
+      class="btn"
+      onclick="openSettings()"
+    >
+      ⚙ Settings
+    </button>
+
+    <button
+      class="btn btn-red"
+      onclick="openFilePicker()"
+    >
+      ＋ Upload
+    </button>
+
   </div>
 
 </header>
+
 
 <main>
 
@@ -690,10 +706,11 @@ textarea{
 
   <p>
     Generate SEO-friendly titles, descriptions, keywords and categories
-    for your stock images using Gemini 2.5 Flash.
+    for your stock images using Gemini.
   </p>
 
 </section>
+
 
 <section class="container">
 
@@ -703,9 +720,13 @@ textarea{
     onclick="openFilePicker()"
   >
 
-    <div class="upload-icon">🖼️</div>
+    <div class="upload-icon">
+      🖼️
+    </div>
 
-    <h2>Upload Your Images</h2>
+    <h2>
+      Upload Your Images
+    </h2>
 
     <p>
       PNG, JPG, JPEG or WEBP — up to 500 images
@@ -725,6 +746,7 @@ textarea{
 
   </div>
 
+
   <input
     id="fileInput"
     class="file-input"
@@ -733,11 +755,16 @@ textarea{
     multiple
   >
 
+
   <div class="toolbar">
 
-    <div class="counter" id="counter">
+    <div
+      class="counter"
+      id="counter"
+    >
       0 / 500 images
     </div>
+
 
     <div class="toolbar-right">
 
@@ -766,6 +793,7 @@ textarea{
     </div>
 
   </div>
+
 
   <div class="export-box">
 
@@ -802,13 +830,25 @@ textarea{
 
   </div>
 
-  <div id="grid" class="grid"></div>
 
-  <div id="emptyState" class="empty">
+  <div
+    id="grid"
+    class="grid"
+  ></div>
 
-    <div class="empty-icon">📷</div>
 
-    <h3>No images uploaded</h3>
+  <div
+    id="emptyState"
+    class="empty"
+  >
+
+    <div class="empty-icon">
+      📷
+    </div>
+
+    <h3>
+      No images uploaded
+    </h3>
 
     <p>
       Upload images first, then click Generate Metadata.
@@ -820,15 +860,18 @@ textarea{
 
 </main>
 
+
 <footer>
   StockMeta AI © 2026 — Browser-based AI Stock Metadata Generator
 </footer>
+
 
 <div
   class="overlay"
   id="overlay"
   onclick="closeSettings()"
 ></div>
+
 
 <aside
   class="settings"
@@ -837,7 +880,9 @@ textarea{
 
   <div class="settings-head">
 
-    <h2>Settings</h2>
+    <h2>
+      Settings
+    </h2>
 
     <button
       class="close"
@@ -848,6 +893,7 @@ textarea{
 
   </div>
 
+
   <div class="settings-body">
 
     <div class="section">
@@ -856,12 +902,13 @@ textarea{
         AI Provider
       </div>
 
+
       <div class="api-box">
 
         <div class="api-title">
 
           <strong>
-            Gemini 2.5 Flash
+            Gemini
           </strong>
 
           <span>
@@ -870,14 +917,19 @@ textarea{
 
         </div>
 
+
         <div class="api-help">
+
           Add as many Gemini API keys as you need.
           There is no fixed key limit in StockMeta AI.
           Keys are automatically rotated and load-balanced.
-          If one key reaches a quota or rate limit,
-          StockMeta AI will temporarily use another available key.
+          Two images can be processed at the same time.
+          If one key reaches quota or rate limit,
+          StockMeta AI temporarily uses another available key.
           Keys are NOT automatically saved.
+
         </div>
+
 
         <a
           class="get-key"
@@ -888,6 +940,7 @@ textarea{
           🔑 Get API Key
         </a>
 
+
         <div
           class="api-count"
           id="apiCount"
@@ -895,7 +948,9 @@ textarea{
           0 API keys added
         </div>
 
+
         <div id="apiKeys"></div>
+
 
         <div class="api-actions">
 
@@ -906,14 +961,17 @@ textarea{
             ＋ Add API Key
           </button>
 
+
           <button
             class="btn btn-green"
-            onclick="testApiKeys()"
+            id="testKeysBtn"
+            onclick="testApiKeys(this)"
           >
             🧪 Test All
           </button>
 
         </div>
+
 
         <button
           class="btn btn-red save-api"
@@ -926,11 +984,13 @@ textarea{
 
     </div>
 
+
     <div class="section">
 
       <div class="section-title">
         Stock Settings
       </div>
+
 
       <div class="field">
 
@@ -940,15 +1000,30 @@ textarea{
 
         <select id="stockSite">
 
-          <option>Adobe Stock</option>
-          <option>Shutterstock</option>
-          <option>Freepik</option>
-          <option>iStock</option>
-          <option>Other</option>
+          <option>
+            Adobe Stock
+          </option>
+
+          <option>
+            Shutterstock
+          </option>
+
+          <option>
+            Freepik
+          </option>
+
+          <option>
+            iStock
+          </option>
+
+          <option>
+            Other
+          </option>
 
         </select>
 
       </div>
+
 
       <div class="field">
 
@@ -974,6 +1049,7 @@ textarea{
 
       </div>
 
+
       <div class="field">
 
         <label>
@@ -982,13 +1058,22 @@ textarea{
 
         <select id="descriptionLength">
 
-          <option value="Short">Short</option>
-          <option value="Medium">Medium</option>
-          <option value="Long">Long</option>
+          <option value="Short">
+            Short
+          </option>
+
+          <option value="Medium">
+            Medium
+          </option>
+
+          <option value="Long">
+            Long
+          </option>
 
         </select>
 
       </div>
+
 
       <div class="field">
 
@@ -1006,6 +1091,7 @@ textarea{
 
       </div>
 
+
       <div class="field">
 
         <label>
@@ -1018,6 +1104,7 @@ textarea{
         ></textarea>
 
       </div>
+
 
       <button
         class="btn btn-red"
@@ -1032,6 +1119,7 @@ textarea{
   </div>
 
 </aside>
+
 
 <div
   class="modal"
@@ -1055,41 +1143,54 @@ textarea{
 
     </div>
 
+
     <div class="modal-body">
 
       <div class="field">
 
-        <label>Title</label>
+        <label>
+          Title
+        </label>
 
         <input id="editTitle">
 
       </div>
 
+
       <div class="field">
 
-        <label>Description</label>
+        <label>
+          Description
+        </label>
 
         <textarea id="editDescription"></textarea>
 
       </div>
 
+
       <div class="field">
 
-        <label>Keywords</label>
+        <label>
+          Keywords
+        </label>
 
         <textarea id="editKeywords"></textarea>
 
       </div>
 
+
       <div class="field">
 
-        <label>Category</label>
+        <label>
+          Category
+        </label>
 
         <input id="editCategory">
 
       </div>
 
     </div>
+
 
     <div class="modal-footer">
 
@@ -1113,6 +1214,7 @@ textarea{
 
 </div>
 
+
 <div class="support">
 
   <div
@@ -1120,7 +1222,9 @@ textarea{
     id="supportPanel"
   >
 
-    <h3>Need Support?</h3>
+    <h3>
+      Need Support?
+    </h3>
 
     <p>
       Contact StockMeta AI support directly on WhatsApp.
@@ -1137,6 +1241,7 @@ textarea{
 
   </div>
 
+
   <button
     class="support-btn"
     onclick="toggleSupport()"
@@ -1146,28 +1251,57 @@ textarea{
 
 </div>
 
+
 <script>
 
-const MODEL = "gemini-2.5-flash";
+/* =========================================================
+   CONFIG
+========================================================= */
+
+/*
+  Gemini model.
+
+  IMPORTANT:
+  "gemini" কোনো valid model ID নয়।
+  তাই এখানে actual model ID ব্যবহার করা হয়েছে।
+*/
+
+const MODEL = "gemini-3.8-flash";
+
+
+/*
+  Maximum uploaded images.
+*/
 
 const MAX_IMAGES = 500;
 
-/* একসাথে ২টি image */
+
+/*
+  একই সময়ে সর্বোচ্চ ২টি image generate হবে।
+*/
+
 const CONCURRENCY = 2;
 
 
-/* =========================
+/*
+  API key storage.
+*/
+
+const NEW_KEY_STORAGE =
+  "stockmeta_gemini_keys";
+
+const OLD_KEY_STORAGE =
+  "stockmeta_gemini25_keys";
+
+
+/* =========================================================
    GLOBAL STATE
-========================= */
+========================================================= */
 
 let images = [];
 
 let apiKeys = [""];
 
-/*
-  প্রতিটি API key-এর runtime state।
-  কোনো hard limit নেই।
-*/
 let keyStates = [];
 
 let editingIndex = null;
@@ -1175,9 +1309,9 @@ let editingIndex = null;
 let exportDirectoryHandle = null;
 
 
-/* =========================
+/* =========================================================
    ELEMENTS
-========================= */
+========================================================= */
 
 const fileInput =
   document.getElementById("fileInput");
@@ -1195,9 +1329,9 @@ const counter =
   document.getElementById("counter");
 
 
-/* =========================
+/* =========================================================
    INIT
-========================= */
+========================================================= */
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -1215,9 +1349,9 @@ document.addEventListener(
 );
 
 
-/* =========================
+/* =========================================================
    FILE PICKER
-========================= */
+========================================================= */
 
 function openFilePicker(){
 
@@ -1230,7 +1364,14 @@ fileInput.addEventListener(
   "change",
   event => {
 
-    handleFiles(event.target.files);
+    handleFiles(
+      event.target.files
+    );
+
+    /*
+      একই file আবার select করার
+      সুযোগ দেওয়ার জন্য reset।
+    */
 
     fileInput.value = "";
 
@@ -1238,9 +1379,9 @@ fileInput.addEventListener(
 );
 
 
-/* =========================
-   DRAG DROP
-========================= */
+/* =========================================================
+   DRAG & DROP
+========================================================= */
 
 uploadBox.addEventListener(
   "dragover",
@@ -1272,15 +1413,17 @@ uploadBox.addEventListener(
 
     uploadBox.classList.remove("drag");
 
-    handleFiles(e.dataTransfer.files);
+    handleFiles(
+      e.dataTransfer.files
+    );
 
   }
 );
 
 
-/* =========================
+/* =========================================================
    HANDLE FILES
-========================= */
+========================================================= */
 
 function handleFiles(fileList){
 
@@ -1290,8 +1433,10 @@ function handleFiles(fileList){
   if(!files.length)
     return;
 
+
   const remaining =
     MAX_IMAGES - images.length;
+
 
   if(remaining <= 0){
 
@@ -1303,37 +1448,55 @@ function handleFiles(fileList){
 
   }
 
+
   const selected =
-    files.slice(0, remaining);
+    files.slice(
+      0,
+      remaining
+    );
 
-  selected.forEach(file => {
 
-    if(
-      !file.type.match(
-        /^image\/(png|jpeg|jpg|webp)$/i
-      )
-    ){
-      return;
+  let added = 0;
+
+
+  selected.forEach(
+    file => {
+
+      if(
+        !file.type.match(
+          /^image\/(png|jpeg|jpg|webp)$/i
+        )
+      ){
+
+        return;
+
+      }
+
+
+      const url =
+        URL.createObjectURL(file);
+
+
+      images.push({
+
+        file,
+
+        url,
+
+        name:file.name,
+
+        status:"waiting",
+
+        metadata:null
+
+      });
+
+
+      added++;
+
     }
+  );
 
-    const url =
-      URL.createObjectURL(file);
-
-    images.push({
-
-      file,
-
-      url,
-
-      name:file.name,
-
-      status:"waiting",
-
-      metadata:null
-
-    });
-
-  });
 
   if(files.length > remaining){
 
@@ -1343,118 +1506,226 @@ function handleFiles(fileList){
 
   }
 
+
+  if(!added && files.length){
+
+    alert(
+      "No supported image files were added."
+    );
+
+  }
+
+
   updateUI();
 
 }
 
 
-/* =========================
+/* =========================================================
    UPDATE UI
-========================= */
+========================================================= */
 
 function updateUI(){
 
   counter.textContent =
     `${images.length} / ${MAX_IMAGES} images`;
 
+
   emptyState.style.display =
     images.length
       ? "none"
       : "block";
+
 
   renderCards();
 
 }
 
 
-/* =========================
+/* =========================================================
    RENDER CARDS
-========================= */
+========================================================= */
 
 function renderCards(){
 
   grid.innerHTML = "";
 
-  images.forEach((item,index) => {
 
-    const card =
-      document.createElement("div");
+  images.forEach(
+    (item,index) => {
 
-    card.className = "card";
+      const card =
+        document.createElement("div");
 
-    const statusClass =
-      item.status === "loading"
-        ? "loading"
-        : item.status === "success"
-        ? "success"
-        : item.status === "error"
-        ? "error"
-        : "";
 
-    let metadataHTML = "";
+      card.className =
+        "card";
 
-    if(item.metadata){
 
-      const m =
-        item.metadata;
+      const statusClass =
+        item.status === "loading"
+          ? "loading"
+          : item.status === "success"
+          ? "success"
+          : item.status === "error"
+          ? "error"
+          : "";
 
-      metadataHTML = `
 
-        <div class="meta show">
+      let metadataHTML = "";
 
-          <div class="meta-item">
 
-            <div class="meta-label">
-              Title
+      if(item.metadata){
+
+        const m =
+          item.metadata;
+
+
+        metadataHTML = `
+
+          <div class="meta show">
+
+            <div class="meta-item">
+
+              <div class="meta-label">
+                Title
+              </div>
+
+              <div class="meta-value">
+                ${escapeHTML(m.title || "")}
+              </div>
+
             </div>
 
-            <div class="meta-value">
-              ${escapeHTML(m.title || "")}
+
+            <div class="meta-item">
+
+              <div class="meta-label">
+                Description
+              </div>
+
+              <div class="meta-value">
+                ${escapeHTML(m.description || "")}
+              </div>
+
+            </div>
+
+
+            <div class="meta-item">
+
+              <div class="meta-label">
+                Keywords
+              </div>
+
+              <div class="keywords">
+
+                ${(m.keywords || [])
+                  .map(
+                    k => `
+                      <span class="keyword">
+                        ${escapeHTML(k)}
+                      </span>
+                    `
+                  )
+                  .join("")}
+
+              </div>
+
+            </div>
+
+
+            <div class="meta-item">
+
+              <div class="meta-label">
+                Category
+              </div>
+
+              <div class="meta-value">
+                ${escapeHTML(m.category || "")}
+              </div>
+
             </div>
 
           </div>
 
-          <div class="meta-item">
+        `;
 
-            <div class="meta-label">
-              Description
-            </div>
+      }
 
-            <div class="meta-value">
-              ${escapeHTML(m.description || "")}
-            </div>
 
+      card.innerHTML = `
+
+        <img
+          class="card-image"
+          src="${item.url}"
+          alt=""
+        >
+
+
+        <div class="card-body">
+
+          <div class="card-name">
+            ${escapeHTML(item.name)}
           </div>
 
-          <div class="meta-item">
 
-            <div class="meta-label">
-              Keywords
-            </div>
-
-            <div class="keywords">
-
-              ${(m.keywords || [])
-                .map(k => `
-                  <span class="keyword">
-                    ${escapeHTML(k)}
-                  </span>
-                `)
-                .join("")}
-
-            </div>
-
+          <div class="status ${statusClass}">
+            ${getStatusText(item.status)}
           </div>
 
-          <div class="meta-item">
 
-            <div class="meta-label">
-              Category
-            </div>
+          ${metadataHTML}
 
-            <div class="meta-value">
-              ${escapeHTML(m.category || "")}
-            </div>
+
+          <div class="card-actions">
+
+            ${
+              item.metadata
+
+              ?
+
+              `
+
+              <button
+                class="btn"
+                onclick="editMetadata(${index})"
+              >
+                ✏ Edit
+              </button>
+
+
+              <button
+                class="btn"
+                onclick="copyMetadata(${index})"
+              >
+                📋 Copy
+              </button>
+
+              `
+
+              :
+
+              `
+
+              <button
+                class="btn"
+                onclick="generateOne(${index})"
+                ${item.status === "loading" ? "disabled" : ""}
+              >
+                ✨ Generate
+              </button>
+
+
+              <button
+                class="btn"
+                onclick="removeImage(${index})"
+              >
+                🗑 Remove
+              </button>
+
+              `
+
+            }
 
           </div>
 
@@ -1462,103 +1733,32 @@ function renderCards(){
 
       `;
 
+
+      grid.appendChild(card);
+
     }
-
-    card.innerHTML = `
-
-      <img
-        class="card-image"
-        src="${item.url}"
-        alt=""
-      >
-
-      <div class="card-body">
-
-        <div class="card-name">
-          ${escapeHTML(item.name)}
-        </div>
-
-        <div class="status ${statusClass}">
-          ${getStatusText(item.status)}
-        </div>
-
-        ${metadataHTML}
-
-        <div class="card-actions">
-
-          ${
-            item.metadata
-
-            ?
-
-            `
-
-            <button
-              class="btn"
-              onclick="editMetadata(${index})"
-            >
-              ✏ Edit
-            </button>
-
-            <button
-              class="btn"
-              onclick="copyMetadata(${index})"
-            >
-              📋 Copy
-            </button>
-
-            `
-
-            :
-
-            `
-
-            <button
-              class="btn"
-              onclick="generateOne(${index})"
-              ${item.status === "loading" ? "disabled" : ""}
-            >
-              ✨ Generate
-            </button>
-
-            <button
-              class="btn"
-              onclick="removeImage(${index})"
-            >
-              🗑 Remove
-            </button>
-
-            `
-
-          }
-
-        </div>
-
-      </div>
-
-    `;
-
-    grid.appendChild(card);
-
-  });
+  );
 
 }
 
 
-/* =========================
+/* =========================================================
    STATUS
-========================= */
+========================================================= */
 
 function getStatusText(status){
 
   if(status === "loading")
     return "⏳ Generating...";
 
+
   if(status === "success")
     return "✓ Metadata generated";
 
+
   if(status === "error")
     return "✕ Generation failed — click Generate again";
+
 
   return "Ready — click Generate";
 
@@ -1574,11 +1774,14 @@ async function callGemini(file,key){
   const base64 =
     await fileToBase64(file);
 
+
   const prompt =
     buildPrompt();
 
+
   const endpoint =
     `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${encodeURIComponent(key)}`;
+
 
   const response =
     await fetch(
@@ -1622,6 +1825,7 @@ async function callGemini(file,key){
 
           ],
 
+
           generationConfig:{
 
             temperature:0.4,
@@ -1636,10 +1840,12 @@ async function callGemini(file,key){
       }
     );
 
+
   if(!response.ok){
 
     const errorText =
       await response.text();
+
 
     throw new Error(
       `API ${response.status}: ${errorText}`
@@ -1647,14 +1853,17 @@ async function callGemini(file,key){
 
   }
 
+
   const data =
     await response.json();
+
 
   const text =
     data
       ?.candidates?.[0]
       ?.content?.parts?.[0]
       ?.text;
+
 
   if(!text){
 
@@ -1664,14 +1873,15 @@ async function callGemini(file,key){
 
   }
 
+
   return parseJSON(text);
 
 }
 
 
-/* =========================
+/* =========================================================
    PROMPT
-========================= */
+========================================================= */
 
 function buildPrompt(){
 
@@ -1680,33 +1890,52 @@ function buildPrompt(){
       "stockSite"
     ).value;
 
+
   const titleStyle =
     document.getElementById(
       "titleStyle"
     ).value;
+
 
   const descriptionLength =
     document.getElementById(
       "descriptionLength"
     ).value;
 
-  const keywordCount =
+
+  let keywordCount =
     Number(
       document.getElementById(
         "keywordCount"
       ).value
     ) || 35;
 
+
+  /*
+    নিরাপদ range.
+  */
+
+  keywordCount =
+    Math.max(
+      5,
+      Math.min(
+        50,
+        keywordCount
+      )
+    );
+
+
   const custom =
     document.getElementById(
       "customInstructions"
     ).value.trim();
 
+
   return `
 
 You are an expert stock photography metadata specialist.
 
-Analyze the uploaded image carefully.
+Analyze the uploaded image carefully and only describe things that are actually visible.
 
 Generate metadata suitable for ${stock}.
 
@@ -1714,24 +1943,29 @@ TITLE:
 Use ${titleStyle} title style.
 Make it natural, accurate, searchable and commercially useful.
 Do not use unnecessary promotional words.
+Do not use quotation marks around the title.
 
 DESCRIPTION:
 Write a ${descriptionLength} stock image description.
+Describe only visible content.
 
 KEYWORDS:
 Generate exactly ${keywordCount} relevant keywords.
 Use single words or short useful phrases.
-Prioritize important visual concepts first.
+Prioritize the most important visual concepts first.
 Avoid duplicates.
 Avoid irrelevant keywords.
 Do not keyword spam.
+Do not invent concepts that are not visible.
 
 CATEGORY:
 Choose the most suitable stock category.
 
 IMPORTANT:
-Do not invent objects, people, locations or concepts that are not visible.
+Do not invent objects, people, locations, brands or concepts that are not visible.
 Return ONLY valid JSON.
+Do not use Markdown.
+Do not use code fences.
 
 JSON format:
 
@@ -1757,21 +1991,24 @@ ${custom || "None"}
 function getSessionKeys(){
 
   return apiKeys
-    .map(k => String(k).trim())
+    .map(
+      k =>
+        String(k).trim()
+    )
     .filter(Boolean);
 
 }
 
 
-/*
-  API key state synchronize করে।
-  কোনো maximum key সংখ্যা নেই।
-*/
+/* =========================================================
+   SYNC KEY STATES
+========================================================= */
 
 function syncKeyStates(){
 
   const keys =
     getSessionKeys();
+
 
   const old =
     new Map(
@@ -1782,6 +2019,7 @@ function syncKeyStates(){
         ]
       )
     );
+
 
   keyStates =
     keys.map(
@@ -1801,27 +2039,31 @@ function syncKeyStates(){
         }
     );
 
+
   updateApiCount();
 
 }
 
 
-/* =========================
+/* =========================================================
    API KEY COUNT
-========================= */
+========================================================= */
 
 function updateApiCount(){
 
   const count =
     getSessionKeys().length;
 
+
   const element =
     document.getElementById(
       "apiCount"
     );
 
+
   if(!element)
     return;
+
 
   element.textContent =
     `${count} API key${count === 1 ? "" : "s"} added`;
@@ -1829,9 +2071,9 @@ function updateApiCount(){
 }
 
 
-/* =========================
-   KEY ERROR DETECTION
-========================= */
+/* =========================================================
+   QUOTA ERROR
+========================================================= */
 
 function isQuotaError(error){
 
@@ -1839,6 +2081,7 @@ function isQuotaError(error){
     String(
       error?.message || ""
     ).toLowerCase();
+
 
   return (
 
@@ -1856,12 +2099,18 @@ function isQuotaError(error){
 
     message.includes("too many requests") ||
 
-    message.includes("temporarily unavailable")
+    message.includes("temporarily unavailable") ||
+
+    message.includes("overloaded")
 
   );
 
 }
 
+
+/* =========================================================
+   AUTH ERROR
+========================================================= */
 
 function isAuthError(error){
 
@@ -1870,26 +2119,36 @@ function isAuthError(error){
       error?.message || ""
     ).toLowerCase();
 
+
   return (
 
-    message.includes("api 401") ||
+    message.includes("api 400") &&
 
-    message.includes("api 403") ||
+    (
+      message.includes("api key") ||
+      message.includes("invalid")
+    )
 
-    message.includes("api key not valid") ||
+  ) ||
 
-    message.includes("invalid api key") ||
+  message.includes("api 401") ||
 
-    message.includes("permission denied")
+  message.includes("api 403") ||
 
-  );
+  message.includes("api key not valid") ||
+
+  message.includes("invalid api key") ||
+
+  message.includes("permission denied") ||
+
+  message.includes("unauthenticated");
 
 }
 
 
-/* =========================
-   KEY RELEASE
-========================= */
+/* =========================================================
+   RELEASE KEY
+========================================================= */
 
 function releaseKey(
   state,
@@ -1899,11 +2158,13 @@ function releaseKey(
   if(!state)
     return;
 
+
   state.busy =
     Math.max(
       0,
       state.busy - 1
     );
+
 
   if(!error){
 
@@ -1915,14 +2176,19 @@ function releaseKey(
 
   }
 
+
   state.failures++;
 
+
   /*
-    Quota/rate limit:
-    প্রথমবার 5 sec,
-    এরপর 10 sec,
-    এরপর 15 sec,
-    maximum 30 sec.
+    Quota/rate limit cooldown:
+
+    5 sec
+    10 sec
+    15 sec
+    20 sec
+    25 sec
+    maximum 30 sec
   */
 
   if(isQuotaError(error)){
@@ -1933,8 +2199,10 @@ function releaseKey(
         5000 * state.failures
       );
 
+
     state.cooldownUntil =
       Date.now() + delay;
+
 
     return;
 
@@ -1942,8 +2210,8 @@ function releaseKey(
 
 
   /*
-    Invalid/unauthorized key
-    কিছু সময়ের জন্য বাদ থাকবে।
+    Invalid key:
+    5 মিনিট temporarily disabled.
   */
 
   if(isAuthError(error)){
@@ -1951,13 +2219,15 @@ function releaseKey(
     state.cooldownUntil =
       Date.now() + 300000;
 
+
     return;
 
   }
 
 
   /*
-    অন্যান্য temporary error
+    Other temporary errors:
+    2 seconds.
   */
 
   state.cooldownUntil =
@@ -1966,9 +2236,9 @@ function releaseKey(
 }
 
 
-/* =========================
+/* =========================================================
    ACQUIRE API KEY
-========================= */
+========================================================= */
 
 async function acquireKey(
   excluded = new Set()
@@ -1978,8 +2248,10 @@ async function acquireKey(
 
     syncKeyStates();
 
+
     const now =
       Date.now();
+
 
     const available =
       keyStates.filter(
@@ -1998,7 +2270,8 @@ async function acquireKey(
 
     /*
       Least recently used key.
-      ফলে key #1 বারবার ব্যবহার হবে না।
+
+      এতে একই key বারবার আগে ব্যবহার হবে না।
     */
 
     if(available.length){
@@ -2009,13 +2282,17 @@ async function acquireKey(
           b.lastUsed
       );
 
+
       const state =
         available[0];
 
+
       state.busy++;
+
 
       state.lastUsed =
         Date.now();
+
 
       return state;
 
@@ -2023,8 +2300,8 @@ async function acquireKey(
 
 
     /*
-      এই image-এর জন্য আর কোনো
-      unused key নেই।
+      এই generation-এর জন্য
+      কোনো unused key বাকি আছে কি?
     */
 
     const remaining =
@@ -2035,13 +2312,14 @@ async function acquireKey(
           )
       );
 
+
     if(!remaining.length)
       return null;
 
 
     /*
-      কোনো key cooldown-এ থাকলে
-      earliest cooldown পর্যন্ত অপেক্ষা।
+      Cooldown থাকা key-এর মধ্যে
+      সবচেয়ে আগে কোনটি available হবে।
     */
 
     const cooldown =
@@ -2087,9 +2365,9 @@ async function acquireKey(
 }
 
 
-/* =========================
+/* =========================================================
    SLEEP
-========================= */
+========================================================= */
 
 function sleep(ms){
 
@@ -2128,7 +2406,7 @@ async function generateAll(){
   if(!keys.length){
 
     alert(
-      "Please add a Gemini 2.5 Flash API key in Settings."
+      "Please add a Gemini API key in Settings."
     );
 
     openSettings();
@@ -2165,7 +2443,9 @@ async function generateAll(){
     );
 
 
-  button.disabled = true;
+  button.disabled =
+    true;
+
 
   button.textContent =
     "⏳ Generating...";
@@ -2174,10 +2454,7 @@ async function generateAll(){
   try{
 
     /*
-      CONCURRENCY = 2
-
-      অর্থাৎ একসাথে সর্বোচ্চ
-      ২টি image Gemini-তে যাবে।
+      একসাথে সর্বোচ্চ ২টি image।
     */
 
     for(
@@ -2208,10 +2485,13 @@ async function generateAll(){
 
   }finally{
 
-    button.disabled = false;
+    button.disabled =
+      false;
+
 
     button.textContent =
       "✨ Generate Metadata";
+
 
     updateUI();
 
@@ -2233,7 +2513,7 @@ async function generateOne(index){
   if(!keys.length){
 
     alert(
-      "Please add a Gemini 2.5 Flash API key in Settings."
+      "Please add a Gemini API key in Settings."
     );
 
     openSettings();
@@ -2297,7 +2577,7 @@ async function generateImage(
 
   /*
     একই image-এর জন্য
-    প্রত্যেক key সর্বোচ্চ একবার চেষ্টা করবে।
+    প্রতিটি API key সর্বোচ্চ একবার চেষ্টা করবে।
   */
 
   for(
@@ -2306,7 +2586,8 @@ async function generateImage(
     attempt++
   ){
 
-    let state = null;
+    let state =
+      null;
 
 
     try{
@@ -2326,8 +2607,15 @@ async function generateImage(
       );
 
 
+      const keyNumber =
+        getSessionKeys()
+          .indexOf(
+            state.key
+          ) + 1;
+
+
       console.log(
-        `Image ${index + 1} using API key ${getSessionKeys().indexOf(state.key) + 1}`
+        `Image ${index + 1} using Gemini API key ${keyNumber}`
       );
 
 
@@ -2349,6 +2637,12 @@ async function generateImage(
           metadata
         );
 
+
+      /*
+        Gemini কখনো exact keyword count
+        না দিলে normalize করার পরেও
+        metadata valid থাকবে।
+      */
 
       item.status =
         "success";
@@ -2376,7 +2670,7 @@ async function generateImage(
 
 
       console.warn(
-        "Gemini key failed:",
+        `Gemini key failed for image ${index + 1}:`,
         error
       );
 
@@ -2406,7 +2700,7 @@ async function generateImage(
 
 
 /* =========================================================
-   TEST ALL API KEYS
+   TEST SINGLE API KEY
 ========================================================= */
 
 async function testSingleKey(key){
@@ -2417,9 +2711,7 @@ async function testSingleKey(key){
 
   const response =
     await fetch(
-
       endpoint,
-
       {
 
         method:"POST",
@@ -2446,12 +2738,20 @@ async function testSingleKey(key){
 
             }
 
-          ]
+          ],
+
+
+          generationConfig:{
+
+            temperature:0,
+
+            maxOutputTokens:10
+
+          }
 
         })
 
       }
-
     );
 
 
@@ -2459,6 +2759,7 @@ async function testSingleKey(key){
 
     const text =
       await response.text();
+
 
     throw new Error(
       `API ${response.status}: ${text}`
@@ -2472,7 +2773,11 @@ async function testSingleKey(key){
 }
 
 
-async function testApiKeys(){
+/* =========================================================
+   TEST ALL API KEYS
+========================================================= */
+
+async function testApiKeys(button = null){
 
   const keys =
     getSessionKeys();
@@ -2489,13 +2794,11 @@ async function testApiKeys(){
   }
 
 
-  const button =
-    event?.currentTarget;
-
-
   if(button){
 
-    button.disabled = true;
+    button.disabled =
+      true;
+
 
     button.textContent =
       "⏳ Testing...";
@@ -2504,6 +2807,10 @@ async function testApiKeys(){
 
 
   try{
+
+    /*
+      সব key একই সময়ে test হবে।
+    */
 
     const results =
       await Promise.allSettled(
@@ -2530,10 +2837,6 @@ async function testApiKeys(){
       working;
 
 
-    /*
-      Failed key-এর state cooldown-এ পাঠানো।
-    */
-
     syncKeyStates();
 
 
@@ -2551,18 +2854,52 @@ async function testApiKeys(){
           return;
 
 
-        if(result.status === "fulfilled"){
+        /*
+          Test successful.
+        */
 
-          state.failures = 0;
+        if(
+          result.status ===
+          "fulfilled"
+        ){
 
-          state.cooldownUntil = 0;
+          state.failures =
+            0;
+
+          state.cooldownUntil =
+            0;
+
+          state.busy =
+            0;
 
         }else{
 
-          releaseKey(
-            state,
-            result.reason
-          );
+          /*
+            Test failed.
+          */
+
+          state.busy =
+            0;
+
+
+          state.failures++;
+
+
+          if(
+            isAuthError(
+              result.reason
+            )
+          ){
+
+            state.cooldownUntil =
+              Date.now() + 300000;
+
+          }else{
+
+            state.cooldownUntil =
+              Date.now() + 10000;
+
+          }
 
         }
 
@@ -2580,16 +2917,27 @@ async function testApiKeys(){
     }else{
 
       alert(
+
         `API Key Test Complete\n\n` +
+
         `✓ Working: ${working}\n` +
+
         `✕ Failed: ${failed}\n` +
+
         `Total: ${results.length}\n\n` +
+
         `Keys have NOT been saved automatically.`
+
       );
 
     }
 
   }catch(error){
+
+    console.error(
+      error
+    );
+
 
     alert(
       "✕ API key test failed.\n\n" +
@@ -2600,7 +2948,9 @@ async function testApiKeys(){
 
     if(button){
 
-      button.disabled = false;
+      button.disabled =
+        false;
+
 
       button.textContent =
         "🧪 Test All";
@@ -2624,7 +2974,8 @@ function renderApiKeys(){
     );
 
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
 
   apiKeys.forEach(
@@ -2648,7 +2999,9 @@ function renderApiKeys(){
           value="${escapeAttribute(key)}"
           oninput="updateApiKey(${index}, this.value)"
           autocomplete="off"
+          spellcheck="false"
         >
+
 
         <button
           class="api-remove"
@@ -2661,7 +3014,9 @@ function renderApiKeys(){
       `;
 
 
-      container.appendChild(row);
+      container.appendChild(
+        row
+      );
 
     }
   );
@@ -2684,9 +3039,10 @@ function updateApiKey(
   apiKeys[index] =
     value;
 
+
   /*
-    এখানে localStorage save হবে না।
-    User নিজে Save API Keys চাপলেই save হবে।
+    IMPORTANT:
+    এখানে localStorage save হচ্ছে না।
   */
 
   syncKeyStates();
@@ -2704,7 +3060,10 @@ function addApiKey(){
     কোনো fixed maximum নেই।
   */
 
-  apiKeys.push("");
+  apiKeys.push(
+    ""
+  );
+
 
   renderApiKeys();
 
@@ -2719,7 +3078,8 @@ function removeApiKey(index){
 
   if(apiKeys.length === 1){
 
-    apiKeys[0] = "";
+    apiKeys[0] =
+      "";
 
   }else{
 
@@ -2739,7 +3099,7 @@ function removeApiKey(index){
 
 
 /* =========================================================
-   MANUAL SAVE API KEYS
+   SAVE API KEYS
 ========================================================= */
 
 function saveApiKeys(){
@@ -2753,9 +3113,23 @@ function saveApiKeys(){
       .filter(Boolean);
 
 
+  /*
+    শুধু এই function-এই API keys
+    localStorage-এ save হচ্ছে।
+  */
+
   localStorage.setItem(
-    "stockmeta_gemini25_keys",
+    NEW_KEY_STORAGE,
     JSON.stringify(clean)
+  );
+
+
+  /*
+    পুরোনো storage থাকলে remove করে দিচ্ছি।
+  */
+
+  localStorage.removeItem(
+    OLD_KEY_STORAGE
   );
 
 
@@ -2783,15 +3157,35 @@ function saveApiKeys(){
 
 function loadSettings(){
 
+  /*
+    New storage first.
+    যদি না থাকে, old Gemini 2.5 storage থেকে
+    saved keys migrate হবে।
+  */
+
   try{
+
+    const newRaw =
+      localStorage.getItem(
+        NEW_KEY_STORAGE
+      );
+
+
+    const oldRaw =
+      localStorage.getItem(
+        OLD_KEY_STORAGE
+      );
+
+
+    const raw =
+      newRaw ??
+      oldRaw ??
+      "[]";
+
 
     const savedKeys =
       JSON.parse(
-
-        localStorage.getItem(
-          "stockmeta_gemini25_keys"
-        ) || "[]"
-
+        raw
       );
 
 
@@ -2804,9 +3198,31 @@ function loadSettings(){
         savedKeys
           .map(
             key =>
-              String(key)
+              String(key).trim()
           )
           .filter(Boolean);
+
+
+      /*
+        Old keys পাওয়া গেলে নতুন storage-এ
+        migrate করে দিচ্ছি।
+      */
+
+      if(
+        !newRaw &&
+        oldRaw
+      ){
+
+        localStorage.setItem(
+          NEW_KEY_STORAGE,
+          JSON.stringify(apiKeys)
+        );
+
+        localStorage.removeItem(
+          OLD_KEY_STORAGE
+        );
+
+      }
 
     }else{
 
@@ -2815,7 +3231,13 @@ function loadSettings(){
 
     }
 
-  }catch{
+  }catch(error){
+
+    console.warn(
+      "Could not load API keys:",
+      error
+    );
+
 
     apiKeys =
       [""];
@@ -2823,7 +3245,8 @@ function loadSettings(){
   }
 
 
-  let settings = {};
+  let settings =
+    {};
 
 
   try{
@@ -2839,44 +3262,60 @@ function loadSettings(){
 
   }catch{
 
-    settings = {};
+    settings =
+      {};
 
   }
 
 
-  if(settings.stockSite)
+  if(settings.stockSite){
+
     document.getElementById(
       "stockSite"
     ).value =
       settings.stockSite;
 
+  }
 
-  if(settings.titleStyle)
+
+  if(settings.titleStyle){
+
     document.getElementById(
       "titleStyle"
     ).value =
       settings.titleStyle;
 
+  }
 
-  if(settings.descriptionLength)
+
+  if(settings.descriptionLength){
+
     document.getElementById(
       "descriptionLength"
     ).value =
       settings.descriptionLength;
 
+  }
 
-  if(settings.keywordCount)
+
+  if(settings.keywordCount){
+
     document.getElementById(
       "keywordCount"
     ).value =
       settings.keywordCount;
 
+  }
 
-  if(settings.customInstructions)
+
+  if(settings.customInstructions){
+
     document.getElementById(
       "customInstructions"
     ).value =
       settings.customInstructions;
+
+  }
 
 
   syncKeyStates();
@@ -2890,6 +3329,30 @@ function loadSettings(){
 
 function saveSettings(){
 
+  let keywordCount =
+    Number(
+      document.getElementById(
+        "keywordCount"
+      ).value
+    ) || 35;
+
+
+  keywordCount =
+    Math.max(
+      5,
+      Math.min(
+        50,
+        keywordCount
+      )
+    );
+
+
+  document.getElementById(
+    "keywordCount"
+  ).value =
+    keywordCount;
+
+
   const settings = {
 
     stockSite:
@@ -2897,20 +3360,24 @@ function saveSettings(){
         "stockSite"
       ).value,
 
+
     titleStyle:
       document.getElementById(
         "titleStyle"
       ).value,
+
 
     descriptionLength:
       document.getElementById(
         "descriptionLength"
       ).value,
 
+
     keywordCount:
-      document.getElementById(
-        "keywordCount"
-      ).value,
+
+
+      keywordCount,
+
 
     customInstructions:
       document.getElementById(
@@ -2940,13 +3407,21 @@ function saveSettings(){
 function openSettings(){
 
   document
-    .getElementById("settings")
-    .classList.add("open");
+    .getElementById(
+      "settings"
+    )
+    .classList.add(
+      "open"
+    );
 
 
   document
-    .getElementById("overlay")
-    .classList.add("show");
+    .getElementById(
+      "overlay"
+    )
+    .classList.add(
+      "show"
+    );
 
 }
 
@@ -2954,13 +3429,21 @@ function openSettings(){
 function closeSettings(){
 
   document
-    .getElementById("settings")
-    .classList.remove("open");
+    .getElementById(
+      "settings"
+    )
+    .classList.remove(
+      "open"
+    );
 
 
   document
-    .getElementById("overlay")
-    .classList.remove("show");
+    .getElementById(
+      "overlay"
+    )
+    .classList.remove(
+      "show"
+    );
 
 }
 
@@ -2976,7 +3459,7 @@ function editMetadata(index){
 
 
   const metadata =
-    images[index].metadata;
+    images[index]?.metadata;
 
 
   if(!metadata)
@@ -3009,8 +3492,12 @@ function editMetadata(index){
 
 
   document
-    .getElementById("editModal")
-    .classList.add("show");
+    .getElementById(
+      "editModal"
+    )
+    .classList.add(
+      "show"
+    );
 
 }
 
@@ -3022,8 +3509,12 @@ function closeEdit(){
 
 
   document
-    .getElementById("editModal")
-    .classList.remove("show");
+    .getElementById(
+      "editModal"
+    )
+    .classList.remove(
+      "show"
+    );
 
 }
 
@@ -3058,6 +3549,7 @@ function saveEdit(){
         .value
         .trim(),
 
+
     description:
       document
         .getElementById(
@@ -3066,7 +3558,9 @@ function saveEdit(){
         .value
         .trim(),
 
+
     keywords,
+
 
     category:
       document
@@ -3077,6 +3571,10 @@ function saveEdit(){
         .trim()
 
   };
+
+
+  images[editingIndex].status =
+    "success";
 
 
   closeEdit();
@@ -3093,7 +3591,7 @@ function saveEdit(){
 async function copyMetadata(index){
 
   const m =
-    images[index].metadata;
+    images[index]?.metadata;
 
 
   if(!m)
@@ -3121,15 +3619,65 @@ ${m.category}`;
       text
     );
 
+
     alert(
       "✓ Metadata copied."
     );
 
   }catch{
 
-    alert(
-      "Could not copy metadata."
-    );
+    /*
+      Clipboard API না চললে
+      fallback.
+    */
+
+    try{
+
+      const textarea =
+        document.createElement(
+          "textarea"
+        );
+
+
+      textarea.value =
+        text;
+
+
+      textarea.style.position =
+        "fixed";
+
+
+      textarea.style.opacity =
+        "0";
+
+
+      document.body.appendChild(
+        textarea
+      );
+
+
+      textarea.select();
+
+
+      document.execCommand(
+        "copy"
+      );
+
+
+      textarea.remove();
+
+
+      alert(
+        "✓ Metadata copied."
+      );
+
+    }catch{
+
+      alert(
+        "Could not copy metadata."
+      );
+
+    }
 
   }
 
@@ -3271,7 +3819,9 @@ function exportCSV(){
       .map(
         row =>
           row
-            .map(csvEscape)
+            .map(
+              csvEscape
+            )
             .join(",")
       )
       .join("\n");
@@ -3309,11 +3859,16 @@ function exportCSV(){
     "stockmeta-metadata.csv";
 
 
-  document.body.appendChild(a);
+  document.body.appendChild(
+    a
+  );
+
 
   a.click();
 
+
   a.remove();
+
 
   URL.revokeObjectURL(
     url
@@ -3322,9 +3877,9 @@ function exportCSV(){
 }
 
 
-/* =========================
+/* =========================================================
    CSV ESCAPE
-========================= */
+========================================================= */
 
 function csvEscape(value){
 
@@ -3351,8 +3906,11 @@ async function selectExportFolder(){
   if(!window.showDirectoryPicker){
 
     alert(
+
       "Folder export is not supported by this browser.\n\n" +
+
       "Please use Google Chrome or Microsoft Edge."
+
     );
 
     return;
@@ -3371,9 +3929,10 @@ async function selectExportFolder(){
     document.getElementById(
       "exportFolderStatus"
     ).textContent =
-      "📁 Selected folder: " +
-      exportDirectoryHandle.name;
 
+      "📁 Selected folder: " +
+
+      exportDirectoryHandle.name;
 
   }catch(error){
 
@@ -3382,7 +3941,10 @@ async function selectExportFolder(){
       "AbortError"
     ){
 
-      console.error(error);
+      console.error(
+        error
+      );
+
 
       alert(
         "Could not select export folder."
@@ -3395,9 +3957,9 @@ async function selectExportFolder(){
 }
 
 
-/* =========================
+/* =========================================================
    XML ESCAPE
-========================= */
+========================================================= */
 
 function escapeXML(value){
 
@@ -3596,16 +4158,30 @@ function embedXMPIntoJPEG(
     );
 
 
-  output[0] = 0xFF;
-  output[1] = 0xD8;
-  output[2] = 0xFF;
-  output[3] = 0xE1;
+  output[0] =
+    0xFF;
+
+
+  output[1] =
+    0xD8;
+
+
+  output[2] =
+    0xFF;
+
+
+  output[3] =
+    0xE1;
+
 
   output[4] =
-    (segmentLength >> 8) & 0xFF;
+    (segmentLength >> 8) &
+    0xFF;
+
 
   output[5] =
-    segmentLength & 0xFF;
+    segmentLength &
+    0xFF;
 
 
   output.set(
@@ -3626,7 +4202,7 @@ function embedXMPIntoJPEG(
 
 
 /* =========================================================
-   PNG XMP
+   PNG CRC32
 ========================================================= */
 
 function crc32(bytes){
@@ -3670,6 +4246,10 @@ function crc32(bytes){
 
 }
 
+
+/* =========================================================
+   PNG CHUNK
+========================================================= */
 
 function createPNGChunk(
   type,
@@ -3743,6 +4323,10 @@ function createPNGChunk(
 }
 
 
+/* =========================================================
+   PNG XMP
+========================================================= */
+
 function embedXMPIntoPNG(
   arrayBuffer,
   xmp
@@ -3752,6 +4336,43 @@ function embedXMPIntoPNG(
     new Uint8Array(
       arrayBuffer
     );
+
+
+  /*
+    PNG signature check.
+  */
+
+  const pngSignature =
+    [
+      0x89,
+      0x50,
+      0x4E,
+      0x47,
+      0x0D,
+      0x0A,
+      0x1A,
+      0x0A
+    ];
+
+
+  for(
+    let i = 0;
+    i < 8;
+    i++
+  ){
+
+    if(
+      original[i] !==
+      pngSignature[i]
+    ){
+
+      throw new Error(
+        "Invalid PNG file."
+      );
+
+    }
+
+  }
 
 
   const xmpText =
@@ -3772,9 +4393,12 @@ function embedXMPIntoPNG(
     );
 
 
-  let pos = 8;
+  let pos =
+    8;
 
-  let iendPosition = -1;
+
+  let iendPosition =
+    -1;
 
 
   while(
@@ -3791,7 +4415,9 @@ function embedXMPIntoPNG(
 
 
     const length =
-      view.getUint32(0);
+      view.getUint32(
+        0
+      );
 
 
     const type =
@@ -3855,7 +4481,7 @@ function embedXMPIntoPNG(
       iendPosition
     ),
     iendPosition +
-      chunk.length
+    chunk.length
   );
 
 
@@ -3988,6 +4614,10 @@ function embedXMPIntoWEBP(
   );
 
 
+  /*
+    RIFF size update.
+  */
+
   const outputView =
     new DataView(
       output.buffer
@@ -3997,7 +4627,7 @@ function embedXMPIntoWEBP(
   outputView.setUint32(
     4,
     oldSize +
-      chunk.length,
+    chunk.length,
     true
   );
 
@@ -4119,8 +4749,11 @@ async function exportImagesWithMetadata(){
   ){
 
     alert(
+
       "Folder export is not supported by this browser.\n\n" +
+
       "Please use Google Chrome or Microsoft Edge."
+
     );
 
     return;
@@ -4172,7 +4805,8 @@ async function exportImagesWithMetadata(){
     "⏳ Exporting...";
 
 
-  let exported = 0;
+  let exported =
+    0;
 
 
   try{
@@ -4214,12 +4848,16 @@ async function exportImagesWithMetadata(){
 
 
     alert(
-      `✓ Export complete!\n\n` +
-      `${exported} image(s) exported.\n\n` +
-      `Title, Description, Keywords and Category ` +
-      `were embedded into the image files.`
-    );
 
+      `✓ Export complete!\n\n` +
+
+      `${exported} image(s) exported.\n\n` +
+
+      `Title, Description, Keywords and Category ` +
+
+      `were embedded into the image files.`
+
+    );
 
   }catch(error){
 
@@ -4229,10 +4867,12 @@ async function exportImagesWithMetadata(){
 
 
     alert(
-      "✕ Export failed.\n\n" +
-      error.message
-    );
 
+      "✕ Export failed.\n\n" +
+
+      error.message
+
+    );
 
   }finally{
 
@@ -4248,9 +4888,9 @@ async function exportImagesWithMetadata(){
 }
 
 
-/* =========================
+/* =========================================================
    BASE64
-========================= */
+========================================================= */
 
 function fileToBase64(file){
 
@@ -4261,25 +4901,56 @@ function fileToBase64(file){
         new FileReader();
 
 
-      reader.onload = () => {
+      reader.onload =
+        () => {
 
-        const result =
-          reader.result;
+          try{
+
+            const result =
+              reader.result;
 
 
-        const base64 =
-          result.split(",")[1];
+            const base64 =
+              String(
+                result
+              ).split(",")[1];
 
 
-        resolve(
-          base64
-        );
+            if(!base64){
 
-      };
+              reject(
+                new Error(
+                  "Could not read image data."
+                )
+              );
+
+              return;
+
+            }
+
+
+            resolve(
+              base64
+            );
+
+          }catch(error){
+
+            reject(
+              error
+            );
+
+          }
+
+        };
 
 
       reader.onerror =
-        reject;
+        () =>
+          reject(
+            new Error(
+              "Could not read image file."
+            )
+          );
 
 
       reader.readAsDataURL(
@@ -4292,33 +4963,35 @@ function fileToBase64(file){
 }
 
 
-/* =========================
+/* =========================================================
    JSON PARSER
-========================= */
+========================================================= */
 
 function parseJSON(text){
 
   let cleaned =
-    text.trim();
+    String(
+      text || ""
+    ).trim();
 
 
   cleaned =
     cleaned.replace(
-      /^```json/i,
+      /^```json\s*/i,
       ""
     );
 
 
   cleaned =
     cleaned.replace(
-      /^```/,
+      /^```\s*/,
       ""
     );
 
 
   cleaned =
     cleaned.replace(
-      /```$/,
+      /\s*```$/,
       ""
     );
 
@@ -4335,6 +5008,11 @@ function parseJSON(text){
 
   }catch{
 
+    /*
+      JSON-এর আগে/পরে extra text থাকলে
+      object অংশ বের করার চেষ্টা।
+    */
+
     const start =
       cleaned.indexOf("{");
 
@@ -4345,7 +5023,8 @@ function parseJSON(text){
 
     if(
       start !== -1 &&
-      end !== -1
+      end !== -1 &&
+      end > start
     ){
 
       return JSON.parse(
@@ -4367,55 +5046,84 @@ function parseJSON(text){
 }
 
 
-/* =========================
+/* =========================================================
    NORMALIZE METADATA
-========================= */
+========================================================= */
 
 function normalizeMetadata(data){
+
+  const keywords =
+    Array.isArray(
+      data?.keywords
+    )
+
+      ?
+
+      data.keywords
+        .map(
+          k =>
+            String(k).trim()
+        )
+        .filter(Boolean)
+
+      :
+
+      [];
+
+
+  /*
+    Duplicate keyword remove.
+  */
+
+  const uniqueKeywords =
+    [
+      ...new Set(
+        keywords.map(
+          k =>
+            k.toLowerCase()
+        )
+      )
+    ].map(
+      lower =>
+        keywords.find(
+          original =>
+            original.toLowerCase() ===
+            lower
+        )
+    );
+
 
   return {
 
     title:
       String(
-        data.title || ""
-      ),
+        data?.title || ""
+      ).trim(),
+
 
     description:
       String(
-        data.description || ""
-      ),
+        data?.description || ""
+      ).trim(),
+
 
     keywords:
-      Array.isArray(
-        data.keywords
-      )
+      uniqueKeywords,
 
-        ?
-
-        data.keywords
-          .map(
-            k =>
-              String(k).trim()
-          )
-          .filter(Boolean)
-
-        :
-
-        [],
 
     category:
       String(
-        data.category || ""
-      )
+        data?.category || ""
+      ).trim()
 
   };
 
 }
 
 
-/* =========================
+/* =========================================================
    SUPPORT
-========================= */
+========================================================= */
 
 function toggleSupport(){
 
@@ -4430,9 +5138,9 @@ function toggleSupport(){
 }
 
 
-/* =========================
+/* =========================================================
    ESCAPE HTML
-========================= */
+========================================================= */
 
 function escapeHTML(value){
 
@@ -4477,9 +5185,9 @@ function escapeAttribute(value){
 }
 
 
-/* =========================
+/* =========================================================
    KEYBOARD
-========================= */
+========================================================= */
 
 document.addEventListener(
   "keydown",
