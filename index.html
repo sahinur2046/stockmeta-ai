@@ -1,1220 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StockMeta AI</title>
-
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Inter,Segoe UI,Arial,sans-serif;
-  background:#080808;
-  color:#fff;
-  min-height:100vh;
-}
-
-button,input,select,textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.header{
-  height:72px;
-  border-bottom:1px solid #242424;
-  background:#0c0c0c;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 5%;
-  position:sticky;
-  top:0;
-  z-index:50;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:21px;
-  font-weight:800;
-}
-
-.logo-icon{
-  width:36px;
-  height:36px;
-  border-radius:10px;
-  background:#e50914;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-}
-
-.nav{
-  display:flex;
-  gap:10px;
-}
-
-.btn{
-  border:1px solid #303030;
-  background:#151515;
-  color:#fff;
-  padding:10px 16px;
-  border-radius:9px;
-  transition:.2s;
-}
-
-.btn:hover{
-  background:#222;
-}
-
-.btn:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-}
-
-.btn-red{
-  background:#e50914;
-  border-color:#e50914;
-}
-
-.btn-red:hover{
-  background:#f6121d;
-}
-
-.btn-green{
-  background:#137333;
-  border-color:#137333;
-}
-
-.btn-green:hover{
-  background:#16883e;
-}
-
-.container{
-  width:90%;
-  max-width:1250px;
-  margin:auto;
-}
-
-.hero{
-  text-align:center;
-  padding:70px 15px 45px;
-}
-
-.badge{
-  display:inline-block;
-  background:#171717;
-  border:1px solid #303030;
-  color:#ff4b54;
-  padding:7px 13px;
-  border-radius:50px;
-  font-size:13px;
-  margin-bottom:20px;
-}
-
-.hero h1{
-  font-size:clamp(38px,6vw,68px);
-  line-height:1;
-  margin-bottom:20px;
-  letter-spacing:-2px;
-}
-
-.hero h1 span{
-  color:#e50914;
-}
-
-.hero p{
-  color:#999;
-  max-width:700px;
-  margin:auto;
-  font-size:17px;
-  line-height:1.7;
-}
-
-.upload-box{
-  border:2px dashed #383838;
-  border-radius:18px;
-  padding:55px 20px;
-  text-align:center;
-  background:#0e0e0e;
-  transition:.2s;
-}
-
-.upload-box.drag{
-  border-color:#e50914;
-  background:#16090a;
-}
-
-.upload-icon{
-  font-size:45px;
-  margin-bottom:15px;
-}
-
-.upload-box h2{
-  margin-bottom:8px;
-}
-
-.upload-box p{
-  color:#888;
-  margin-bottom:22px;
-}
-
-.file-input{
-  display:none;
-}
-
-.upload-info{
-  margin-top:15px;
-  color:#777;
-  font-size:13px;
-}
-
-.toolbar{
-  margin:30px 0 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.counter{
-  color:#aaa;
-}
-
-.toolbar-right{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:18px;
-  padding-bottom:80px;
-}
-
-.card{
-  background:#101010;
-  border:1px solid #262626;
-  border-radius:15px;
-  overflow:hidden;
-}
-
-.card-image{
-  width:100%;
-  height:210px;
-  object-fit:cover;
-  display:block;
-  background:#181818;
-}
-
-.card-body{
-  padding:17px;
-}
-
-.card-name{
-  font-size:14px;
-  color:#bbb;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  margin-bottom:13px;
-}
-
-.status{
-  padding:10px;
-  border-radius:8px;
-  background:#171717;
-  color:#999;
-  font-size:13px;
-  margin-bottom:12px;
-}
-
-.status.loading{
-  color:#ffb3b6;
-  background:#1d0d0e;
-}
-
-.status.success{
-  color:#63e68a;
-  background:#0c1d12;
-}
-
-.status.error{
-  color:#ff7777;
-  background:#210d0d;
-}
-
-.meta{
-  display:none;
-}
-
-.meta.show{
-  display:block;
-}
-
-.meta-item{
-  margin-bottom:13px;
-}
-
-.meta-label{
-  font-size:11px;
-  text-transform:uppercase;
-  color:#666;
-  margin-bottom:5px;
-}
-
-.meta-value{
-  font-size:14px;
-  line-height:1.5;
-  color:#ddd;
-  word-break:break-word;
-}
-
-.keywords{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-}
-
-.keyword{
-  background:#1c1c1c;
-  border:1px solid #303030;
-  color:#bbb;
-  padding:4px 7px;
-  border-radius:5px;
-  font-size:11px;
-}
-
-.card-actions{
-  display:flex;
-  gap:7px;
-  margin-top:15px;
-}
-
-.card-actions button{
-  flex:1;
-}
-
-.empty{
-  text-align:center;
-  padding:70px 20px;
-  color:#555;
-}
-
-.empty-icon{
-  font-size:45px;
-  margin-bottom:15px;
-}
-
-footer{
-  border-top:1px solid #222;
-  padding:30px;
-  text-align:center;
-  color:#555;
-  font-size:13px;
-}
-
-/* EXPORT */
-
-.export-box{
-  margin:0 0 25px;
-  padding:16px;
-  border:1px solid #292929;
-  background:#101010;
-  border-radius:12px;
-}
-
-.export-title{
-  font-size:13px;
-  color:#888;
-  text-transform:uppercase;
-  margin-bottom:10px;
-}
-
-.export-row{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.export-status{
-  margin-top:9px;
-  color:#777;
-  font-size:12px;
-}
-
-/* SETTINGS */
-
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.65);
-  z-index:90;
-  display:none;
-}
-
-.overlay.show{
-  display:block;
-}
-
-.settings{
-  position:fixed;
-  right:0;
-  top:0;
-  height:100vh;
-  width:min(430px,95%);
-  background:#0e0e0e;
-  border-left:1px solid #292929;
-  z-index:100;
-  transform:translateX(100%);
-  transition:.3s;
-  overflow-y:auto;
-}
-
-.settings.open{
-  transform:translateX(0);
-}
-
-.settings-head{
-  padding:22px;
-  border-bottom:1px solid #242424;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:sticky;
-  top:0;
-  background:#0e0e0e;
-  z-index:2;
-}
-
-.settings-head h2{
-  font-size:20px;
-}
-
-.close{
-  background:none;
-  border:0;
-  color:#aaa;
-  font-size:25px;
-}
-
-.settings-body{
-  padding:22px;
-}
-
-.section{
-  margin-bottom:25px;
-}
-
-.section-title{
-  font-size:13px;
-  color:#888;
-  text-transform:uppercase;
-  letter-spacing:.8px;
-  margin-bottom:12px;
-}
-
-.field{
-  margin-bottom:15px;
-}
-
-.field label{
-  display:block;
-  font-size:13px;
-  color:#aaa;
-  margin-bottom:7px;
-}
-
-input,select,textarea{
-  width:100%;
-  background:#151515;
-  border:1px solid #303030;
-  color:#fff;
-  border-radius:8px;
-  padding:11px 12px;
-  outline:none;
-}
-
-input:focus,select:focus,textarea:focus{
-  border-color:#e50914;
-}
-
-textarea{
-  min-height:100px;
-  resize:vertical;
-}
-
-.api-box{
-  background:#121212;
-  border:1px solid #292929;
-  padding:15px;
-  border-radius:12px;
-}
-
-.api-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-
-.api-title strong{
-  color:#fff;
-}
-
-.api-title span{
-  color:#e50914;
-  font-size:12px;
-}
-
-.api-help{
-  color:#777;
-  font-size:12px;
-  line-height:1.5;
-  margin-bottom:13px;
-}
-
-.api-row{
-  display:flex;
-  gap:7px;
-  margin-bottom:8px;
-}
-
-.api-row input{
-  flex:1;
-}
-
-.api-remove{
-  width:42px;
-  background:#211010;
-  border:1px solid #432020;
-  color:#ff6c6c;
-  border-radius:8px;
-}
-
-.api-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:10px;
-}
-
-.save-api{
-  width:100%;
-  margin-top:9px;
-}
-
-.get-key{
-  display:block;
-  text-align:center;
-  margin-bottom:12px;
-  color:#ff525a;
-  text-decoration:none;
-  font-size:13px;
-}
-
-.get-key:hover{
-  text-decoration:underline;
-}
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.78);
-  z-index:150;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:min(700px,100%);
-  max-height:90vh;
-  overflow-y:auto;
-  background:#111;
-  border:1px solid #2d2d2d;
-  border-radius:15px;
-}
-
-.modal-head{
-  padding:18px;
-  border-bottom:1px solid #282828;
-  display:flex;
-  justify-content:space-between;
-}
-
-.modal-body{
-  padding:18px;
-}
-
-.modal-footer{
-  padding:15px 18px;
-  border-top:1px solid #282828;
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-}
-
-/* SUPPORT */
-
-.support{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:70;
-}
-
-.support-btn{
-  border:0;
-  background:#20c76a;
-  color:#fff;
-  padding:12px 17px;
-  border-radius:50px;
-  font-weight:700;
-  box-shadow:0 8px 30px rgba(0,0,0,.4);
-}
-
-.support-panel{
-  display:none;
-  position:absolute;
-  right:0;
-  bottom:55px;
-  width:250px;
-  background:#111;
-  border:1px solid #303030;
-  border-radius:13px;
-  padding:16px;
-}
-
-.support-panel.show{
-  display:block;
-}
-
-.support-panel h3{
-  margin-bottom:7px;
-}
-
-.support-panel p{
-  color:#888;
-  font-size:13px;
-  line-height:1.5;
-  margin-bottom:12px;
-}
-
-.whatsapp{
-  display:block;
-  text-align:center;
-  background:#20c76a;
-  color:#fff;
-  text-decoration:none;
-  padding:10px;
-  border-radius:8px;
-  font-weight:700;
-}
-
-@media(max-width:600px){
-
-  .header{
-    padding:0 4%;
-  }
-
-  .hero{
-    padding-top:45px;
-  }
-
-  .hero h1{
-    font-size:42px;
-  }
-
-  .toolbar{
-    align-items:stretch;
-  }
-
-  .toolbar-right{
-    width:100%;
-  }
-
-  .toolbar-right button{
-    flex:1;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<header class="header">
-
-  <div class="logo">
-    <div class="logo-icon">S</div>
-    <span>StockMeta AI</span>
-  </div>
-
-  <div class="nav">
-    <button class="btn" onclick="openSettings()">⚙ Settings</button>
-    <button class="btn btn-red" onclick="openFilePicker()">＋ Upload</button>
-  </div>
-
-</header>
-
-
-<main>
-
-<section class="hero">
-
-  <div class="badge">
-    AI Stock Metadata Generator
-  </div>
-
-  <h1>
-    Create <span>Stock Metadata</span><br>
-    in Seconds
-  </h1>
-
-  <p>
-    Generate SEO-friendly titles, descriptions, keywords and categories
-    for your stock images using Gemini 2.5 Flash.
-  </p>
-
-</section>
-
-
-<section class="container">
-
-  <div
-    class="upload-box"
-    id="uploadBox"
-    onclick="openFilePicker()"
-  >
-
-    <div class="upload-icon">🖼️</div>
-
-    <h2>Upload Your Images</h2>
-
-    <p>
-      PNG, JPG, JPEG or WEBP — up to 500 images
-    </p>
-
-    <button
-      class="btn btn-red"
-      onclick="event.stopPropagation();openFilePicker()"
-    >
-      Choose Images
-    </button>
-
-    <div class="upload-info">
-      Images are NOT generated automatically.
-      Click Generate Metadata when ready.
-    </div>
-
-  </div>
-
-
-  <input
-    id="fileInput"
-    class="file-input"
-    type="file"
-    accept="image/png,image/jpeg,image/jpg,image/webp"
-    multiple
-  >
-
-
-  <div class="toolbar">
-
-    <div class="counter" id="counter">
-      0 / 500 images
-    </div>
-
-    <div class="toolbar-right">
-
-      <button
-        class="btn btn-red"
-        id="generateAllBtn"
-        onclick="generateAll()"
-      >
-        ✨ Generate Metadata
-      </button>
-
-      <button
-        class="btn"
-        onclick="exportCSV()"
-      >
-        ⬇ Export CSV
-      </button>
-
-      <button
-        class="btn"
-        onclick="clearAll()"
-      >
-        Clear All
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- FOLDER EXPORT -->
-
-  <div class="export-box">
-
-    <div class="export-title">
-      Image Metadata Export
-    </div>
-
-    <div class="export-row">
-
-      <button
-        class="btn"
-        onclick="selectExportFolder()"
-      >
-        📁 Select Export Folder
-      </button>
-
-      <button
-        class="btn btn-green"
-        id="folderExportBtn"
-        onclick="exportImagesWithMetadata()"
-      >
-        📁 Export Images + Metadata
-      </button>
-
-    </div>
-
-    <div
-      class="export-status"
-      id="exportFolderStatus"
-    >
-      No export folder selected.
-      Folder export embeds metadata directly inside the image.
-    </div>
-
-  </div>
-
-
-  <div id="grid" class="grid"></div>
-
-
-  <div id="emptyState" class="empty">
-
-    <div class="empty-icon">📷</div>
-
-    <h3>No images uploaded</h3>
-
-    <p>
-      Upload images first, then click Generate Metadata.
-    </p>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<footer>
-  StockMeta AI © 2026 — Browser-based AI Stock Metadata Generator
-</footer>
-
-
-<!-- SETTINGS -->
-
-<div
-  class="overlay"
-  id="overlay"
-  onclick="closeSettings()"
-></div>
-
-
-<aside
-  class="settings"
-  id="settings"
->
-
-  <div class="settings-head">
-
-    <h2>Settings</h2>
-
-    <button
-      class="close"
-      onclick="closeSettings()"
-    >
-      ×
-    </button>
-
-  </div>
-
-
-  <div class="settings-body">
-
-    <div class="section">
-
-      <div class="section-title">
-        AI Provider
-      </div>
-
-      <div class="api-box">
-
-        <div class="api-title">
-
-          <strong>
-            Gemini 2.5 Flash
-          </strong>
-
-          <span>
-            ACTIVE
-          </span>
-
-        </div>
-
-
-        <div class="api-help">
-          Add your own Gemini API key.
-          Keys are NOT automatically saved.
-          Click Save API Keys when you want to store them in this browser.
-        </div>
-
-
-        <a
-          class="get-key"
-          href="https://aistudio.google.com/apikey"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          🔑 Get API Key
-        </a>
-
-
-        <div id="apiKeys"></div>
-
-
-        <div class="api-actions">
-
-          <button
-            class="btn"
-            onclick="addApiKey()"
-          >
-            ＋ Add API Key
-          </button>
-
-          <button
-            class="btn btn-green"
-            onclick="testApiKeys()"
-          >
-            🧪 Test
-          </button>
-
-        </div>
-
-
-        <button
-          class="btn btn-red save-api"
-          onclick="saveApiKeys()"
-        >
-          💾 Save API Keys
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="section">
-
-      <div class="section-title">
-        Stock Settings
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Stock Site
-        </label>
-
-        <select id="stockSite">
-
-          <option>
-            Adobe Stock
-          </option>
-
-          <option>
-            Shutterstock
-          </option>
-
-          <option>
-            Freepik
-          </option>
-
-          <option>
-            iStock
-          </option>
-
-          <option>
-            Other
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Title Style
-        </label>
-
-        <select id="titleStyle">
-
-          <option value="SEO">
-            SEO Optimized
-          </option>
-
-          <option value="Simple">
-            Simple
-          </option>
-
-          <option value="Descriptive">
-            Descriptive
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Description Length
-        </label>
-
-        <select id="descriptionLength">
-
-          <option value="Short">
-            Short
-          </option>
-
-          <option value="Medium">
-            Medium
-          </option>
-
-          <option value="Long">
-            Long
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Keyword Count
-        </label>
-
-        <input
-          id="keywordCount"
-          type="number"
-          min="5"
-          max="50"
-          value="35"
-        >
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Custom Instructions
-        </label>
-
-        <textarea
-          id="customInstructions"
-          placeholder="Example: Use commercial stock photography keywords. Avoid duplicate words."
-        ></textarea>
-
-      </div>
-
-
-      <button
-        class="btn btn-red"
-        style="width:100%"
-        onclick="saveSettings()"
-      >
-        💾 Save Settings
-      </button>
-
-    </div>
-
-  </div>
-
-</aside>
-
-
-<!-- EDIT MODAL -->
-
-<div
-  class="modal"
-  id="editModal"
->
-
-  <div class="modal-box">
-
-    <div class="modal-head">
-
-      <strong>
-        Edit Metadata
-      </strong>
-
-      <button
-        class="close"
-        onclick="closeEdit()"
-      >
-        ×
-      </button>
-
-    </div>
-
-
-    <div class="modal-body">
-
-      <div class="field">
-
-        <label>
-          Title
-        </label>
-
-        <input id="editTitle">
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Description
-        </label>
-
-        <textarea id="editDescription"></textarea>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Keywords
-        </label>
-
-        <textarea id="editKeywords"></textarea>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Category
-        </label>
-
-        <input id="editCategory">
-
-      </div>
-
-    </div>
-
-
-    <div class="modal-footer">
-
-      <button
-        class="btn"
-        onclick="closeEdit()"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="btn btn-red"
-        onclick="saveEdit()"
-      >
-        Save Changes
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- SUPPORT -->
-
-<div class="support">
-
-  <div
-    class="support-panel"
-    id="supportPanel"
-  >
-
-    <h3>
-      Need Support?
-    </h3>
-
-    <p>
-      Contact StockMeta AI support directly on WhatsApp.
-    </p>
-
-    <a
-      class="whatsapp"
-      href="https://wa.me/8801968696236?text=Hello%20StockMeta%20AI%20Support"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      💬 WhatsApp Support
-    </a>
-
-  </div>
-
-
-  <button
-    class="support-btn"
-    onclick="toggleSupport()"
-  >
-    💬 Support
-  </button>
-
-</div>
-
-
 <script>
 
 const MODEL = "gemini-2.5-flash";
 
 const MAX_IMAGES = 500;
 
+/*
+  একসাথে সর্বোচ্চ ২টি image
+*/
 const CONCURRENCY = 2;
+
+/*
+  API key cooldown
+  Rate limit হলে অন্তত 20 sec অন্য key ব্যবহার করবে।
+*/
+const KEY_COOLDOWN_MS = 20000;
 
 
 /* =========================
@@ -1228,6 +27,19 @@ let apiKeys = [""];
 let editingIndex = null;
 
 let exportDirectoryHandle = null;
+
+/*
+  API KEY ROTATION STATE
+
+  প্রতিটি key-এর জন্য:
+  busy         = বর্তমানে request চলছে কিনা
+  cooldownUntil = কতক্ষণ পর্যন্ত key ব্যবহার না করা হবে
+  lastUsed     = সর্বশেষ কখন ব্যবহার হয়েছে
+  disabled     = key invalid হলে সাময়িকভাবে বাদ
+*/
+let keyStates = [];
+
+let rotationCursor = 0;
 
 
 /* =========================
@@ -1259,6 +71,8 @@ document.addEventListener(
   () => {
 
     loadSettings();
+
+    syncKeyStates();
 
     renderApiKeys();
 
@@ -1390,7 +204,9 @@ function handleFiles(fileList){
 
       status:"waiting",
 
-      metadata:null
+      metadata:null,
+
+      error:""
 
     });
 
@@ -1539,6 +355,32 @@ function renderCards(){
     }
 
 
+    let errorHTML = "";
+
+
+    if(
+      item.status === "error" &&
+      item.error
+    ){
+
+      errorHTML = `
+
+        <div
+          style="
+            color:#ff7777;
+            font-size:11px;
+            line-height:1.5;
+            margin-top:7px;
+          "
+        >
+          ${escapeHTML(item.error)}
+        </div>
+
+      `;
+
+    }
+
+
     card.innerHTML = `
 
       <img
@@ -1558,6 +400,9 @@ function renderCards(){
         <div class="status ${statusClass}">
           ${getStatusText(item.status)}
         </div>
+
+
+        ${errorHTML}
 
 
         ${metadataHTML}
@@ -1649,11 +494,433 @@ function getStatusText(status){
 }
 
 
+/* =========================================================
+   API KEY ROTATION SYSTEM
+========================================================= */
+
+
+/*
+  API key list পরিবর্তন হলে state sync করবে।
+*/
+function syncKeyStates(){
+
+  const cleanKeys =
+    apiKeys
+      .map(k => k.trim())
+      .filter(Boolean);
+
+
+  const oldStates =
+    keyStates.slice();
+
+
+  keyStates =
+    cleanKeys.map(
+      (key,index) => {
+
+        const old =
+          oldStates[index];
+
+
+        return {
+
+          key,
+
+          busy:
+            old?.busy || 0,
+
+          cooldownUntil:
+            old?.cooldownUntil || 0,
+
+          lastUsed:
+            old?.lastUsed || 0,
+
+          disabled:
+            old?.disabled || false
+
+        };
+
+      }
+    );
+
+
+  if(
+    rotationCursor >= keyStates.length
+  ){
+
+    rotationCursor = 0;
+
+  }
+
+}
+
+
+/*
+  Available key খুঁজে বের করবে।
+
+  যে key:
+  - busy না
+  - cooldown-এ নেই
+  - disabled না
+
+  তার মধ্যে rotation অনুযায়ী ব্যবহার করবে।
+*/
+function acquireApiKey(excluded = new Set()){
+
+  syncKeyStates();
+
+
+  const now =
+    Date.now();
+
+
+  if(!keyStates.length){
+
+    return null;
+
+  }
+
+
+  for(
+    let i = 0;
+    i < keyStates.length;
+    i++
+  ){
+
+    const index =
+      (
+        rotationCursor + i
+      ) %
+      keyStates.length;
+
+
+    const state =
+      keyStates[index];
+
+
+    if(!state)
+      continue;
+
+
+    if(
+      excluded.has(index)
+    )
+      continue;
+
+
+    if(
+      state.busy > 0
+    )
+      continue;
+
+
+    if(
+      state.disabled
+    )
+      continue;
+
+
+    if(
+      state.cooldownUntil > now
+    )
+      continue;
+
+
+    state.busy++;
+
+    state.lastUsed =
+      now;
+
+
+    rotationCursor =
+      (
+        index + 1
+      ) %
+      keyStates.length;
+
+
+    return {
+
+      index,
+
+      key:
+        state.key
+
+    };
+
+  }
+
+
+  return null;
+
+}
+
+
+/*
+  Request শেষ হলে key release করবে।
+*/
+function releaseApiKey(index){
+
+  const state =
+    keyStates[index];
+
+
+  if(!state)
+    return;
+
+
+  state.busy =
+    Math.max(
+      0,
+      state.busy - 1
+    );
+
+}
+
+
+/*
+  Rate limit / temporary server error হলে
+  key-কে কিছু সময় cooldown-এ রাখবে।
+*/
+function cooldownApiKey(
+  index,
+  milliseconds = KEY_COOLDOWN_MS
+){
+
+  const state =
+    keyStates[index];
+
+
+  if(!state)
+    return;
+
+
+  state.cooldownUntil =
+    Date.now() +
+    milliseconds;
+
+}
+
+
+/*
+  Invalid API key হলে সাময়িকভাবে disable।
+*/
+function disableApiKey(index){
+
+  const state =
+    keyStates[index];
+
+
+  if(!state)
+    return;
+
+
+  state.disabled = true;
+
+}
+
+
+/*
+  API key-এর error দেখে সিদ্ধান্ত।
+*/
+function handleApiKeyError(
+  index,
+  error
+){
+
+  const message =
+    String(
+      error?.message || ""
+    ).toLowerCase();
+
+
+  /*
+    429 = Too Many Requests
+    quota / resource exhausted
+  */
+  if(
+    message.includes("429") ||
+    message.includes("quota") ||
+    message.includes("resource_exhausted") ||
+    message.includes("rate limit")
+  ){
+
+    cooldownApiKey(
+      index,
+      KEY_COOLDOWN_MS
+    );
+
+    return;
+
+  }
+
+
+  /*
+    503 = overloaded
+    500 = temporary server error
+  */
+  if(
+    message.includes("503") ||
+    message.includes("500") ||
+    message.includes("overloaded")
+  ){
+
+    cooldownApiKey(
+      index,
+      15000
+    );
+
+    return;
+
+  }
+
+
+  /*
+    400/401/403 সাধারণত key/configuration
+    problem হতে পারে।
+
+    403 হলে permanent delete করছি না,
+    শুধু কিছু সময়ের জন্য disable করছি।
+  */
+  if(
+    message.includes("401") ||
+    message.includes("403") ||
+    message.includes("api key")
+  ){
+
+    const state =
+      keyStates[index];
+
+
+    if(state){
+
+      state.disabled =
+        true;
+
+    }
+
+  }
+
+}
+
+
+/*
+  সব key busy/cooldown হলে
+  সবচেয়ে কাছের available key পর্যন্ত wait করবে।
+*/
+async function waitForAvailableKey(){
+
+  while(true){
+
+    const keys =
+      getSessionKeys();
+
+
+    if(!keys.length)
+      return null;
+
+
+    const available =
+      acquireApiKey();
+
+
+    if(available)
+      return available;
+
+
+    const now =
+      Date.now();
+
+
+    let waitTime =
+      3000;
+
+
+    const futureTimes =
+      keyStates
+        .filter(
+          state =>
+            !state.disabled &&
+            state.cooldownUntil > now &&
+            state.busy === 0
+        )
+        .map(
+          state =>
+            state.cooldownUntil
+        );
+
+
+    if(futureTimes.length){
+
+      const earliest =
+        Math.min(
+          ...futureTimes
+        );
+
+
+      waitTime =
+        Math.max(
+          1000,
+          Math.min(
+            5000,
+            earliest - now
+          )
+        );
+
+    }
+
+
+    /*
+      যদি সব key disabled হয়ে যায়
+    */
+    const usable =
+      keyStates.some(
+        state =>
+          !state.disabled
+      );
+
+
+    if(!usable){
+
+      return null;
+
+    }
+
+
+    await sleep(
+      waitTime
+    );
+
+  }
+
+}
+
+
+/* =========================
+   SLEEP
+========================= */
+
+function sleep(ms){
+
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        ms
+      )
+  );
+
+}
+
+
 /* =========================
    GEMINI API
 ========================= */
 
-async function callGemini(file,key){
+async function callGemini(
+  file,
+  key
+){
 
   const base64 =
     await fileToBase64(file);
@@ -1848,9 +1115,9 @@ ${custom || "None"}
 }
 
 
-/* =========================
+/* =========================================================
    GENERATE ALL
-========================= */
+========================================================= */
 
 async function generateAll(){
 
@@ -1892,12 +1159,20 @@ async function generateAll(){
       )
       .filter(
         x =>
-          x.item.status !== "loading"
+          x.item.status !== "loading" &&
+          !x.item.metadata
       );
 
 
-  if(!pending.length)
+  if(!pending.length){
+
+    alert(
+      "All images already have metadata."
+    );
+
     return;
+
+  }
 
 
   const button =
@@ -1906,13 +1181,24 @@ async function generateAll(){
     );
 
 
-  button.disabled = true;
+  button.disabled =
+    true;
+
 
   button.textContent =
-    "⏳ Generating...";
+    "⏳ Generating 0 / " +
+    pending.length;
+
+
+  let completed =
+    0;
 
 
   try{
+
+    /*
+      সর্বোচ্চ ২টি image একসাথে।
+    */
 
     for(
       let i = 0;
@@ -1932,8 +1218,17 @@ async function generateAll(){
         batch.map(
           x =>
             generateImage(
-              x.index,
-              keys
+              x.index
+            ).finally(
+              () => {
+
+                completed++;
+
+
+                button.textContent =
+                  `⏳ Generating ${completed} / ${pending.length}`;
+
+              }
             )
         )
 
@@ -1943,10 +1238,13 @@ async function generateAll(){
 
   }finally{
 
-    button.disabled = false;
+    button.disabled =
+      false;
+
 
     button.textContent =
       "✨ Generate Metadata";
+
 
     updateUI();
 
@@ -1955,9 +1253,9 @@ async function generateAll(){
 }
 
 
-/* =========================
+/* =========================================================
    GENERATE ONE
-========================= */
+========================================================= */
 
 async function generateOne(index){
 
@@ -1979,8 +1277,7 @@ async function generateOne(index){
 
 
   await generateImage(
-    index,
-    keys
+    index
   );
 
 
@@ -1989,14 +1286,11 @@ async function generateOne(index){
 }
 
 
-/* =========================
+/* =========================================================
    GENERATE IMAGE
-========================= */
+========================================================= */
 
-async function generateImage(
-  index,
-  keys
-){
+async function generateImage(index){
 
   const item =
     images[index];
@@ -2010,20 +1304,78 @@ async function generateImage(
     "loading";
 
 
+  item.error =
+    "";
+
+
   renderCards();
 
 
-  let lastError = null;
+  const keys =
+    getSessionKeys();
 
 
-  for(const key of keys){
+  if(!keys.length){
+
+    item.status =
+      "error";
+
+    item.error =
+      "No API keys available.";
+
+    renderCards();
+
+    return;
+
+  }
+
+
+  /*
+    এই image-এর জন্য কোন key ইতিমধ্যে
+    চেষ্টা করা হয়েছে।
+  */
+  const attempted =
+    new Set();
+
+
+  let lastError =
+    null;
+
+
+  /*
+    সর্বোচ্চ প্রতিটি available key
+    একবার করে চেষ্টা করবে।
+  */
+  for(
+    let attempt = 0;
+    attempt < keys.length;
+    attempt++
+  ){
+
+    let acquired =
+      await waitForSpecificAvailableKey(
+        attempted
+      );
+
+
+    if(!acquired){
+
+      break;
+
+    }
+
+
+    attempted.add(
+      acquired.index
+    );
+
 
     try{
 
       const metadata =
         await callGemini(
           item.file,
-          key
+          acquired.key
         );
 
 
@@ -2037,6 +1389,15 @@ async function generateImage(
         "success";
 
 
+      item.error =
+        "";
+
+
+      releaseApiKey(
+        acquired.index
+      );
+
+
       renderCards();
 
       return;
@@ -2046,15 +1407,34 @@ async function generateImage(
       lastError =
         error;
 
+
       console.warn(
-        "Gemini key failed:",
+        `Gemini API key #${acquired.index + 1} failed:`,
         error
       );
+
+
+      handleApiKeyError(
+        acquired.index,
+        error
+      );
+
+
+      releaseApiKey(
+        acquired.index
+      );
+
+
+      renderCards();
 
     }
 
   }
 
+
+  /*
+    সব available key try করেও কাজ হয়নি।
+  */
 
   item.status =
     "error";
@@ -2064,19 +1444,232 @@ async function generateImage(
     null;
 
 
+  item.error =
+    getFriendlyApiError(
+      lastError
+    );
+
+
   renderCards();
 
+}
 
-  console.error(
-    lastError
-  );
+
+/*
+  নির্দিষ্ট image-এর জন্য এমন key খুঁজবে
+  যেটা আগে চেষ্টা করা হয়নি।
+*/
+async function waitForSpecificAvailableKey(
+  attempted
+){
+
+  while(true){
+
+    syncKeyStates();
+
+
+    const now =
+      Date.now();
+
+
+    /*
+      Rotation cursor থেকে search।
+    */
+    for(
+      let i = 0;
+      i < keyStates.length;
+      i++
+    ){
+
+      const index =
+        (
+          rotationCursor + i
+        ) %
+        keyStates.length;
+
+
+      const state =
+        keyStates[index];
+
+
+      if(!state)
+        continue;
+
+
+      if(
+        attempted.has(index)
+      )
+        continue;
+
+
+      if(
+        state.busy > 0
+      )
+        continue;
+
+
+      if(
+        state.disabled
+      )
+        continue;
+
+
+      if(
+        state.cooldownUntil > now
+      )
+        continue;
+
+
+      state.busy++;
+
+
+      state.lastUsed =
+        now;
+
+
+      rotationCursor =
+        (
+          index + 1
+        ) %
+        keyStates.length;
+
+
+      return {
+
+        index,
+
+        key:
+          state.key
+
+      };
+
+    }
+
+
+    /*
+      নতুন key নেই।
+    */
+    const remaining =
+      keyStates.some(
+        (state,index) =>
+          !attempted.has(index) &&
+          !state.disabled
+      );
+
+
+    if(!remaining){
+
+      return null;
+
+    }
+
+
+    /*
+      Cooldown শেষ হওয়া পর্যন্ত
+      অল্প অল্প করে wait।
+    */
+
+    let waitTime =
+      1000;
+
+
+    const future =
+      keyStates
+        .filter(
+          (state,index) =>
+            !attempted.has(index) &&
+            !state.disabled &&
+            state.cooldownUntil > now
+        )
+        .map(
+          state =>
+            state.cooldownUntil
+        );
+
+
+    if(future.length){
+
+      waitTime =
+        Math.max(
+          1000,
+          Math.min(
+            5000,
+            Math.min(...future) - now
+          )
+        );
+
+    }
+
+
+    await sleep(
+      waitTime
+    );
+
+  }
 
 }
 
 
 /* =========================
-   TEST API KEYS
+   FRIENDLY API ERROR
 ========================= */
+
+function getFriendlyApiError(
+  error
+){
+
+  if(!error)
+    return "All API keys failed.";
+
+
+  const message =
+    String(
+      error.message || ""
+    );
+
+
+  if(
+    message.includes("429") ||
+    message.toLowerCase().includes("quota") ||
+    message.toLowerCase().includes("resource_exhausted")
+  ){
+
+    return "All available API keys reached their current rate/quota limit.";
+
+  }
+
+
+  if(
+    message.includes("403") ||
+    message.includes("401")
+  ){
+
+    return "All available API keys were rejected. Check your API keys.";
+
+  }
+
+
+  if(
+    message.includes("503") ||
+    message.includes("500")
+  ){
+
+    return "Gemini server is temporarily unavailable.";
+
+  }
+
+
+  return message.substring(
+    0,
+    300
+  );
+
+}
+
+
+/* =========================================================
+   TEST API KEYS
+========================================================= */
 
 async function testApiKeys(){
 
@@ -2095,94 +1688,128 @@ async function testApiKeys(){
   }
 
 
-  const testKey =
-    keys[0];
+  let working =
+    0;
 
 
-  try{
+  let failed =
+    0;
 
-    const response =
-      await fetch(
 
-        `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${encodeURIComponent(testKey)}`,
+  const results = [];
 
-        {
 
-          method:"POST",
+  for(
+    let i = 0;
+    i < keys.length;
+    i++
+  ){
 
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
+    try{
 
-          body:JSON.stringify({
+      const response =
+        await fetch(
 
-            contents:[
+          `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${encodeURIComponent(keys[i])}`,
 
-              {
+          {
 
-                parts:[
+            method:"POST",
 
-                  {
-                    text:
-                      "Reply with exactly: OK"
-                  }
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
 
-                ]
+            body:JSON.stringify({
 
-              }
+              contents:[
 
-            ]
+                {
 
-          })
+                  parts:[
 
-        }
+                    {
+                      text:
+                        "Reply with exactly: OK"
+                    }
 
+                  ]
+
+                }
+
+              ]
+
+            })
+
+          }
+
+        );
+
+
+      if(!response.ok){
+
+        throw new Error(
+          `API ${response.status}`
+        );
+
+      }
+
+
+      working++;
+
+      results.push(
+        `Key ${i + 1}: ✓ Working`
       );
 
 
-    if(!response.ok){
+    }catch(error){
 
-      throw new Error(
-        `API ${response.status}`
+      failed++;
+
+      results.push(
+        `Key ${i + 1}: ✕ ${error.message}`
       );
 
     }
 
-
-    alert(
-      "✓ Gemini 2.5 Flash API key is working.\n\nThe key has NOT been saved automatically."
-    );
-
-
-  }catch(error){
-
-    alert(
-      "✕ API key test failed.\n\n" +
-      error.message
-    );
-
   }
+
+
+  alert(
+
+    `API Key Test Complete\n\n` +
+
+    `✓ Working: ${working}\n` +
+
+    `✕ Failed: ${failed}\n\n` +
+
+    results.join("\n")
+
+  );
 
 }
 
 
-/* =========================
-   API KEY MEMORY
-========================= */
+/* =========================================================
+   GET SESSION KEYS
+========================================================= */
 
 function getSessionKeys(){
 
   return apiKeys
-    .map(k => k.trim())
+    .map(
+      k =>
+        String(k || "").trim()
+    )
     .filter(Boolean);
 
 }
 
 
-/* =========================
+/* =========================================================
    API KEY UI
-========================= */
+========================================================= */
 
 function renderApiKeys(){
 
@@ -2194,6 +1821,12 @@ function renderApiKeys(){
 
   container.innerHTML = "";
 
+
+  /*
+    Unlimited API keys.
+    যতগুলো apiKeys array-তে আছে
+    সবগুলো render হবে।
+  */
 
   apiKeys.forEach(
     (key,index) => {
@@ -2235,6 +1868,30 @@ function renderApiKeys(){
     }
   );
 
+
+  /*
+    কতগুলো key আছে সেটা দেখাবে।
+  */
+
+  const count =
+    getSessionKeys().length;
+
+
+  const title =
+    document.querySelector(
+      ".api-title span"
+    );
+
+
+  if(title){
+
+    title.textContent =
+      count
+        ? `${count} KEY${count > 1 ? "S" : ""} ACTIVE`
+        : "NO KEY";
+
+  }
+
 }
 
 
@@ -2250,6 +1907,9 @@ function updateApiKey(
   apiKeys[index] =
     value;
 
+
+  syncKeyStates();
+
 }
 
 
@@ -2259,9 +1919,41 @@ function updateApiKey(
 
 function addApiKey(){
 
+  /*
+    কোনো fixed limit নেই।
+  */
+
   apiKeys.push("");
 
+
   renderApiKeys();
+
+
+  /*
+    নতুন field-এ focus।
+  */
+
+  setTimeout(
+    () => {
+
+      const inputs =
+        document.querySelectorAll(
+          "#apiKeys input"
+        );
+
+
+      const last =
+        inputs[
+          inputs.length - 1
+        ];
+
+
+      if(last)
+        last.focus();
+
+    },
+    50
+  );
 
 }
 
@@ -2272,36 +1964,52 @@ function addApiKey(){
 
 function removeApiKey(index){
 
-  if(apiKeys.length === 1){
+  if(
+    index < 0 ||
+    index >= apiKeys.length
+  )
+    return;
 
-    apiKeys[0] = "";
 
-  }else{
+  apiKeys.splice(
+    index,
+    1
+  );
 
-    apiKeys.splice(
-      index,
-      1
-    );
+
+  if(!apiKeys.length){
+
+    apiKeys =
+      [""];
 
   }
 
+
+  syncKeyStates();
 
   renderApiKeys();
 
 }
 
 
-/* =========================
+/* =========================================================
    MANUAL SAVE API KEYS
-========================= */
+========================================================= */
 
 function saveApiKeys(){
 
   const clean =
     apiKeys
-      .map(k => k.trim())
+      .map(
+        k =>
+          String(k || "").trim()
+      )
       .filter(Boolean);
 
+
+  /*
+    এই জায়গাতেই শুধু API key localStorage-এ save হবে।
+  */
 
   localStorage.setItem(
     "stockmeta_gemini25_keys",
@@ -2315,19 +2023,33 @@ function saveApiKeys(){
       : [""];
 
 
+  keyStates =
+    [];
+
+
+  rotationCursor =
+    0;
+
+
+  syncKeyStates();
+
   renderApiKeys();
 
 
   alert(
-    "✓ Gemini 2.5 Flash API keys saved successfully."
+
+    `✓ ${clean.length} API key(s) saved successfully.\n\n` +
+
+    `Automatic rotation is active.`
+
   );
 
 }
 
 
-/* =========================
+/* =========================================================
    LOAD SETTINGS
-========================= */
+========================================================= */
 
 function loadSettings(){
 
@@ -2349,7 +2071,12 @@ function loadSettings(){
     ){
 
       apiKeys =
-        savedKeys;
+        savedKeys
+          .map(
+            key =>
+              String(key || "")
+          )
+          .filter(Boolean);
 
     }else{
 
@@ -2424,9 +2151,9 @@ function loadSettings(){
 }
 
 
-/* =========================
+/* =========================================================
    SAVE SETTINGS
-========================= */
+========================================================= */
 
 function saveSettings(){
 
@@ -2473,9 +2200,9 @@ function saveSettings(){
 }
 
 
-/* =========================
+/* =========================================================
    SETTINGS PANEL
-========================= */
+========================================================= */
 
 function openSettings(){
 
@@ -2505,9 +2232,9 @@ function closeSettings(){
 }
 
 
-/* =========================
+/* =========================================================
    EDIT METADATA
-========================= */
+========================================================= */
 
 function editMetadata(index){
 
@@ -2581,7 +2308,10 @@ function saveEdit(){
       )
       .value
       .split(",")
-      .map(k => k.trim())
+      .map(
+        k =>
+          k.trim()
+      )
       .filter(Boolean);
 
 
@@ -2623,9 +2353,9 @@ function saveEdit(){
 }
 
 
-/* =========================
+/* =========================================================
    COPY METADATA
-========================= */
+========================================================= */
 
 async function copyMetadata(index){
 
@@ -2658,6 +2388,7 @@ ${m.category}`;
       text
     );
 
+
     alert(
       "✓ Metadata copied."
     );
@@ -2673,9 +2404,9 @@ ${m.category}`;
 }
 
 
-/* =========================
+/* =========================================================
    REMOVE IMAGE
-========================= */
+========================================================= */
 
 function removeImage(index){
 
@@ -2699,9 +2430,9 @@ function removeImage(index){
 }
 
 
-/* =========================
+/* =========================================================
    CLEAR ALL
-========================= */
+========================================================= */
 
 function clearAll(){
 
@@ -2742,7 +2473,6 @@ function clearAll(){
 
 /* =========================================================
    CSV EXPORT
-   আগের CSV Export সম্পূর্ণ রাখা হয়েছে
 ========================================================= */
 
 function exportCSV(){
@@ -2853,6 +2583,7 @@ function exportCSV(){
 
   a.remove();
 
+
   URL.revokeObjectURL(
     url
   );
@@ -2883,14 +2614,6 @@ function csvEscape(value){
 /* =========================================================
    FOLDER EXPORT
 ========================================================= */
-
-
-/*
-  User clicks this button and manually
-  selects Desktop/new folder.
-
-  Browser permission is required.
-*/
 
 async function selectExportFolder(){
 
@@ -2979,9 +2702,9 @@ function escapeXML(value){
 }
 
 
-/* =========================
+/* =========================================================
    XMP METADATA
-========================= */
+========================================================= */
 
 function createXMP(metadata){
 
@@ -3051,6 +2774,10 @@ ${keywordXML}
 <photoshop:Category>
 ${category}
 </photoshop:Category>
+
+<xmp:CreatorTool>
+StockMeta AI
+</xmp:CreatorTool>
 
 </rdf:Description>
 
@@ -3186,7 +2913,7 @@ function embedXMPIntoJPEG(
 
 
 /* =========================================================
-   PNG XMP
+   PNG
 ========================================================= */
 
 function crc32(bytes){
@@ -3321,15 +3048,99 @@ function embedXMPIntoPNG(
     );
 
 
-  const xmpText =
-    "XML:com.adobe.xmp\0" +
-    xmp;
+  const expectedSignature =
+    new Uint8Array([
+      137,80,78,71,
+      13,10,26,10
+    ]);
+
+
+  for(
+    let i = 0;
+    i < 8;
+    i++
+  ){
+
+    if(
+      signature[i] !==
+      expectedSignature[i]
+    ){
+
+      throw new Error(
+        "Invalid PNG file."
+      );
+
+    }
+
+  }
+
+
+  /*
+    Correct PNG iTXt format:
+    keyword + null +
+    compression flag +
+    compression method +
+    language tag + null +
+    translated keyword + null +
+    XMP
+  */
+
+  const keyword =
+    new TextEncoder().encode(
+      "XML:com.adobe.xmp"
+    );
+
+
+  const xmpBytes =
+    new TextEncoder().encode(
+      xmp
+    );
 
 
   const xmpData =
-    new TextEncoder().encode(
-      xmpText
+    new Uint8Array(
+      keyword.length +
+      1 +
+      1 +
+      1 +
+      1 +
+      1 +
+      xmpBytes.length
     );
+
+
+  let offset = 0;
+
+
+  xmpData.set(
+    keyword,
+    offset
+  );
+
+  offset +=
+    keyword.length;
+
+
+  xmpData[offset++] =
+    0;
+
+
+  xmpData[offset++] =
+    0;
+
+
+  xmpData[offset++] =
+    0;
+
+
+  xmpData[offset++] =
+    0;
+
+
+  xmpData.set(
+    xmpBytes,
+    offset
+  );
 
 
   const chunk =
@@ -3362,7 +3173,9 @@ function embedXMPIntoPNG(
 
 
     const length =
-      view.getUint32(0);
+      view.getUint32(
+        0
+      );
 
 
     const type =
@@ -3583,22 +3396,20 @@ function embedXMPIntoWEBP(
 
 
 /* =========================================================
-   CREATE IMAGE WITH EMBEDDED METADATA
+   IMAGE WITH METADATA
 ========================================================= */
 
-async function createImageWithMetadata(item){
+async function createImageWithMetadata(
+  item
+){
 
   const originalBuffer =
     await item.file.arrayBuffer();
 
 
-  const metadata =
-    item.metadata;
-
-
   const xmp =
     createXMP(
-      metadata
+      item.metadata
     );
 
 
@@ -3684,7 +3495,80 @@ async function createImageWithMetadata(item){
 
 
 /* =========================================================
-   EXPORT IMAGES + EMBEDDED METADATA
+   UNIQUE FILE NAME
+========================================================= */
+
+async function getUniqueFileName(
+  directory,
+  originalName
+){
+
+  const dot =
+    originalName.lastIndexOf(".");
+
+
+  const extension =
+    dot >= 0
+      ? originalName.slice(dot)
+      : "";
+
+
+  const base =
+    dot >= 0
+      ? originalName.slice(
+          0,
+          dot
+        )
+      : originalName;
+
+
+  let candidate =
+    originalName;
+
+
+  let number =
+    1;
+
+
+  while(true){
+
+    try{
+
+      await directory.getFileHandle(
+        candidate
+      );
+
+
+      candidate =
+        `${base} (${number})${extension}`;
+
+
+      number++;
+
+
+    }catch(error){
+
+      if(
+        error.name ===
+        "NotFoundError"
+      ){
+
+        return candidate;
+
+      }
+
+
+      throw error;
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   EXPORT IMAGES + METADATA
 ========================================================= */
 
 async function exportImagesWithMetadata(){
@@ -3763,9 +3647,16 @@ async function exportImagesWithMetadata(){
         );
 
 
+      const fileName =
+        await getUniqueFileName(
+          exportDirectoryHandle,
+          item.name
+        );
+
+
       const fileHandle =
         await exportDirectoryHandle.getFileHandle(
-          item.name,
+          fileName,
           {
             create:true
           }
@@ -3789,11 +3680,22 @@ async function exportImagesWithMetadata(){
     }
 
 
+    document.getElementById(
+      "exportFolderStatus"
+    ).textContent =
+      `✓ ${exported} image(s) exported to ${exportDirectoryHandle.name}`;
+
+
     alert(
+
       `✓ Export complete!\n\n` +
+
       `${exported} image(s) exported.\n\n` +
+
       `Title, Description, Keywords and Category ` +
-      `were embedded into the image files.`
+
+      `were embedded inside the image files.`
+
     );
 
 
@@ -4079,6 +3981,3 @@ document.addEventListener(
 );
 
 </script>
-
-</body>
-</html>
