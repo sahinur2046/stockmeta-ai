@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>StockMeta AI</title>
 
 <style>
@@ -14,11 +15,11 @@
 
 :root{
   --bg:#070707;
-  --panel:#101010;
-  --panel2:#151515;
+  --card:#111111;
+  --card2:#151515;
   --border:#292929;
-  --text:#fff;
-  --muted:#999;
+  --text:#ffffff;
+  --muted:#999999;
   --red:#e50914;
   --red2:#ff2631;
   --green:#20c777;
@@ -27,18 +28,26 @@
 body{
   font-family:Inter,Arial,sans-serif;
   background:
-    radial-gradient(circle at top right,rgba(229,9,20,.12),transparent 35%),
+    radial-gradient(circle at 85% 0%,rgba(229,9,20,.14),transparent 32%),
     var(--bg);
   color:var(--text);
   min-height:100vh;
 }
 
-button,input,textarea,select{
+button,
+input,
+textarea,
+select{
   font:inherit;
 }
 
 button{
   cursor:pointer;
+}
+
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
 }
 
 header{
@@ -52,7 +61,7 @@ header{
   top:0;
   z-index:50;
   background:rgba(7,7,7,.94);
-  backdrop-filter:blur(15px);
+  backdrop-filter:blur(16px);
 }
 
 .logo{
@@ -67,15 +76,15 @@ header{
 
 .header-actions{
   display:flex;
-  gap:10px;
+  gap:9px;
 }
 
 .btn{
-  border:1px solid var(--border);
   background:#151515;
-  color:white;
-  border-radius:9px;
+  border:1px solid var(--border);
+  color:#fff;
   padding:10px 15px;
+  border-radius:9px;
   transition:.2s;
 }
 
@@ -109,10 +118,10 @@ header{
 }
 
 .hero h1{
-  font-size:clamp(38px,6vw,72px);
+  font-size:clamp(40px,6vw,72px);
   line-height:1;
-  font-weight:900;
   letter-spacing:-3px;
+  font-weight:900;
 }
 
 .hero h1 span{
@@ -120,20 +129,19 @@ header{
 }
 
 .hero p{
-  color:var(--muted);
-  max-width:650px;
+  max-width:680px;
   margin:20px auto 0;
+  color:var(--muted);
   line-height:1.7;
-  font-size:16px;
 }
 
 .upload-box{
-  margin:25px auto 35px;
+  margin:10px auto 35px;
   border:1px dashed #444;
   border-radius:18px;
-  padding:45px 20px;
-  background:linear-gradient(145deg,#101010,#0b0b0b);
+  padding:48px 20px;
   text-align:center;
+  background:linear-gradient(145deg,#111,#0a0a0a);
   transition:.2s;
 }
 
@@ -144,7 +152,7 @@ header{
 
 .upload-icon{
   font-size:45px;
-  margin-bottom:15px;
+  margin-bottom:12px;
 }
 
 .upload-box h2{
@@ -152,36 +160,36 @@ header{
 }
 
 .upload-box p{
-  color:var(--muted);
+  color:#888;
   margin-bottom:20px;
+}
+
+.file-btn{
+  display:inline-block;
+  padding:12px 20px;
+  background:var(--red);
+  border-radius:9px;
+  font-weight:800;
+  cursor:pointer;
 }
 
 input[type=file]{
   display:none;
 }
 
-.file-btn{
-  display:inline-block;
-  padding:12px 20px;
-  border-radius:9px;
-  background:var(--red);
-  font-weight:700;
-  cursor:pointer;
-}
-
 .info{
+  color:#666;
+  font-size:12px;
   margin-top:15px;
-  color:#777;
-  font-size:13px;
 }
 
 .toolbar{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:12px;
-  margin-bottom:20px;
+  align-items:center;
+  gap:10px;
   flex-wrap:wrap;
+  margin-bottom:20px;
 }
 
 .toolbar-left,
@@ -192,7 +200,7 @@ input[type=file]{
 }
 
 .counter{
-  color:#aaa;
+  color:#999;
   font-size:14px;
 }
 
@@ -204,7 +212,7 @@ input[type=file]{
 }
 
 .card{
-  background:var(--panel);
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:14px;
   overflow:hidden;
@@ -214,9 +222,6 @@ input[type=file]{
   height:210px;
   background:#050505;
   position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
 .preview img{
@@ -227,12 +232,12 @@ input[type=file]{
 
 .status{
   position:absolute;
-  top:10px;
   right:10px;
+  top:10px;
+  padding:5px 9px;
+  border-radius:7px;
   background:#000c;
   border:1px solid #333;
-  border-radius:7px;
-  padding:5px 9px;
   font-size:12px;
 }
 
@@ -249,8 +254,8 @@ input[type=file]{
 }
 
 .filename{
-  font-size:13px;
   color:#777;
+  font-size:13px;
   margin-bottom:12px;
   white-space:nowrap;
   overflow:hidden;
@@ -264,7 +269,7 @@ input[type=file]{
 .field label{
   display:block;
   color:#777;
-  font-size:11px;
+  font-size:10px;
   text-transform:uppercase;
   margin-bottom:5px;
 }
@@ -276,7 +281,7 @@ input[type=file]{
   border-radius:7px;
   font-size:13px;
   line-height:1.5;
-  max-height:75px;
+  max-height:80px;
   overflow:auto;
 }
 
@@ -287,13 +292,11 @@ input[type=file]{
 .card-actions{
   display:flex;
   gap:7px;
-  margin-top:13px;
 }
 
 .card-actions button{
   flex:1;
   font-size:12px;
-  padding:8px;
 }
 
 .empty{
@@ -303,11 +306,22 @@ input[type=file]{
   display:none;
 }
 
-/* Settings */
+footer{
+  border-top:1px solid var(--border);
+  padding:25px;
+  text-align:center;
+  color:#555;
+  font-size:13px;
+}
+
+/* =====================
+   OVERLAY
+===================== */
+
 .overlay{
   position:fixed;
   inset:0;
-  background:#0009;
+  background:#000b;
   z-index:80;
   display:none;
 }
@@ -316,17 +330,21 @@ input[type=file]{
   display:block;
 }
 
+/* =====================
+   SETTINGS
+===================== */
+
 .settings{
   position:fixed;
-  right:-430px;
+  right:-450px;
   top:0;
-  width:min(410px,92%);
+  width:min(430px,94%);
   height:100%;
   background:#101010;
   border-left:1px solid #292929;
   z-index:90;
   padding:25px;
-  overflow:auto;
+  overflow-y:auto;
   transition:.3s;
 }
 
@@ -336,48 +354,87 @@ input[type=file]{
 
 .settings-head{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
   margin-bottom:25px;
 }
 
-.settings h2{
-  font-size:22px;
+.settings-head h2{
+  font-size:23px;
 }
 
 .close{
   background:none;
   border:0;
-  color:white;
-  font-size:25px;
+  color:#fff;
+  font-size:26px;
 }
 
-.setting-group{
-  margin-bottom:22px;
-}
+/* GEMINI BOX */
 
-.setting-group label{
-  display:block;
-  font-size:13px;
-  color:#aaa;
-  margin-bottom:7px;
-}
-
-.setting-group input,
-.setting-group select,
-.setting-group textarea{
-  width:100%;
-  background:#080808;
+.gemini-box{
+  background:
+    linear-gradient(145deg,#171717,#0d0d0d);
   border:1px solid #303030;
-  color:white;
-  border-radius:8px;
-  padding:11px;
-  outline:none;
+  border-radius:13px;
+  padding:16px;
+  margin-bottom:24px;
 }
 
-.setting-group textarea{
-  min-height:90px;
-  resize:vertical;
+.gemini-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:5px;
+}
+
+.gemini-icon{
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  background:#202020;
+  font-size:19px;
+}
+
+.gemini-title h3{
+  font-size:17px;
+}
+
+.gemini-subtitle{
+  color:#777;
+  font-size:12px;
+  margin-bottom:16px;
+}
+
+.get-key{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:7px;
+  text-decoration:none;
+  background:#202020;
+  border:1px solid #383838;
+  color:#fff;
+  border-radius:8px;
+  padding:10px;
+  margin-bottom:15px;
+  font-size:13px;
+  font-weight:700;
+}
+
+.get-key:hover{
+  border-color:#666;
+  background:#262626;
+}
+
+.setting-label{
+  display:block;
+  color:#aaa;
+  font-size:12px;
+  margin-bottom:7px;
 }
 
 .api-row{
@@ -390,12 +447,29 @@ input[type=file]{
   flex:1;
 }
 
+.setting-input,
+.setting-select,
+.setting-textarea{
+  width:100%;
+  background:#080808;
+  border:1px solid #303030;
+  color:white;
+  border-radius:8px;
+  padding:11px;
+  outline:none;
+}
+
+.setting-textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
 .remove-key{
   width:40px;
+  border-radius:7px;
   background:#241010;
   color:#ff6570;
   border:1px solid #432020;
-  border-radius:7px;
 }
 
 .api-actions{
@@ -403,18 +477,25 @@ input[type=file]{
   gap:7px;
 }
 
-.small{
-  font-size:12px;
+.small-note{
   color:#666;
+  font-size:11px;
   line-height:1.5;
-  margin-top:7px;
+  margin-top:9px;
 }
 
-/* Modal */
+.setting-group{
+  margin-bottom:20px;
+}
+
+/* =====================
+   EDIT MODAL
+===================== */
+
 .modal{
   position:fixed;
   inset:0;
-  background:#000b;
+  background:#000c;
   z-index:100;
   display:none;
   align-items:center;
@@ -436,15 +517,16 @@ input[type=file]{
 
 .modal-head{
   display:flex;
+  align-items:center;
   justify-content:space-between;
   margin-bottom:18px;
 }
 
-.modal textarea,
-.modal input{
+.modal input,
+.modal textarea{
   width:100%;
   background:#080808;
-  color:white;
+  color:#fff;
   border:1px solid #333;
   border-radius:8px;
   padding:11px;
@@ -458,11 +540,14 @@ input[type=file]{
 
 .modal-actions{
   display:flex;
-  gap:8px;
   justify-content:flex-end;
+  gap:8px;
 }
 
-/* Support */
+/* =====================
+   SUPPORT
+===================== */
+
 .support{
   position:fixed;
   right:22px;
@@ -471,29 +556,26 @@ input[type=file]{
 }
 
 .support-btn{
-  display:flex;
-  align-items:center;
-  gap:9px;
   border:0;
   background:#20c777;
   color:white;
   padding:12px 17px;
   border-radius:30px;
   font-weight:800;
-  box-shadow:0 8px 30px #0008;
+  box-shadow:0 8px 30px #0009;
 }
 
 .support-panel{
   position:absolute;
   right:0;
   bottom:58px;
-  width:280px;
+  width:285px;
   background:#111;
   border:1px solid #303030;
   border-radius:14px;
   padding:18px;
-  display:none;
   box-shadow:0 15px 50px #000b;
+  display:none;
 }
 
 .support-panel.show{
@@ -514,33 +596,22 @@ input[type=file]{
 .whatsapp{
   display:block;
   text-align:center;
-  background:#20c777;
-  color:white;
   text-decoration:none;
+  background:#20c777;
+  color:#fff;
   padding:11px;
   border-radius:8px;
-  font-weight:700;
+  font-weight:800;
 }
 
-footer{
-  border-top:1px solid var(--border);
-  padding:25px;
-  text-align:center;
-  color:#555;
-  font-size:13px;
-}
-
-.loading{
-  animation:pulse 1.3s infinite;
-}
-
-@keyframes pulse{
-  50%{opacity:.45}
-}
+/* =====================
+   RESPONSIVE
+===================== */
 
 @media(max-width:600px){
+
   header{
-    padding:0 15px;
+    padding:0 14px;
   }
 
   .logo{
@@ -572,33 +643,77 @@ footer{
 </style>
 </head>
 
+
 <body>
 
+
+<!-- =====================
+     HEADER
+===================== -->
+
 <header>
-  <div class="logo">StockMeta<span> AI</span></div>
+
+  <div class="logo">
+    StockMeta<span> AI</span>
+  </div>
 
   <div class="header-actions">
-    <button class="btn" onclick="openSettings()">⚙ Settings</button>
-    <button class="btn btn-red" onclick="document.getElementById('fileInput').click()">
+
+    <button class="btn" onclick="openSettings()">
+      ⚙ Settings
+    </button>
+
+    <button
+      class="btn btn-red"
+      onclick="document.getElementById('fileInput').click()"
+    >
       + Upload
     </button>
+
   </div>
+
 </header>
+
 
 <main class="container">
 
+
+<!-- =====================
+     HERO
+===================== -->
+
 <section class="hero">
-  <h1>Generate <span>Stock Metadata</span><br>with AI</h1>
+
+  <h1>
+    Generate <span>Stock Metadata</span><br>
+    with AI
+  </h1>
+
   <p>
-    Upload your stock images and automatically generate professional
-    titles, descriptions, keywords and categories.
+    Upload your stock images and automatically generate
+    professional titles, descriptions, keywords and categories.
   </p>
+
 </section>
 
+
+<!-- =====================
+     UPLOAD
+===================== -->
+
 <section class="upload-box" id="dropZone">
-  <div class="upload-icon">🖼️</div>
-  <h2>Drop your images here</h2>
-  <p>PNG, JPG, JPEG or WEBP • Up to 15 images</p>
+
+  <div class="upload-icon">
+    🖼️
+  </div>
+
+  <h2>
+    Drop your images here
+  </h2>
+
+  <p>
+    PNG, JPG, JPEG or WEBP • Up to 15 images
+  </p>
 
   <label class="file-btn" for="fileInput">
     Choose Images
@@ -614,42 +729,84 @@ footer{
   <div class="info">
     Images are processed in your browser and are not permanently stored.
   </div>
+
 </section>
 
+
+<!-- =====================
+     TOOLBAR
+===================== -->
+
 <div class="toolbar">
+
   <div class="toolbar-left">
-    <span class="counter" id="counter">0 images</span>
+
+    <span class="counter" id="counter">
+      0 / 15 images
+    </span>
+
   </div>
 
   <div class="toolbar-right">
-    <button class="btn" onclick="exportCSV()">📥 Export CSV</button>
-    <button class="btn" onclick="clearAll()">Clear All</button>
+
+    <button class="btn" onclick="exportCSV()">
+      📥 Export CSV
+    </button>
+
+    <button class="btn" onclick="clearAll()">
+      Clear All
+    </button>
+
   </div>
+
 </div>
+
 
 <div id="grid" class="grid"></div>
 
+
 <div id="empty" class="empty">
-  <h2>No images yet</h2>
-  <p>Upload some images to generate stock metadata.</p>
+
+  <h2>
+    No images yet
+  </h2>
+
+  <p>
+    Upload some images to generate stock metadata.
+  </p>
+
 </div>
+
 
 </main>
 
+
 <footer>
+
   StockMeta AI • AI-powered stock metadata generator
+
 </footer>
 
 
-<!-- SUPPORT -->
+<!-- =====================
+     WHATSAPP SUPPORT
+===================== -->
+
 <div class="support">
 
-  <div class="support-panel" id="supportPanel">
-    <h3>💬 WhatsApp Support</h3>
+  <div
+    class="support-panel"
+    id="supportPanel"
+  >
+
+    <h3>
+      💬 WhatsApp Support
+    </h3>
 
     <p>
-      কোনো সমস্যা হলে বা StockMeta AI নিয়ে সাহায্য দরকার হলে
-      সরাসরি WhatsApp-এ আমার সাথে যোগাযোগ করুন।
+      কোনো সমস্যা হলে বা StockMeta AI নিয়ে
+      সাহায্য দরকার হলে সরাসরি WhatsApp-এ
+      আমাদের সাথে যোগাযোগ করুন।
     </p>
 
     <a
@@ -660,129 +817,333 @@ footer{
     >
       💬 Chat on WhatsApp
     </a>
+
   </div>
 
-  <button class="support-btn" onclick="toggleSupport()">
+  <button
+    class="support-btn"
+    onclick="toggleSupport()"
+  >
     💬 Support
   </button>
 
 </div>
 
 
-<!-- OVERLAY -->
-<div class="overlay" id="overlay" onclick="closeSettings()"></div>
+<!-- =====================
+     OVERLAY
+===================== -->
+
+<div
+  class="overlay"
+  id="overlay"
+  onclick="closeSettings()"
+></div>
 
 
-<!-- SETTINGS -->
-<aside class="settings" id="settings">
+<!-- =====================
+     SETTINGS
+===================== -->
+
+<aside
+  class="settings"
+  id="settings"
+>
 
   <div class="settings-head">
-    <h2>⚙ Settings</h2>
-    <button class="close" onclick="closeSettings()">×</button>
+
+    <h2>
+      ⚙ Settings
+    </h2>
+
+    <button
+      class="close"
+      onclick="closeSettings()"
+    >
+      ×
+    </button>
+
   </div>
 
-  <div class="setting-group">
-    <label>Gemini API Keys</label>
+
+  <!-- GEMINI 2.5 FLASH -->
+
+  <div class="gemini-box">
+
+    <div class="gemini-title">
+
+      <div class="gemini-icon">
+        ✦
+      </div>
+
+      <h3>
+        Gemini 2.5 Flash
+      </h3>
+
+    </div>
+
+    <div class="gemini-subtitle">
+      AI model used to generate your stock metadata.
+    </div>
+
+
+    <a
+      class="get-key"
+      href="https://aistudio.google.com/apikey"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      🔑 Get API Key
+      ↗
+    </a>
+
+
+    <label class="setting-label">
+      Gemini 2.5 Flash API Keys
+    </label>
 
     <div id="apiKeys"></div>
 
+
     <div class="api-actions">
-      <button class="btn" onclick="addApiKey()">+ Add API Key</button>
-      <button class="btn btn-green" onclick="testApiKeys()">Test Keys</button>
+
+      <button
+        class="btn"
+        onclick="addApiKey()"
+      >
+        + Add API Key
+      </button>
+
+      <button
+        class="btn btn-green"
+        onclick="testApiKeys()"
+      >
+        🧪 Test
+      </button>
+
     </div>
 
-    <div class="small">
-      API keys are saved only in this browser using localStorage.
+    <div class="small-note">
+      Add multiple keys if needed. If one key fails,
+      StockMeta AI will automatically try another available key.
     </div>
+
   </div>
 
-  <div class="setting-group">
-    <label>Description Length</label>
 
-    <select id="descriptionLength">
-      <option value="short">Short</option>
-      <option value="medium" selected>Medium</option>
-      <option value="long">Long</option>
+  <!-- DESCRIPTION -->
+
+  <div class="setting-group">
+
+    <label class="setting-label">
+      Description Length
+    </label>
+
+    <select
+      id="descriptionLength"
+      class="setting-select"
+    >
+
+      <option value="short">
+        Short
+      </option>
+
+      <option value="medium" selected>
+        Medium
+      </option>
+
+      <option value="long">
+        Long
+      </option>
+
     </select>
+
   </div>
 
+
+  <!-- KEYWORD COUNT -->
+
   <div class="setting-group">
-    <label>Keyword Count</label>
+
+    <label class="setting-label">
+      Keyword Count
+    </label>
 
     <input
       id="keywordCount"
+      class="setting-input"
       type="number"
       min="5"
       max="50"
       value="35"
     >
+
   </div>
 
-  <div class="setting-group">
-    <label>Title Style</label>
 
-    <select id="titleStyle">
-      <option value="seo" selected>SEO Friendly</option>
-      <option value="simple">Simple</option>
-      <option value="descriptive">Descriptive</option>
+  <!-- TITLE -->
+
+  <div class="setting-group">
+
+    <label class="setting-label">
+      Title Style
+    </label>
+
+    <select
+      id="titleStyle"
+      class="setting-select"
+    >
+
+      <option value="seo" selected>
+        SEO Friendly
+      </option>
+
+      <option value="simple">
+        Simple
+      </option>
+
+      <option value="descriptive">
+        Descriptive
+      </option>
+
     </select>
+
   </div>
 
-  <div class="setting-group">
-    <label>Stock Site</label>
 
-    <select id="stockSite">
-      <option>Adobe Stock</option>
-      <option>Shutterstock</option>
-      <option>Freepik</option>
-      <option>iStock</option>
-      <option>Other</option>
+  <!-- STOCK SITE -->
+
+  <div class="setting-group">
+
+    <label class="setting-label">
+      Stock Site
+    </label>
+
+    <select
+      id="stockSite"
+      class="setting-select"
+    >
+
+      <option>
+        Adobe Stock
+      </option>
+
+      <option>
+        Shutterstock
+      </option>
+
+      <option>
+        Freepik
+      </option>
+
+      <option>
+        iStock
+      </option>
+
+      <option>
+        Other
+      </option>
+
     </select>
+
   </div>
 
+
+  <!-- CUSTOM -->
+
   <div class="setting-group">
-    <label>Custom Instructions</label>
+
+    <label class="setting-label">
+      Custom Instructions
+    </label>
 
     <textarea
       id="customInstructions"
-      placeholder="Example: Avoid unnecessary words, focus on commercial stock keywords..."
+      class="setting-textarea"
+      placeholder="Example: Focus on commercial stock keywords and avoid unnecessary words."
     ></textarea>
+
   </div>
 
-  <button class="btn btn-red" style="width:100%" onclick="saveSettings()">
+
+  <button
+    class="btn btn-red"
+    style="width:100%"
+    onclick="saveSettings()"
+  >
     Save Settings
   </button>
 
 </aside>
 
 
-<!-- EDIT MODAL -->
-<div class="modal" id="editModal">
+<!-- =====================
+     EDIT MODAL
+===================== -->
+
+<div
+  class="modal"
+  id="editModal"
+>
 
   <div class="modal-box">
 
     <div class="modal-head">
-      <h2>Edit Metadata</h2>
-      <button class="close" onclick="closeEdit()">×</button>
+
+      <h2>
+        Edit Metadata
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeEdit()"
+      >
+        ×
+      </button>
+
     </div>
 
-    <input id="editTitle" placeholder="Title">
+
+    <input
+      id="editTitle"
+      placeholder="Title"
+    >
+
 
     <textarea
       id="editDescription"
       placeholder="Description"
     ></textarea>
 
+
     <textarea
       id="editKeywords"
       placeholder="Keywords separated by commas"
     ></textarea>
 
-    <input id="editCategory" placeholder="Category">
+
+    <input
+      id="editCategory"
+      placeholder="Category"
+    >
+
 
     <div class="modal-actions">
-      <button class="btn" onclick="closeEdit()">Cancel</button>
-      <button class="btn btn-red" onclick="saveEdit()">Save Changes</button>
+
+      <button
+        class="btn"
+        onclick="closeEdit()"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="btn btn-red"
+        onclick="saveEdit()"
+      >
+        Save Changes
+      </button>
+
     </div>
 
   </div>
@@ -792,118 +1153,227 @@ footer{
 
 <script>
 
+/* =========================
+   CONFIG
+========================= */
+
 const MODEL = "gemini-2.5-flash";
+
 const MAX_IMAGES = 15;
+
 const CONCURRENCY = 3;
 
+
+/* =========================
+   GLOBAL STATE
+========================= */
+
 let images = [];
+
 let apiKeys = [];
+
 let editingIndex = -1;
 
 
 /* =========================
-   STORAGE
+   SETTINGS
 ========================= */
 
 function loadSettings(){
 
   apiKeys = JSON.parse(
-    localStorage.getItem("stockmeta_api_keys") || "[]"
+    localStorage.getItem("stockmeta_gemini25_keys") || "[]"
   );
 
   if(!apiKeys.length){
+
     apiKeys = [""];
+
   }
 
+
   document.getElementById("descriptionLength").value =
-    localStorage.getItem("stockmeta_description_length") || "medium";
+    localStorage.getItem(
+      "stockmeta_description_length"
+    ) || "medium";
+
 
   document.getElementById("keywordCount").value =
-    localStorage.getItem("stockmeta_keyword_count") || "35";
+    localStorage.getItem(
+      "stockmeta_keyword_count"
+    ) || "35";
+
 
   document.getElementById("titleStyle").value =
-    localStorage.getItem("stockmeta_title_style") || "seo";
+    localStorage.getItem(
+      "stockmeta_title_style"
+    ) || "seo";
+
 
   document.getElementById("stockSite").value =
-    localStorage.getItem("stockmeta_stock_site") || "Adobe Stock";
+    localStorage.getItem(
+      "stockmeta_stock_site"
+    ) || "Adobe Stock";
+
 
   document.getElementById("customInstructions").value =
-    localStorage.getItem("stockmeta_custom") || "";
+    localStorage.getItem(
+      "stockmeta_custom"
+    ) || "";
+
 
   renderApiKeys();
+
 }
 
 
 function saveSettings(){
 
-  localStorage.setItem(
-    "stockmeta_api_keys",
-    JSON.stringify(apiKeys.filter(k => k.trim()))
+  apiKeys = apiKeys.filter(
+    key => key.trim()
   );
+
+
+  localStorage.setItem(
+    "stockmeta_gemini25_keys",
+    JSON.stringify(apiKeys)
+  );
+
 
   localStorage.setItem(
     "stockmeta_description_length",
-    document.getElementById("descriptionLength").value
+    document.getElementById(
+      "descriptionLength"
+    ).value
   );
+
 
   localStorage.setItem(
     "stockmeta_keyword_count",
-    document.getElementById("keywordCount").value
+    document.getElementById(
+      "keywordCount"
+    ).value
   );
+
 
   localStorage.setItem(
     "stockmeta_title_style",
-    document.getElementById("titleStyle").value
+    document.getElementById(
+      "titleStyle"
+    ).value
   );
+
 
   localStorage.setItem(
     "stockmeta_stock_site",
-    document.getElementById("stockSite").value
+    document.getElementById(
+      "stockSite"
+    ).value
   );
+
 
   localStorage.setItem(
     "stockmeta_custom",
-    document.getElementById("customInstructions").value
+    document.getElementById(
+      "customInstructions"
+    ).value
   );
 
-  alert("Settings saved successfully.");
+
+  if(!apiKeys.length){
+
+    apiKeys = [""];
+
+  }
+
+
+  renderApiKeys();
+
+
+  alert(
+    "Settings saved successfully."
+  );
+
 }
 
 
 /* =========================
-   API KEYS
+   API KEY UI
 ========================= */
 
 function renderApiKeys(){
 
-  const box = document.getElementById("apiKeys");
+  const box =
+    document.getElementById("apiKeys");
 
   box.innerHTML = "";
 
+
   apiKeys.forEach((key,index)=>{
 
-    const row = document.createElement("div");
+    const row =
+      document.createElement("div");
 
     row.className = "api-row";
 
-    row.innerHTML = `
-      <input
-        type="password"
-        value="${escapeHTML(key)}"
-        placeholder="Gemini API Key"
-        oninput="apiKeys[${index}]=this.value"
-      >
 
-      <button
-        class="remove-key"
-        onclick="removeApiKey(${index})"
-      >
-        ×
-      </button>
-    `;
+    const input =
+      document.createElement("input");
+
+    input.className =
+      "setting-input";
+
+    input.type = "password";
+
+    input.placeholder =
+      "Paste Gemini API Key";
+
+    input.value = key;
+
+
+    input.addEventListener(
+      "input",
+      e=>{
+        apiKeys[index] =
+          e.target.value;
+      }
+    );
+
+
+    const remove =
+      document.createElement("button");
+
+    remove.className =
+      "remove-key";
+
+    remove.textContent = "×";
+
+
+    remove.onclick = ()=>{
+
+      if(apiKeys.length === 1){
+
+        apiKeys[0] = "";
+
+      }else{
+
+        apiKeys.splice(index,1);
+
+      }
+
+      renderApiKeys();
+
+    };
+
+
+    row.appendChild(input);
+
+    row.appendChild(remove);
 
     box.appendChild(row);
+
   });
+
 }
 
 
@@ -912,46 +1382,46 @@ function addApiKey(){
   apiKeys.push("");
 
   renderApiKeys();
+
 }
 
 
-function removeApiKey(index){
-
-  if(apiKeys.length === 1){
-
-    apiKeys[0] = "";
-
-  }else{
-
-    apiKeys.splice(index,1);
-
-  }
-
-  renderApiKeys();
-}
-
+/* =========================
+   TEST API
+========================= */
 
 async function testApiKeys(){
 
-  const keys = apiKeys.filter(k => k.trim());
+  const keys =
+    apiKeys.filter(
+      key => key.trim()
+    );
+
 
   if(!keys.length){
 
-    alert("Please add at least one Gemini API key.");
+    alert(
+      "Please add a Gemini 2.5 Flash API key first."
+    );
 
     return;
+
   }
 
+
   let working = 0;
+
 
   for(const key of keys){
 
     try{
 
-      const result = await callGemini(
-        key,
-        "Reply with only the word OK."
-      );
+      const result =
+        await callGemini(
+          key,
+          "Reply with only the word OK."
+        );
+
 
       if(result){
 
@@ -961,103 +1431,167 @@ async function testApiKeys(){
 
     }catch(error){
 
-      console.log("Key failed:",error);
+      console.log(
+        "API key failed:",
+        error
+      );
 
     }
 
   }
 
+
   alert(
-    `API key test completed.\nWorking keys: ${working}/${keys.length}`
+    `API test completed.\nWorking keys: ${working}/${keys.length}`
   );
+
 }
 
 
 /* =========================
-   UPLOAD
+   FILE UPLOAD
 ========================= */
 
-const fileInput = document.getElementById("fileInput");
-const dropZone = document.getElementById("dropZone");
+const fileInput =
+  document.getElementById(
+    "fileInput"
+  );
 
-fileInput.addEventListener("change",e=>{
-
-  handleFiles([...e.target.files]);
-
-  fileInput.value = "";
-
-});
-
-
-["dragenter","dragover"].forEach(event=>{
-
-  dropZone.addEventListener(event,e=>{
-
-    e.preventDefault();
-
-    dropZone.classList.add("drag");
-
-  });
-
-});
+const dropZone =
+  document.getElementById(
+    "dropZone"
+  );
 
 
-["dragleave","drop"].forEach(event=>{
+fileInput.addEventListener(
+  "change",
+  event=>{
 
-  dropZone.addEventListener(event,e=>{
+    handleFiles(
+      [...event.target.files]
+    );
 
-    e.preventDefault();
+    fileInput.value = "";
 
-    dropZone.classList.remove("drag");
-
-  });
-
-});
+  }
+);
 
 
-dropZone.addEventListener("drop",e=>{
+["dragenter","dragover"].forEach(
+  eventName=>{
 
-  handleFiles([...e.dataTransfer.files]);
+    dropZone.addEventListener(
+      eventName,
+      event=>{
 
-});
+        event.preventDefault();
+
+        dropZone.classList.add(
+          "drag"
+        );
+
+      }
+    );
+
+  }
+);
+
+
+["dragleave","drop"].forEach(
+  eventName=>{
+
+    dropZone.addEventListener(
+      eventName,
+      event=>{
+
+        event.preventDefault();
+
+        dropZone.classList.remove(
+          "drag"
+        );
+
+      }
+    );
+
+  }
+);
+
+
+dropZone.addEventListener(
+  "drop",
+  event=>{
+
+    handleFiles(
+      [...event.dataTransfer.files]
+    );
+
+  }
+);
 
 
 async function handleFiles(files){
 
-  const imageFiles = files.filter(file =>
-    file.type.startsWith("image/")
-  );
+  const imageFiles =
+    files.filter(
+      file =>
+        file.type.startsWith(
+          "image/"
+        )
+    );
+
 
   if(!imageFiles.length){
 
-    alert("Please select image files.");
+    alert(
+      "Please select image files."
+    );
 
     return;
+
   }
 
-  if(images.length + imageFiles.length > MAX_IMAGES){
 
-    alert(`Maximum ${MAX_IMAGES} images are allowed.`);
+  if(
+    images.length +
+    imageFiles.length >
+    MAX_IMAGES
+  ){
+
+    alert(
+      `Maximum ${MAX_IMAGES} images are allowed.`
+    );
 
     return;
+
   }
 
-  for(const file of imageFiles){
 
-    const preview = await fileToDataURL(file);
+  for(
+    const file of imageFiles
+  ){
+
+    const preview =
+      await fileToDataURL(file);
+
 
     images.push({
 
-      file,
+      file:file,
+
       name:file.name,
-      preview,
+
+      preview:preview,
+
       status:"waiting",
+
       metadata:null,
+
       error:null
 
     });
 
   }
+
 
   render();
 
@@ -1067,69 +1601,131 @@ async function handleFiles(files){
 
 
 /* =========================
-   IMAGE RESIZE
+   DATA URL
 ========================= */
 
 function fileToDataURL(file){
 
-  return new Promise((resolve,reject)=>{
+  return new Promise(
+    (resolve,reject)=>{
 
-    const reader = new FileReader();
+      const reader =
+        new FileReader();
 
-    reader.onload = ()=>resolve(reader.result);
 
-    reader.onerror = reject;
+      reader.onload =
+        ()=>resolve(
+          reader.result
+        );
 
-    reader.readAsDataURL(file);
 
-  });
+      reader.onerror =
+        reject;
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
 
 }
 
 
+/* =========================
+   RESIZE
+========================= */
+
 function resizeImage(dataURL){
 
-  return new Promise(resolve=>{
+  return new Promise(
+    resolve=>{
 
-    const img = new Image();
+      const img =
+        new Image();
 
-    img.onload = ()=>{
 
-      const max = 1600;
+      img.onload = ()=>{
 
-      let width = img.width;
-      let height = img.height;
+        const max = 1600;
 
-      if(width > max || height > max){
 
-        const ratio = Math.min(
-          max / width,
-          max / height
+        let width =
+          img.width;
+
+        let height =
+          img.height;
+
+
+        if(
+          width > max ||
+          height > max
+        ){
+
+          const ratio =
+            Math.min(
+              max / width,
+              max / height
+            );
+
+
+          width =
+            Math.round(
+              width * ratio
+            );
+
+
+          height =
+            Math.round(
+              height * ratio
+            );
+
+        }
+
+
+        const canvas =
+          document.createElement(
+            "canvas"
+          );
+
+
+        canvas.width =
+          width;
+
+        canvas.height =
+          height;
+
+
+        const ctx =
+          canvas.getContext(
+            "2d"
+          );
+
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          width,
+          height
         );
 
-        width = Math.round(width * ratio);
-        height = Math.round(height * ratio);
 
-      }
+        resolve(
+          canvas.toDataURL(
+            "image/jpeg",
+            .82
+          )
+        );
 
-      const canvas = document.createElement("canvas");
+      };
 
-      canvas.width = width;
-      canvas.height = height;
 
-      const ctx = canvas.getContext("2d");
+      img.src = dataURL;
 
-      ctx.drawImage(img,0,0,width,height);
-
-      resolve(
-        canvas.toDataURL("image/jpeg",.82)
-      );
-
-    };
-
-    img.src = dataURL;
-
-  });
+    }
+  );
 
 }
 
@@ -1140,58 +1736,104 @@ function resizeImage(dataURL){
 
 async function generateAll(){
 
-  const indexes = images
-    .map((item,index)=>item.status === "waiting" ? index : -1)
-    .filter(index=>index !== -1);
+  const indexes =
+    images
+      .map(
+        (item,index)=>
+          item.status === "waiting"
+            ? index
+            : -1
+      )
+      .filter(
+        index => index !== -1
+      );
+
 
   let pointer = 0;
 
+
   async function worker(){
 
-    while(pointer < indexes.length){
+    while(
+      pointer <
+      indexes.length
+    ){
 
-      const current = indexes[pointer++];
+      const current =
+        indexes[pointer++];
 
-      await generateMetadata(current);
+
+      await generateMetadata(
+        current
+      );
 
     }
 
   }
 
+
   const workers = [];
 
-  for(let i=0;i<Math.min(CONCURRENCY,indexes.length);i++){
 
-    workers.push(worker());
+  for(
+    let i=0;
+    i<Math.min(
+      CONCURRENCY,
+      indexes.length
+    );
+    i++
+  ){
+
+    workers.push(
+      worker()
+    );
 
   }
 
-  await Promise.all(workers);
+
+  await Promise.all(
+    workers
+  );
 
 }
 
 
 /* =========================
-   GENERATE ONE
+   GENERATE METADATA
 ========================= */
 
 async function generateMetadata(index){
 
-  const item = images[index];
+  const item =
+    images[index];
 
-  item.status = "generating";
 
-  item.error = null;
+  item.status =
+    "generating";
+
+
+  item.error =
+    null;
+
 
   render();
 
-  const keys = apiKeys.filter(k => k.trim());
+
+  const keys =
+    apiKeys.filter(
+      key => key.trim()
+    );
+
 
   if(!keys.length){
 
-    item.status = "failed";
+    item.status =
+      "failed";
 
-    item.error = "No Gemini API key.";
+
+    item.error =
+      "No Gemini 2.5 Flash API key added.";
+
 
     render();
 
@@ -1201,88 +1843,153 @@ async function generateMetadata(index){
 
   }
 
+
   try{
 
-    const resized = await resizeImage(item.preview);
+    const resized =
+      await resizeImage(
+        item.preview
+      );
 
-    const base64 = resized.split(",")[1];
 
-    const mimeType = "image/jpeg";
+    const base64 =
+      resized.split(",")[1];
 
-    const prompt = buildPrompt();
 
-    let success = false;
+    const prompt =
+      buildPrompt();
 
-    let lastError = null;
 
-    for(let i=0;i<keys.length;i++){
+    let success =
+      false;
+
+
+    let lastError =
+      null;
+
+
+    for(
+      let i=0;
+      i<keys.length;
+      i++
+    ){
 
       try{
 
-        const text = await callGemini(
-          keys[i],
-          prompt,
-          base64,
-          mimeType
-        );
+        const text =
+          await callGemini(
+            keys[i],
+            prompt,
+            base64,
+            "image/jpeg"
+          );
 
-        const metadata = parseJSON(text);
 
-        metadata.keywords = cleanKeywords(
-          metadata.keywords
-        );
+        const metadata =
+          parseJSON(text);
 
-        const count = Number(
-          document.getElementById("keywordCount").value || 35
-        );
 
         metadata.keywords =
-          metadata.keywords.slice(0,count);
+          cleanKeywords(
+            metadata.keywords
+          );
 
-        item.metadata = metadata;
 
-        item.status = "done";
+        const count =
+          Number(
+            document.getElementById(
+              "keywordCount"
+            ).value || 35
+          );
 
-        // Move working key to front
-        const workingKey = keys[i];
+
+        metadata.keywords =
+          metadata.keywords.slice(
+            0,
+            count
+          );
+
+
+        item.metadata =
+          metadata;
+
+
+        item.status =
+          "done";
+
+
+        /* Move working key to front */
+
+        const workingKey =
+          keys[i];
+
 
         apiKeys = [
+
           workingKey,
-          ...apiKeys.filter(k=>k !== workingKey)
+
+          ...apiKeys.filter(
+            key =>
+              key !== workingKey
+          )
+
         ];
 
+
         localStorage.setItem(
-          "stockmeta_api_keys",
-          JSON.stringify(apiKeys.filter(k=>k.trim()))
+          "stockmeta_gemini25_keys",
+          JSON.stringify(
+            apiKeys.filter(
+              key => key.trim()
+            )
+          )
         );
 
-        success = true;
+
+        success =
+          true;
+
 
         break;
 
       }catch(error){
 
-        lastError = error;
+        lastError =
+          error;
 
-        console.log("API key failed:",error);
+        console.log(
+          "Gemini key failed:",
+          error
+        );
 
       }
 
     }
 
+
     if(!success){
 
-      throw lastError || new Error("All API keys failed.");
+      throw (
+        lastError ||
+        new Error(
+          "All Gemini API keys failed."
+        )
+      );
 
     }
 
   }catch(error){
 
-    item.status = "failed";
+    item.status =
+      "failed";
 
-    item.error = error.message || "Generation failed.";
+
+    item.error =
+      error.message ||
+      "Generation failed.";
 
   }
+
 
   render();
 
@@ -1296,33 +2003,49 @@ async function generateMetadata(index){
 function buildPrompt(){
 
   const descriptionLength =
-    document.getElementById("descriptionLength").value;
+    document.getElementById(
+      "descriptionLength"
+    ).value;
+
 
   const keywordCount =
-    document.getElementById("keywordCount").value;
+    document.getElementById(
+      "keywordCount"
+    ).value;
+
 
   const titleStyle =
-    document.getElementById("titleStyle").value;
+    document.getElementById(
+      "titleStyle"
+    ).value;
+
 
   const stockSite =
-    document.getElementById("stockSite").value;
+    document.getElementById(
+      "stockSite"
+    ).value;
+
 
   const custom =
-    document.getElementById("customInstructions").value;
+    document.getElementById(
+      "customInstructions"
+    ).value;
+
 
   return `
+
 You are a professional stock photography metadata specialist.
 
 Analyze the uploaded image carefully.
 
-Generate metadata suitable for ${stockSite}.
+Create metadata suitable for ${stockSite}.
 
 Return ONLY valid JSON.
 
-Required JSON structure:
+Use exactly this structure:
 
 {
-  "title": "SEO friendly stock title",
+  "title": "Professional stock title",
   "description": "Professional stock description",
   "keywords": ["keyword 1","keyword 2","keyword 3"],
   "category": "appropriate stock category"
@@ -1330,22 +2053,26 @@ Required JSON structure:
 
 Rules:
 
-1. Title must accurately describe the image.
-2. Do not invent objects that are not visible.
-3. Avoid trademarks, brands, copyrighted characters and misleading claims.
-4. Keywords must be highly relevant and commercially useful.
-5. Prefer specific keywords over generic useless words.
-6. Include important visual concepts, objects, style, color, composition and use case when appropriate.
+1. Accurately describe only what is visible.
+2. Do not invent objects, people, locations or concepts.
+3. Avoid trademarks, brands and copyrighted characters.
+4. Use commercially useful stock keywords.
+5. Avoid meaningless or repetitive keywords.
+6. Keywords should cover the main subject, objects, visual concepts, style, color, composition and relevant commercial concepts.
 7. Do not repeat keywords.
-8. Provide approximately ${keywordCount} keywords.
+8. Provide approximately ${keywordCount} relevant keywords.
 9. Description length: ${descriptionLength}.
 10. Title style: ${titleStyle}.
+11. Make the metadata suitable for stock marketplaces.
 
-Additional instructions:
-${custom || "No additional instructions."}
+Additional user instructions:
+
+${custom || "None"}
 
 Return JSON only.
+
 `;
+
 }
 
 
@@ -1363,11 +2090,15 @@ async function callGemini(
   const url =
     `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
+
   const parts = [
+
     {
       text:prompt
     }
+
   ];
+
 
   if(base64){
 
@@ -1382,51 +2113,81 @@ async function callGemini(
 
   }
 
-  const response = await fetch(url,{
 
-    method:"POST",
+  const response =
+    await fetch(
+      url,
+      {
 
-    headers:{
-      "Content-Type":"application/json",
-      "x-goog-api-key":apiKey
-    },
+        method:"POST",
 
-    body:JSON.stringify({
+        headers:{
 
-      contents:[
-        {
-          parts
-        }
-      ],
+          "Content-Type":
+            "application/json",
 
-      generationConfig:{
-        temperature:.4,
-        responseMimeType:"application/json"
+          "x-goog-api-key":
+            apiKey
+
+        },
+
+        body:JSON.stringify({
+
+          contents:[
+
+            {
+              parts:parts
+            }
+
+          ],
+
+          generationConfig:{
+
+            temperature:.4,
+
+            responseMimeType:
+              "application/json"
+
+          }
+
+        })
+
       }
+    );
 
-    })
 
-  });
+  const data =
+    await response.json();
 
-  const data = await response.json();
 
   if(!response.ok){
 
     throw new Error(
+
       data?.error?.message ||
+
       `API Error ${response.status}`
+
     );
 
   }
 
+
   const text =
-    data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    data
+      ?.candidates?.[0]
+      ?.content?.parts?.[0]
+      ?.text;
+
 
   if(!text){
 
-    throw new Error("Empty Gemini response.");
+    throw new Error(
+      "Empty Gemini response."
+    );
 
   }
+
 
   return text;
 
@@ -1439,13 +2200,26 @@ async function callGemini(
 
 function parseJSON(text){
 
-  text = text.trim();
+  text =
+    text.trim();
 
-  text = text
-    .replace(/^```json/i,"")
-    .replace(/^```/i,"")
-    .replace(/```$/i,"")
-    .trim();
+
+  text =
+    text
+      .replace(
+        /^```json/i,
+        ""
+      )
+      .replace(
+        /^```/i,
+        ""
+      )
+      .replace(
+        /```$/i,
+        ""
+      )
+      .trim();
+
 
   try{
 
@@ -1453,19 +2227,32 @@ function parseJSON(text){
 
   }catch(error){
 
-    const start = text.indexOf("{");
+    const start =
+      text.indexOf("{");
 
-    const end = text.lastIndexOf("}");
 
-    if(start !== -1 && end !== -1){
+    const end =
+      text.lastIndexOf("}");
+
+
+    if(
+      start !== -1 &&
+      end !== -1
+    ){
 
       return JSON.parse(
-        text.slice(start,end+1)
+        text.slice(
+          start,
+          end + 1
+        )
       );
 
     }
 
-    throw new Error("Invalid JSON returned by AI.");
+
+    throw new Error(
+      "Invalid JSON returned by AI."
+    );
 
   }
 
@@ -1473,16 +2260,20 @@ function parseJSON(text){
 
 
 /* =========================
-   KEYWORD CLEANER
+   KEYWORDS
 ========================= */
 
 function cleanKeywords(keywords){
 
   if(!Array.isArray(keywords)){
 
-    if(typeof keywords === "string"){
+    if(
+      typeof keywords ===
+      "string"
+    ){
 
-      keywords = keywords.split(",");
+      keywords =
+        keywords.split(",");
 
     }else{
 
@@ -1492,21 +2283,33 @@ function cleanKeywords(keywords){
 
   }
 
-  const seen = new Set();
+
+  const seen =
+    new Set();
+
 
   return keywords
 
-    .map(k =>
-      String(k)
-        .trim()
-        .toLowerCase()
+    .map(
+      keyword =>
+        String(keyword)
+          .trim()
+          .toLowerCase()
     )
 
-    .filter(k=>{
+    .filter(keyword=>{
 
-      if(!k || seen.has(k)) return false;
+      if(
+        !keyword ||
+        seen.has(keyword)
+      ){
 
-      seen.add(k);
+        return false;
+
+      }
+
+
+      seen.add(keyword);
 
       return true;
 
@@ -1521,155 +2324,255 @@ function cleanKeywords(keywords){
 
 function render(){
 
-  const grid = document.getElementById("grid");
+  const grid =
+    document.getElementById(
+      "grid"
+    );
 
-  const empty = document.getElementById("empty");
 
-  const counter = document.getElementById("counter");
+  const empty =
+    document.getElementById(
+      "empty"
+    );
+
+
+  const counter =
+    document.getElementById(
+      "counter"
+    );
+
 
   counter.textContent =
     `${images.length} / ${MAX_IMAGES} images`;
+
 
   if(!images.length){
 
     grid.innerHTML = "";
 
-    empty.style.display = "block";
+    empty.style.display =
+      "block";
 
     return;
 
   }
 
-  empty.style.display = "none";
 
-  grid.innerHTML = images.map((item,index)=>{
+  empty.style.display =
+    "none";
 
-    const metadata = item.metadata || {};
 
-    let statusText = "Waiting";
+  grid.innerHTML =
+    images.map(
+      (item,index)=>{
 
-    if(item.status === "generating"){
-      statusText = "Generating...";
-    }
+        const metadata =
+          item.metadata || {};
 
-    if(item.status === "done"){
-      statusText = "✓ Done";
-    }
 
-    if(item.status === "failed"){
-      statusText = "Failed";
-    }
+        let statusText =
+          "Waiting";
 
-    return `
 
-      <div class="card">
+        if(
+          item.status ===
+          "generating"
+        ){
 
-        <div class="preview">
+          statusText =
+            "Generating...";
 
-          <img
-            src="${item.preview}"
-            alt=""
-          >
+        }
 
-          <div class="status ${item.status}">
-            ${statusText}
+
+        if(
+          item.status ===
+          "done"
+        ){
+
+          statusText =
+            "✓ Done";
+
+        }
+
+
+        if(
+          item.status ===
+          "failed"
+        ){
+
+          statusText =
+            "Failed";
+
+        }
+
+
+        return `
+
+        <div class="card">
+
+          <div class="preview">
+
+            <img
+              src="${item.preview}"
+              alt=""
+            >
+
+            <div
+              class="status ${item.status}"
+            >
+              ${statusText}
+            </div>
+
+          </div>
+
+
+          <div class="card-body">
+
+            <div class="filename">
+              ${escapeHTML(
+                item.name
+              )}
+            </div>
+
+
+            ${
+              item.status ===
+              "failed"
+
+              ?
+
+              `
+
+              <div class="field">
+
+                <div
+                  class="field-content"
+                  style="color:#ff6570"
+                >
+                  ${escapeHTML(
+                    item.error ||
+                    "Generation failed"
+                  )}
+                </div>
+
+              </div>
+
+              `
+
+              :
+
+              `
+
+              <div class="field">
+
+                <label>
+                  Title
+                </label>
+
+                <div class="field-content">
+                  ${escapeHTML(
+                    metadata.title ||
+                    "Waiting..."
+                  )}
+                </div>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  Description
+                </label>
+
+                <div class="field-content">
+                  ${escapeHTML(
+                    metadata.description ||
+                    "Waiting..."
+                  )}
+                </div>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  Keywords
+                </label>
+
+                <div
+                  class="field-content keywords"
+                >
+                  ${
+                    metadata.keywords
+                    ?
+                    escapeHTML(
+                      metadata.keywords.join(
+                        ", "
+                      )
+                    )
+                    :
+                    "Waiting..."
+                  }
+                </div>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  Category
+                </label>
+
+                <div class="field-content">
+                  ${escapeHTML(
+                    metadata.category ||
+                    "Waiting..."
+                  )}
+                </div>
+
+              </div>
+
+
+              <div class="card-actions">
+
+                <button
+                  class="btn"
+                  onclick="copyMetadata(${index})"
+                  ${item.status !== "done"
+                    ? "disabled"
+                    : ""}
+                >
+                  📋 Copy
+                </button>
+
+
+                <button
+                  class="btn"
+                  onclick="openEdit(${index})"
+                  ${item.status !== "done"
+                    ? "disabled"
+                    : ""}
+                >
+                  ✏ Edit
+                </button>
+
+              </div>
+
+              `
+            }
+
           </div>
 
         </div>
 
-        <div class="card-body">
+        `;
 
-          <div class="filename">
-            ${escapeHTML(item.name)}
-          </div>
-
-          ${
-            item.status === "failed"
-            ?
-            `
-            <div class="field">
-              <div class="field-content" style="color:#ff6570">
-                ${escapeHTML(item.error || "Generation failed")}
-              </div>
-            </div>
-            `
-            :
-            `
-            <div class="field">
-
-              <label>Title</label>
-
-              <div class="field-content">
-                ${escapeHTML(metadata.title || "Waiting...")}
-              </div>
-
-            </div>
-
-            <div class="field">
-
-              <label>Description</label>
-
-              <div class="field-content">
-                ${escapeHTML(metadata.description || "Waiting...")}
-              </div>
-
-            </div>
-
-            <div class="field">
-
-              <label>Keywords</label>
-
-              <div class="field-content keywords">
-                ${
-                  metadata.keywords
-                  ?
-                  escapeHTML(metadata.keywords.join(", "))
-                  :
-                  "Waiting..."
-                }
-              </div>
-
-            </div>
-
-            <div class="field">
-
-              <label>Category</label>
-
-              <div class="field-content">
-                ${escapeHTML(metadata.category || "Waiting...")}
-              </div>
-
-            </div>
-
-            <div class="card-actions">
-
-              <button
-                class="btn"
-                onclick="copyMetadata(${index})"
-                ${item.status !== "done" ? "disabled" : ""}
-              >
-                📋 Copy
-              </button>
-
-              <button
-                class="btn"
-                onclick="openEdit(${index})"
-                ${item.status !== "done" ? "disabled" : ""}
-              >
-                ✏ Edit
-              </button>
-
-            </div>
-            `
-          }
-
-        </div>
-
-      </div>
-
-    `;
-
-  }).join("");
+      }
+    ).join("");
 
 }
 
@@ -1680,9 +2583,12 @@ function render(){
 
 async function copyMetadata(index){
 
-  const metadata = images[index].metadata;
+  const metadata =
+    images[index].metadata;
+
 
   if(!metadata) return;
+
 
   const text =
 
@@ -1698,9 +2604,15 @@ ${metadata.keywords.join(", ")}
 Category:
 ${metadata.category}`;
 
-  await navigator.clipboard.writeText(text);
 
-  alert("Metadata copied.");
+  await navigator.clipboard.writeText(
+    text
+  );
+
+
+  alert(
+    "Metadata copied."
+  );
 
 }
 
@@ -1711,63 +2623,106 @@ ${metadata.category}`;
 
 function openEdit(index){
 
-  const item = images[index];
+  const item =
+    images[index];
 
-  if(!item.metadata) return;
 
-  editingIndex = index;
+  if(!item.metadata)
+    return;
 
-  document.getElementById("editTitle").value =
+
+  editingIndex =
+    index;
+
+
+  document.getElementById(
+    "editTitle"
+  ).value =
     item.metadata.title || "";
 
-  document.getElementById("editDescription").value =
-    item.metadata.description || "";
 
-  document.getElementById("editKeywords").value =
-    (item.metadata.keywords || []).join(", ");
+  document.getElementById(
+    "editDescription"
+  ).value =
+    item.metadata.description ||
+    "";
 
-  document.getElementById("editCategory").value =
-    item.metadata.category || "";
 
-  document.getElementById("editModal")
-    .classList.add("show");
+  document.getElementById(
+    "editKeywords"
+  ).value =
+    (
+      item.metadata.keywords ||
+      []
+    ).join(", ");
+
+
+  document.getElementById(
+    "editCategory"
+  ).value =
+    item.metadata.category ||
+    "";
+
+
+  document.getElementById(
+    "editModal"
+  ).classList.add(
+    "show"
+  );
 
 }
 
 
 function closeEdit(){
 
-  document.getElementById("editModal")
-    .classList.remove("show");
+  document.getElementById(
+    "editModal"
+  ).classList.remove(
+    "show"
+  );
 
-  editingIndex = -1;
+
+  editingIndex =
+    -1;
 
 }
 
 
 function saveEdit(){
 
-  if(editingIndex < 0) return;
+  if(
+    editingIndex < 0
+  ) return;
 
-  images[editingIndex].metadata = {
+
+  images[
+    editingIndex
+  ].metadata = {
 
     title:
-      document.getElementById("editTitle").value.trim(),
+      document.getElementById(
+        "editTitle"
+      ).value.trim(),
 
     description:
-      document.getElementById("editDescription").value.trim(),
+      document.getElementById(
+        "editDescription"
+      ).value.trim(),
 
     keywords:
       cleanKeywords(
-        document.getElementById("editKeywords")
-          .value
-          .split(",")
+        document.getElementById(
+          "editKeywords"
+        ).value.split(",")
       ),
 
     category:
-      document.getElementById("editCategory").value.trim()
+      document.getElementById(
+        "editCategory"
+      ).value.trim()
 
   };
+
 
   closeEdit();
 
@@ -1777,73 +2732,116 @@ function saveEdit(){
 
 
 /* =========================
-   CSV
+   CSV EXPORT
 ========================= */
 
 function exportCSV(){
 
   const completed =
-    images.filter(item =>
-      item.status === "done" &&
-      item.metadata
+    images.filter(
+      item =>
+        item.status === "done" &&
+        item.metadata
     );
+
 
   if(!completed.length){
 
-    alert("No completed metadata to export.");
+    alert(
+      "No completed metadata to export."
+    );
 
     return;
 
   }
 
+
   let csv =
     "Filename,Title,Description,Keywords,Category\n";
 
-  completed.forEach(item=>{
 
-    const m = item.metadata;
+  completed.forEach(
+    item=>{
 
-    const row = [
+      const m =
+        item.metadata;
 
-      item.name,
 
-      m.title,
+      const row = [
 
-      m.description,
+        item.name,
 
-      (m.keywords || []).join(", "),
+        m.title,
 
-      m.category
+        m.description,
 
-    ].map(csvEscape);
+        (
+          m.keywords || []
+        ).join(", "),
 
-    csv += row.join(",") + "\n";
+        m.category
 
-  });
+      ].map(
+        csvEscape
+      );
 
-  const blob = new Blob(
-    ["\uFEFF" + csv],
-    {type:"text/csv;charset=utf-8;"}
+
+      csv +=
+        row.join(",") +
+        "\n";
+
+    }
   );
 
-  const url = URL.createObjectURL(blob);
 
-  const a = document.createElement("a");
+  const blob =
+    new Blob(
+      ["\uFEFF" + csv],
+      {
+        type:
+          "text/csv;charset=utf-8;"
+      }
+    );
 
-  a.href = url;
 
-  a.download = "stockmeta-ai.csv";
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const a =
+    document.createElement(
+      "a"
+    );
+
+
+  a.href =
+    url;
+
+
+  a.download =
+    "stockmeta-ai.csv";
+
 
   a.click();
 
-  URL.revokeObjectURL(url);
+
+  URL.revokeObjectURL(
+    url
+  );
 
 }
 
 
 function csvEscape(value){
 
-  return `"${String(value ?? "").replace(/"/g,'""')}"`;
+  return `"${String(
+    value ?? ""
+  ).replace(
+    /"/g,
+    '""'
+  )}"`;
 
 }
 
@@ -1854,13 +2852,20 @@ function csvEscape(value){
 
 function clearAll(){
 
-  if(!images.length) return;
+  if(!images.length)
+    return;
 
-  if(!confirm("Clear all images and generated metadata?")){
+
+  if(
+    !confirm(
+      "Clear all images and generated metadata?"
+    )
+  ){
 
     return;
 
   }
+
 
   images = [];
 
@@ -1870,27 +2875,41 @@ function clearAll(){
 
 
 /* =========================
-   SETTINGS UI
+   SETTINGS OPEN/CLOSE
 ========================= */
 
 function openSettings(){
 
-  document.getElementById("overlay")
-    .classList.add("show");
+  document.getElementById(
+    "overlay"
+  ).classList.add(
+    "show"
+  );
 
-  document.getElementById("settings")
-    .classList.add("show");
+
+  document.getElementById(
+    "settings"
+  ).classList.add(
+    "show"
+  );
 
 }
 
 
 function closeSettings(){
 
-  document.getElementById("overlay")
-    .classList.remove("show");
+  document.getElementById(
+    "overlay"
+  ).classList.remove(
+    "show"
+  );
 
-  document.getElementById("settings")
-    .classList.remove("show");
+
+  document.getElementById(
+    "settings"
+  ).classList.remove(
+    "show"
+  );
 
 }
 
@@ -1901,24 +2920,49 @@ function closeSettings(){
 
 function toggleSupport(){
 
-  document.getElementById("supportPanel")
-    .classList.toggle("show");
+  document.getElementById(
+    "supportPanel"
+  ).classList.toggle(
+    "show"
+  );
 
 }
 
 
 /* =========================
-   SECURITY / HTML ESCAPE
+   HTML ESCAPE
 ========================= */
 
 function escapeHTML(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    value ?? ""
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
