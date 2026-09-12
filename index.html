@@ -662,7 +662,7 @@ textarea{
     <h2>Upload Your Images</h2>
 
     <p>
-      PNG, JPG, JPEG or WEBP — up to 15 images
+      PNG, JPG, JPEG or WEBP — up to 500 images
     </p>
 
     <button class="btn btn-red" onclick="event.stopPropagation();openFilePicker()">
@@ -685,7 +685,7 @@ textarea{
   <div class="toolbar">
 
     <div class="counter" id="counter">
-      0 / 15 images
+      0 / 500 images
     </div>
 
     <div class="toolbar-right">
@@ -733,8 +733,6 @@ textarea{
   </div>
 
   <div class="settings-body">
-
-    <!-- GEMINI -->
 
     <div class="section">
 
@@ -788,8 +786,6 @@ textarea{
 
     </div>
 
-
-    <!-- STOCK -->
 
     <div class="section">
 
@@ -957,8 +953,13 @@ textarea{
 <script>
 
 const MODEL = "gemini-2.5-flash";
-const MAX_IMAGES = 15;
-const CONCURRENCY = 3;
+
+/* =========================
+   UPDATED LIMITS
+========================= */
+
+const MAX_IMAGES = 500;
+const CONCURRENCY = 2;
 
 let images = [];
 let apiKeys = [""];
@@ -1088,15 +1089,11 @@ function handleFiles(fileList){
 
 
   /*
-    IMPORTANT:
-
-    এখানে generateMetadata() CALL করা হয়নি।
-
-    তাই upload করার পর automatically
+    Upload করার পর automatically
     Gemini API call হবে না।
 
-    User-কে Generate Metadata button
-    manually click করতে হবে.
+    Generate Metadata button manually
+    click করতে হবে।
   */
 
   updateUI();
@@ -1517,7 +1514,8 @@ async function generateAll(){
 
 
   /*
-    Maximum 3 images are processed
+    IMPORTANT:
+    Maximum 2 images are processed
     at the same time.
   */
 
@@ -1611,14 +1609,9 @@ async function generateImage(index,keys){
 
 
       /*
-        IMPORTANT:
-
-        এখানে API key save করা হচ্ছে না।
-
-        কোনো localStorage.setItem()
-        নেই।
-
-        এমনকি working key reorder-ও করা হচ্ছে না।
+        API key save করা হচ্ছে না।
+        Manual Save API Keys ছাড়া
+        localStorage-এ key লেখা হচ্ছে না।
       */
 
 
@@ -1680,7 +1673,6 @@ async function testApiKeys(){
       await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${encodeURIComponent(testKey)}`,
         {
-
           method:"POST",
 
           headers:{
@@ -1690,13 +1682,19 @@ async function testApiKeys(){
           body:JSON.stringify({
 
             contents:[
+
               {
+
                 parts:[
+
                   {
                     text:"Reply with exactly: OK"
                   }
+
                 ]
+
               }
+
             ]
 
           })
@@ -2369,11 +2367,14 @@ function parseJSON(text){
   cleaned =
     cleaned.replace(/^```json/i,"");
 
+
   cleaned =
     cleaned.replace(/^```/,"");
 
+
   cleaned =
     cleaned.replace(/```$/,"");
+
 
   cleaned =
     cleaned.trim();
