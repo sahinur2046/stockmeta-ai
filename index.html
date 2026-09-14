@@ -3,575 +3,667 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>StockMeta AI - Fast Metadata Generator</title>
+<title>StockMeta AI</title>
 
 <style>
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-:root{
-    --bg:#070707;
-    --panel:#101010;
-    --panel2:#151515;
-    --border:#292929;
-    --text:#fff;
-    --muted:#999;
-    --red:#ff2b2b;
-    --red2:#b80000;
-    --green:#25d366;
-    --yellow:#ffc107;
-    --blue:#3b82f6;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-    font-family:Inter,Segoe UI,Arial,sans-serif;
-    background:
-        radial-gradient(circle at top left,rgba(255,30,30,.08),transparent 30%),
-        radial-gradient(circle at bottom right,rgba(255,0,0,.05),transparent 35%),
-        var(--bg);
-    color:var(--text);
-    min-height:100vh;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:#080808;
+  color:#fff;
+  min-height:100vh;
 }
 
-button,
-input,
-select{
-    font:inherit;
+button,input,select,textarea{
+  font:inherit;
 }
 
 button{
-    cursor:pointer;
+  cursor:pointer;
 }
 
 .header{
-    height:70px;
-    border-bottom:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 28px;
-    background:rgba(5,5,5,.9);
-    position:sticky;
-    top:0;
-    z-index:50;
-    backdrop-filter:blur(12px);
+  height:72px;
+  border-bottom:1px solid #242424;
+  background:#0c0c0c;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 5%;
+  position:sticky;
+  top:0;
+  z-index:50;
 }
 
 .logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:21px;
-    font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:21px;
+  font-weight:800;
 }
 
-.logoIcon{
-    width:34px;
-    height:34px;
-    border-radius:9px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg,#ff3030,#900000);
-    box-shadow:0 0 25px rgba(255,0,0,.2);
+.logo-icon{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:#e50914;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
 }
 
-.headerRight{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.modeBadge{
-    padding:8px 13px;
-    border:1px solid rgba(37,211,102,.25);
-    background:rgba(37,211,102,.08);
-    color:var(--green);
-    border-radius:999px;
-    font-size:12px;
-    font-weight:700;
-}
-
-.container{
-    max-width:1500px;
-    margin:auto;
-    padding:28px;
-}
-
-.hero{
-    margin-bottom:22px;
-}
-
-.hero h1{
-    font-size:32px;
-    margin-bottom:8px;
-}
-
-.hero p{
-    color:var(--muted);
-    max-width:800px;
-    line-height:1.6;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:340px 1fr;
-    gap:20px;
-}
-
-.panel{
-    background:linear-gradient(180deg,#111,#0c0c0c);
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:18px;
-    box-shadow:0 15px 40px rgba(0,0,0,.2);
-}
-
-.panelTitle{
-    font-size:15px;
-    font-weight:800;
-    margin-bottom:15px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.setting{
-    margin-bottom:15px;
-}
-
-.setting label{
-    display:block;
-    color:#ccc;
-    font-size:12px;
-    margin-bottom:7px;
-    font-weight:700;
-}
-
-input[type="text"],
-input[type="password"],
-input[type="number"],
-select{
-    width:100%;
-    background:#080808;
-    color:white;
-    border:1px solid #2b2b2b;
-    border-radius:9px;
-    padding:11px 12px;
-    outline:none;
-}
-
-input:focus,
-select:focus{
-    border-color:#555;
-}
-
-input[type="range"]{
-    width:100%;
-}
-
-.small{
-    font-size:11px;
-    color:#777;
-    margin-top:5px;
-    line-height:1.5;
-}
-
-.apiBox{
-    background:#0a0a0a;
-    border:1px solid #242424;
-    padding:12px;
-    border-radius:11px;
-    margin-bottom:10px;
-}
-
-.apiTitle{
-    font-size:12px;
-    font-weight:800;
-    margin-bottom:8px;
-}
-
-.apiStatus{
-    margin-top:7px;
-    font-size:11px;
-    color:#777;
-}
-
-.dropZone{
-    border:1px dashed #444;
-    border-radius:15px;
-    min-height:190px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:25px;
-    transition:.2s;
-    background:rgba(255,255,255,.015);
-}
-
-.dropZone.drag{
-    border-color:var(--red);
-    background:rgba(255,0,0,.05);
-}
-
-.dropInner h2{
-    font-size:19px;
-    margin-bottom:8px;
-}
-
-.dropInner p{
-    color:#777;
-    font-size:12px;
-    margin-bottom:15px;
-}
-
-.uploadBtn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:7px;
-    background:linear-gradient(135deg,#ff3434,#a40000);
-    color:white;
-    border:0;
-    border-radius:9px;
-    padding:11px 18px;
-    font-weight:800;
-}
-
-#fileInput{
-    display:none;
-}
-
-.toolbar{
-    display:flex;
-    flex-wrap:wrap;
-    gap:9px;
-    margin-top:15px;
+.nav{
+  display:flex;
+  gap:10px;
 }
 
 .btn{
-    border:1px solid #303030;
-    background:#151515;
-    color:white;
-    padding:10px 14px;
-    border-radius:9px;
-    font-weight:700;
-    font-size:12px;
+  border:1px solid #303030;
+  background:#151515;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:9px;
+  transition:.2s;
 }
 
 .btn:hover{
-    background:#1c1c1c;
-}
-
-.btn.primary{
-    border-color:#a60000;
-    background:linear-gradient(135deg,#ff2929,#a90000);
-}
-
-.btn.green{
-    border-color:#146c36;
-    background:#10351f;
-    color:#61ed92;
-}
-
-.btn.yellow{
-    border-color:#765d00;
-    background:#292200;
-    color:#ffd84d;
-}
-
-.btn.danger{
-    border-color:#6e1717;
-    background:#290d0d;
-    color:#ff6969;
+  background:#222;
 }
 
 .btn:disabled{
-    opacity:.45;
-    cursor:not-allowed;
+  opacity:.45;
+  cursor:not-allowed;
 }
 
-.stats{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:10px;
-    margin:15px 0;
+.btn-red{
+  background:#e50914;
+  border-color:#e50914;
 }
 
-.stat{
-    background:#0c0c0c;
-    border:1px solid #242424;
-    border-radius:11px;
-    padding:13px;
+.btn-red:hover{
+  background:#f6121d;
 }
 
-.statLabel{
-    color:#777;
-    font-size:10px;
-    text-transform:uppercase;
-    margin-bottom:6px;
+.btn-green{
+  background:#137333;
+  border-color:#137333;
 }
 
-.statValue{
-    font-size:21px;
-    font-weight:900;
+.container{
+  width:90%;
+  max-width:1250px;
+  margin:auto;
 }
 
-.progressBox{
-    margin:15px 0;
-    background:#0c0c0c;
-    border:1px solid #242424;
-    border-radius:11px;
-    padding:13px;
+.hero{
+  text-align:center;
+  padding:70px 15px 45px;
 }
 
-.progressTop{
-    display:flex;
-    justify-content:space-between;
-    font-size:12px;
-    margin-bottom:8px;
+.badge{
+  display:inline-block;
+  background:#171717;
+  border:1px solid #303030;
+  color:#ff4b54;
+  padding:7px 13px;
+  border-radius:50px;
+  font-size:13px;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-size:clamp(38px,6vw,68px);
+  line-height:1;
+  margin-bottom:20px;
+  letter-spacing:-2px;
+}
+
+.hero h1 span{
+  color:#e50914;
+}
+
+.hero p{
+  color:#999;
+  max-width:700px;
+  margin:auto;
+  font-size:17px;
+  line-height:1.7;
+}
+
+.upload-box{
+  border:2px dashed #383838;
+  border-radius:18px;
+  padding:55px 20px;
+  text-align:center;
+  background:#0e0e0e;
+  transition:.2s;
+}
+
+.upload-box.drag{
+  border-color:#e50914;
+  background:#16090a;
+}
+
+.upload-icon{
+  font-size:45px;
+  margin-bottom:15px;
+}
+
+.upload-box h2{
+  margin-bottom:8px;
+}
+
+.upload-box p{
+  color:#888;
+  margin-bottom:22px;
+}
+
+.file-input{
+  display:none;
+}
+
+.upload-info{
+  margin-top:15px;
+  color:#777;
+  font-size:13px;
+}
+
+.toolbar{
+  margin:30px 0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.counter{
+  color:#aaa;
 }
 
 .progress{
-    width:100%;
-    height:8px;
-    background:#222;
-    border-radius:99px;
-    overflow:hidden;
+  color:#888;
+  font-size:13px;
+  margin-top:5px;
 }
 
-.progressBar{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg,#ff2020,#ff6b6b);
-    transition:.2s;
+.toolbar-right{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
-.providerStatus{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-bottom:15px;
-}
-
-.provider{
-    background:#0b0b0b;
-    border:1px solid #252525;
-    border-radius:11px;
-    padding:12px;
-}
-
-.providerHead{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:7px;
-}
-
-.providerName{
-    font-size:12px;
-    font-weight:800;
-}
-
-.dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#555;
-}
-
-.dot.on{
-    background:var(--green);
-    box-shadow:0 0 10px rgba(37,211,102,.5);
-}
-
-.dot.wait{
-    background:var(--yellow);
-}
-
-.dot.off{
-    background:#ff3c3c;
-}
-
-.providerInfo{
-    color:#777;
-    font-size:10px;
-    line-height:1.6;
-}
-
-.queueHeader{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin:20px 0 10px;
-}
-
-.queueHeader h2{
-    font-size:16px;
-}
-
-.queueCount{
-    color:#777;
-    font-size:11px;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:18px;
+  padding-bottom:80px;
 }
 
 .card{
-    background:#0c0c0c;
-    border:1px solid #252525;
-    border-radius:12px;
-    overflow:hidden;
+  background:#101010;
+  border:1px solid #262626;
+  border-radius:15px;
+  overflow:hidden;
 }
 
-.cardImage{
-    width:100%;
-    height:170px;
-    object-fit:cover;
-    background:#050505;
-    display:block;
+.card-image{
+  width:100%;
+  height:210px;
+  object-fit:cover;
+  display:block;
+  background:#181818;
 }
 
-.cardBody{
-    padding:12px;
+.card-body{
+  padding:17px;
 }
 
-.cardTop{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    align-items:center;
-    margin-bottom:9px;
-}
-
-.fileName{
-    font-size:12px;
-    font-weight:800;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+.card-name{
+  font-size:14px;
+  color:#bbb;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  margin-bottom:13px;
 }
 
 .status{
-    flex-shrink:0;
-    font-size:9px;
-    padding:4px 7px;
-    border-radius:999px;
-    background:#222;
-    color:#999;
+  padding:10px;
+  border-radius:8px;
+  background:#171717;
+  color:#999;
+  font-size:13px;
+  margin-bottom:12px;
 }
 
-.status.done{
-    color:#5bf08b;
-    background:rgba(37,211,102,.08);
+.status.loading{
+  color:#ffb3b6;
+  background:#1d0d0e;
+}
+
+.status.success{
+  color:#63e68a;
+  background:#0c1d12;
 }
 
 .status.error{
-    color:#ff6464;
-    background:rgba(255,0,0,.08);
+  color:#ff7777;
+  background:#210d0d;
 }
 
-.status.processing{
-    color:#ffc94a;
-    background:rgba(255,193,7,.08);
+.meta{
+  display:none;
 }
 
-.status.retry{
-    color:#7eb5ff;
-    background:rgba(59,130,246,.08);
+.meta.show{
+  display:block;
 }
 
-.metaRow{
-    margin-bottom:7px;
+.meta-item{
+  margin-bottom:13px;
 }
 
-.metaLabel{
-    font-size:9px;
-    color:#666;
-    text-transform:uppercase;
-    margin-bottom:3px;
+.meta-label{
+  font-size:11px;
+  text-transform:uppercase;
+  color:#666;
+  margin-bottom:5px;
 }
 
-.metaText{
-    color:#ccc;
-    font-size:11px;
-    line-height:1.5;
-    word-break:break-word;
+.meta-value{
+  font-size:14px;
+  line-height:1.5;
+  color:#ddd;
+  word-break:break-word;
 }
 
 .keywords{
-    color:#aaa;
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
 }
 
-.cardError{
-    color:#ff6868;
-    font-size:10px;
-    line-height:1.5;
-    background:#180909;
-    border:1px solid #391010;
-    padding:8px;
-    border-radius:7px;
-    margin-top:8px;
+.keyword{
+  background:#1c1c1c;
+  border:1px solid #303030;
+  color:#bbb;
+  padding:4px 7px;
+  border-radius:5px;
+  font-size:11px;
+}
+
+.card-actions{
+  display:flex;
+  gap:7px;
+  margin-top:15px;
+}
+
+.card-actions button{
+  flex:1;
 }
 
 .empty{
-    text-align:center;
-    color:#666;
-    padding:50px 20px;
-    border:1px dashed #292929;
-    border-radius:13px;
+  text-align:center;
+  padding:70px 20px;
+  color:#555;
 }
 
-.footerNote{
-    color:#555;
-    font-size:10px;
-    margin-top:18px;
-    line-height:1.6;
+.empty-icon{
+  font-size:45px;
+  margin-bottom:15px;
 }
 
-.hidden{
-    display:none!important;
+footer{
+  border-top:1px solid #222;
+  padding:30px;
+  text-align:center;
+  color:#555;
+  font-size:13px;
 }
 
-@media(max-width:1000px){
-    .grid{
-        grid-template-columns:1fr;
-    }
+/* SETTINGS */
 
-    .cards{
-        grid-template-columns:1fr;
-    }
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:90;
+  display:none;
+}
 
-    .stats{
-        grid-template-columns:repeat(3,1fr);
-    }
+.overlay.show{
+  display:block;
+}
+
+.settings{
+  position:fixed;
+  right:0;
+  top:0;
+  height:100vh;
+  width:min(470px,95%);
+  background:#0e0e0e;
+  border-left:1px solid #292929;
+  z-index:100;
+  transform:translateX(100%);
+  transition:.3s;
+  overflow-y:auto;
+}
+
+.settings.open{
+  transform:translateX(0);
+}
+
+.settings-head{
+  padding:22px;
+  border-bottom:1px solid #242424;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  background:#0e0e0e;
+  z-index:2;
+}
+
+.close{
+  background:none;
+  border:0;
+  color:#aaa;
+  font-size:25px;
+}
+
+.settings-body{
+  padding:22px;
+}
+
+.section{
+  margin-bottom:25px;
+}
+
+.section-title{
+  font-size:13px;
+  color:#888;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  margin-bottom:12px;
+}
+
+.field{
+  margin-bottom:15px;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:7px;
+}
+
+input,select,textarea{
+  width:100%;
+  background:#151515;
+  border:1px solid #303030;
+  color:#fff;
+  border-radius:8px;
+  padding:11px 12px;
+  outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:#e50914;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.api-box{
+  background:#121212;
+  border:1px solid #292929;
+  padding:15px;
+  border-radius:12px;
+}
+
+.provider-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-bottom:18px;
+}
+
+.provider-tab{
+  padding:11px;
+  border-radius:8px;
+  background:#171717;
+  color:#aaa;
+  border:1px solid #303030;
+}
+
+.provider-tab.active{
+  background:#e50914;
+  border-color:#e50914;
+  color:#fff;
+}
+
+.provider-section{
+  display:none;
+}
+
+.provider-section.active{
+  display:block;
+}
+
+.api-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+.api-title span{
+  color:#63e68a;
+  font-size:11px;
+}
+
+.api-help{
+  color:#777;
+  font-size:12px;
+  line-height:1.5;
+  margin-bottom:13px;
+}
+
+.get-key{
+  display:block;
+  text-align:center;
+  margin-bottom:12px;
+  color:#ff525a;
+  text-decoration:none;
+  font-size:13px;
+}
+
+.api-row{
+  display:flex;
+  gap:7px;
+  margin-bottom:8px;
+}
+
+.api-row input{
+  flex:1;
+}
+
+.api-remove{
+  width:42px;
+  background:#211010;
+  border:1px solid #432020;
+  color:#ff6c6c;
+  border-radius:8px;
+}
+
+.api-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+
+.save-api{
+  width:100%;
+  margin-top:9px;
+}
+
+.key-status{
+  font-size:12px;
+  color:#777;
+  margin-top:10px;
+  line-height:1.5;
+}
+
+.ai-mode{
+  background:#0e1711;
+  border:1px solid #203a27;
+  color:#79e59b;
+  padding:12px;
+  border-radius:9px;
+  font-size:12px;
+  line-height:1.5;
+  margin-top:12px;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  z-index:150;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(700px,100%);
+  max-height:90vh;
+  overflow-y:auto;
+  background:#111;
+  border:1px solid #2d2d2d;
+  border-radius:15px;
+}
+
+.modal-head{
+  padding:18px;
+  border-bottom:1px solid #282828;
+  display:flex;
+  justify-content:space-between;
+}
+
+.modal-body{
+  padding:18px;
+}
+
+.modal-footer{
+  padding:15px 18px;
+  border-top:1px solid #282828;
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+}
+
+/* SUPPORT */
+
+.support{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:70;
+}
+
+.support-btn{
+  border:0;
+  background:#20c76a;
+  color:#fff;
+  padding:12px 17px;
+  border-radius:50px;
+  font-weight:700;
+}
+
+.support-panel{
+  display:none;
+  position:absolute;
+  right:0;
+  bottom:55px;
+  width:250px;
+  background:#111;
+  border:1px solid #303030;
+  border-radius:13px;
+  padding:16px;
+}
+
+.support-panel.show{
+  display:block;
+}
+
+.support-panel h3{
+  margin-bottom:7px;
+}
+
+.support-panel p{
+  color:#888;
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:12px;
+}
+
+.whatsapp{
+  display:block;
+  text-align:center;
+  background:#20c76a;
+  color:#fff;
+  text-decoration:none;
+  padding:10px;
+  border-radius:8px;
+  font-weight:700;
 }
 
 @media(max-width:600px){
-    .header{
-        padding:0 15px;
-    }
 
-    .container{
-        padding:15px;
-    }
+  .header{
+    padding:0 4%;
+  }
 
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
+  .hero{
+    padding-top:45px;
+  }
 
-    .providerStatus{
-        grid-template-columns:1fr;
-    }
+  .hero h1{
+    font-size:42px;
+  }
+
+  .toolbar{
+    align-items:stretch;
+  }
+
+  .toolbar-right{
+    width:100%;
+  }
+
+  .toolbar-right button{
+    flex:1;
+  }
 }
 </style>
 </head>
@@ -579,2954 +671,3317 @@ input[type="range"]{
 <body>
 
 <header class="header">
-    <div class="logo">
-        <div class="logoIcon">S</div>
-        <span>StockMeta AI</span>
-    </div>
 
-    <div class="headerRight">
-        <div class="modeBadge">⚡ FAST MODE</div>
-    </div>
+  <div class="logo">
+    <div class="logo-icon">S</div>
+    <span>StockMeta AI</span>
+  </div>
+
+  <div class="nav">
+    <button class="btn" onclick="openSettings()">⚙ Settings</button>
+    <button class="btn btn-red" onclick="openFilePicker()">＋ Upload</button>
+  </div>
+
 </header>
 
-<main class="container">
-
-    <section class="hero">
-        <h1>AI Stock Metadata Generator</h1>
-        <p>
-            Upload up to 500 images and generate stock-ready title,
-            description, keywords and category using a smart multi-provider queue.
-        </p>
-    </section>
-
-    <div class="grid">
-
-        <!-- SETTINGS -->
-        <aside>
-
-            <div class="panel">
-
-                <div class="panelTitle">
-                    <span>⚙ Settings</span>
-                </div>
-
-                <div class="setting">
-                    <label>Fast Mode</label>
-
-                    <select id="mode">
-                        <option value="fast">⚡ Fast Mode</option>
-                        <option value="safe">🛡 Safe Mode</option>
-                    </select>
-
-                    <div class="small">
-                        Fast Mode uses one active request per provider simultaneously.
-                    </div>
-                </div>
-
-                <div class="setting">
-                    <label>Preferred Provider</label>
-
-                    <select id="preferredProvider">
-                        <option value="auto">Auto / Smart Queue</option>
-                        <option value="gemini">Gemini</option>
-                        <option value="groq">Groq</option>
-                    </select>
-                </div>
-
-                <div class="setting">
-                    <label>Keywords</label>
-
-                    <input
-                        type="number"
-                        id="keywordCount"
-                        value="35"
-                        min="10"
-                        max="50"
-                    >
+<main>
 
-                    <div class="small">
-                        10–50 keywords per image.
-                    </div>
-                </div>
+<section class="hero">
 
-                <div class="setting">
-                    <label>Minimum Delay Between Requests</label>
+  <div class="badge">
+    AI Stock Metadata Generator
+  </div>
 
-                    <select id="requestDelay">
-                        <option value="0">Automatic</option>
-                        <option value="500">0.5 second</option>
-                        <option value="1000">1 second</option>
-                        <option value="1500">1.5 seconds</option>
-                        <option value="2000">2 seconds</option>
-                        <option value="3000">3 seconds</option>
-                    </select>
+  <h1>
+    Create <span>Stock Metadata</span><br>
+    in Seconds
+  </h1>
 
-                    <div class="small">
-                        Smart Queue automatically adds delay when rate limits are detected.
-                    </div>
-                </div>
+  <p>
+    Generate SEO-friendly titles, descriptions,
+    keywords and categories for your stock images
+    using Gemini 2.5 Flash + Groq Vision.
+  </p>
 
-                <div class="setting">
-                    <label>Maximum Images</label>
+</section>
 
-                    <input
-                        type="number"
-                        value="500"
-                        disabled
-                    >
+<section class="container">
 
-                    <div class="small">
-                        Maximum 500 images per run.
-                    </div>
-                </div>
+<div
+  class="upload-box"
+  id="uploadBox"
+  onclick="openFilePicker()"
+>
 
-            </div>
+  <div class="upload-icon">🖼️</div>
 
-            <br>
+  <h2>Upload Your Images</h2>
 
-            <!-- GEMINI -->
-            <div class="panel">
+  <p>PNG, JPG, JPEG or WEBP — up to 500 images</p>
 
-                <div class="panelTitle">
-                    <span>🔵 Gemini API</span>
-                </div>
+  <button
+    class="btn btn-red"
+    onclick="event.stopPropagation();openFilePicker()"
+  >
+    Choose Images
+  </button>
 
-                <div class="apiBox">
+  <div class="upload-info">
+    Upload first. Metadata generation starts only
+    when you click Generate Metadata.
+  </div>
 
-                    <div class="apiTitle">
-                        Gemini Model
-                    </div>
+</div>
 
-                    <select id="geminiModel">
-                        <option value="gemini-2.5-flash">
-                            gemini-2.5-flash
-                        </option>
-                        <option value="gemini-2.5-flash-lite">
-                            gemini-2.5-flash-lite
-                        </option>
-                    </select>
+<input
+  id="fileInput"
+  class="file-input"
+  type="file"
+  accept="image/png,image/jpeg,image/jpg,image/webp"
+  multiple
+>
 
-                </div>
+<div class="toolbar">
 
-                <div class="apiBox">
+  <div>
 
-                    <div class="apiTitle">
-                        Gemini API Key
-                    </div>
-
-                    <input
-                        type="password"
-                        id="geminiKey"
-                        placeholder="AIza..."
-                    >
-
-                    <div id="geminiStatus" class="apiStatus">
-                        Not configured
-                    </div>
-
-                </div>
-
-            </div>
-
-            <br>
-
-            <!-- GROQ -->
-            <div class="panel">
-
-                <div class="panelTitle">
-                    <span>🟠 Groq API</span>
-                </div>
-
-                <div class="apiBox">
-
-                    <div class="apiTitle">
-                        Groq Model
-                    </div>
-
-                    <select id="groqModel">
-
-                        <option value="qwen/qwen3.8-27b">
-                            qwen/qwen3.8-27b — Strict Schema
-                        </option>
-
-                        <option value="qwen/qwen3.6-27b">
-                            qwen/qwen3.6-27b — JSON Mode
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div class="apiBox">
-
-                    <div class="apiTitle">
-                        Groq API Key
-                    </div>
-
-                    <input
-                        type="password"
-                        id="groqKey"
-                        placeholder="gsk_..."
-                    >
-
-                    <div id="groqStatus" class="apiStatus">
-                        Not configured
-                    </div>
-
-                </div>
-
-            </div>
-
-        </aside>
-
-        <!-- MAIN -->
-        <section>
-
-            <div class="panel">
-
-                <div
-                    class="dropZone"
-                    id="dropZone"
-                >
-
-                    <div class="dropInner">
-
-                        <h2>Drop images here</h2>
-
-                        <p>
-                            PNG, JPG, JPEG, WEBP • Up to 500 images
-                        </p>
-
-                        <label
-                            for="fileInput"
-                            class="uploadBtn"
-                        >
-                            + Select Images
-                        </label>
-
-                        <input
-                            type="file"
-                            id="fileInput"
-                            accept="image/png,image/jpeg,image/webp"
-                            multiple
-                        >
-
-                    </div>
-
-                </div>
-
-                <div class="toolbar">
-
-                    <button
-                        class="btn primary"
-                        id="startBtn"
-                    >
-                        ⚡ Start Fast Generation
-                    </button>
-
-                    <button
-                        class="btn danger"
-                        id="stopBtn"
-                        disabled
-                    >
-                        ■ Stop
-                    </button>
-
-                    <button
-                        class="btn green"
-                        id="csvBtn"
-                        disabled
-                    >
-                        ↓ Export CSV
-                    </button>
-
-                    <button
-                        class="btn"
-                        id="retryBtn"
-                        disabled
-                    >
-                        ↻ Retry Failed
-                    </button>
-
-                    <button
-                        class="btn"
-                        id="clearBtn"
-                    >
-                        Clear
-                    </button>
-
-                </div>
-
-                <!-- STATS -->
-                <div class="stats">
-
-                    <div class="stat">
-                        <div class="statLabel">Total</div>
-                        <div class="statValue" id="totalCount">0</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="statLabel">Done</div>
-                        <div class="statValue" id="doneCount">0</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="statLabel">Processing</div>
-                        <div class="statValue" id="processingCount">0</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="statLabel">Failed</div>
-                        <div class="statValue" id="failedCount">0</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="statLabel">Queue</div>
-                        <div class="statValue" id="queueCount">0</div>
-                    </div>
-
-                </div>
-
-                <!-- PROGRESS -->
-                <div class="progressBox">
-
-                    <div class="progressTop">
-
-                        <span id="progressText">
-                            Ready
-                        </span>
-
-                        <span id="progressPercent">
-                            0%
-                        </span>
-
-                    </div>
-
-                    <div class="progress">
-                        <div
-                            class="progressBar"
-                            id="progressBar"
-                        ></div>
-                    </div>
-
-                </div>
-
-                <!-- PROVIDER STATUS -->
-                <div class="providerStatus">
-
-                    <div class="provider">
-
-                        <div class="providerHead">
-
-                            <span class="providerName">
-                                🔵 Gemini Worker
-                            </span>
-
-                            <span
-                                class="dot"
-                                id="geminiDot"
-                            ></span>
-
-                        </div>
-
-                        <div
-                            class="providerInfo"
-                            id="geminiInfo"
-                        >
-                            Waiting
-                        </div>
-
-                    </div>
-
-                    <div class="provider">
-
-                        <div class="providerHead">
-
-                            <span class="providerName">
-                                🟠 Groq Worker
-                            </span>
-
-                            <span
-                                class="dot"
-                                id="groqDot"
-                            ></span>
-
-                        </div>
-
-                        <div
-                            class="providerInfo"
-                            id="groqInfo"
-                        >
-                            Waiting
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- QUEUE -->
-                <div class="queueHeader">
-
-                    <h2>Smart Queue</h2>
-
-                    <span
-                        class="queueCount"
-                        id="queueText"
-                    >
-                        0 images
-                    </span>
-
-                </div>
-
-                <div id="cards" class="cards">
-
-                    <div class="empty">
-                        Upload images to start.
-                    </div>
-
-                </div>
-
-                <div class="footerNote">
-                    ⚠ API keys are used directly from your browser in this client-only version.
-                    For a public production website, move API calls to a backend/serverless proxy.
-                </div>
-
-            </div>
-
-        </section>
-
+    <div class="counter" id="counter">
+      0 / 500 images
     </div>
 
+    <div class="progress" id="progress"></div>
+
+  </div>
+
+  <div class="toolbar-right">
+
+    <button
+      class="btn btn-red"
+      id="generateAllBtn"
+      onclick="generateAll()"
+    >
+      ✨ Generate Metadata
+    </button>
+
+    <button class="btn" onclick="exportCSV()">
+      ⬇ Export CSV
+    </button>
+
+    <button class="btn" onclick="clearAll()">
+      Clear All
+    </button>
+
+  </div>
+
+</div>
+
+<div id="grid" class="grid"></div>
+
+<div id="emptyState" class="empty">
+
+  <div class="empty-icon">📷</div>
+
+  <h3>No images uploaded</h3>
+
+  <p>
+    Upload images first, then click Generate Metadata.
+  </p>
+
+</div>
+
+</section>
+
 </main>
+
+<footer>
+  StockMeta AI © 2026 —
+  Browser-based AI Stock Metadata Generator
+</footer>
+
+
+<!-- SETTINGS -->
+
+<div
+  class="overlay"
+  id="overlay"
+  onclick="closeSettings()"
+></div>
+
+<aside
+  class="settings"
+  id="settings"
+>
+
+<div class="settings-head">
+
+  <h2>Settings</h2>
+
+  <button class="close" onclick="closeSettings()">×</button>
+
+</div>
+
+<div class="settings-body">
+
+
+<!-- AI SETTINGS -->
+
+<div class="section">
+
+<div class="section-title">
+  AI Providers
+</div>
+
+<div class="api-box">
+
+  <div class="provider-tabs">
+
+    <button
+      id="geminiTab"
+      class="provider-tab active"
+      onclick="switchProvider('gemini')"
+    >
+      🔵 Gemini
+    </button>
+
+    <button
+      id="groqTab"
+      class="provider-tab"
+      onclick="switchProvider('groq')"
+    >
+      🟣 Groq
+    </button>
+
+  </div>
+
+
+<!-- GEMINI -->
+
+<div
+  id="geminiSection"
+  class="provider-section active"
+>
+
+  <div class="api-title">
+
+    <strong>
+      Gemini 2.5 Flash
+    </strong>
+
+    <span>ACTIVE</span>
+
+  </div>
+
+  <div class="api-help">
+    Add your own Gemini API keys. You can add multiple keys.
+    Keys are used automatically by the smart queue.
+  </div>
+
+  <a
+    class="get-key"
+    href="https://aistudio.google.com/apikey"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    🔑 Get Gemini API Key
+  </a>
+
+  <div id="geminiKeys"></div>
+
+  <div class="api-actions">
+
+    <button
+      class="btn"
+      onclick="addApiKey('gemini')"
+    >
+      ＋ Add Gemini Key
+    </button>
+
+    <button
+      class="btn btn-green"
+      onclick="testApiKeys('gemini')"
+    >
+      🧪 Test
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- GROQ -->
+
+<div
+  id="groqSection"
+  class="provider-section"
+>
+
+  <div class="api-title">
+
+    <strong>
+      Groq Vision
+    </strong>
+
+    <span>ACTIVE</span>
+
+  </div>
+
+  <div class="api-help">
+    Add your own Groq API keys. Groq is used together
+    with Gemini for faster parallel processing.
+  </div>
+
+  <a
+    class="get-key"
+    href="https://console.groq.com/keys"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    🔑 Get Groq API Key
+  </a>
+
+  <div id="groqKeys"></div>
+
+  <div class="api-actions">
+
+    <button
+      class="btn"
+      onclick="addApiKey('groq')"
+    >
+      ＋ Add Groq Key
+    </button>
+
+    <button
+      class="btn btn-green"
+      onclick="testApiKeys('groq')"
+    >
+      🧪 Test
+    </button>
+
+  </div>
+
+</div>
+
+
+<button
+  class="btn btn-red save-api"
+  onclick="saveAllApiKeys()"
+>
+  💾 Save All API Keys
+</button>
+
+<div class="key-status" id="keyStatus"></div>
+
+<div class="ai-mode">
+  ⚡ <b>Smart Parallel Mode</b><br>
+  Gemini + Groq work together automatically.
+  You don't need to choose an AI when generating metadata.
+</div>
+
+</div>
+
+</div>
+
+
+<!-- STOCK SETTINGS -->
+
+<div class="section">
+
+<div class="section-title">
+  Stock Settings
+</div>
+
+<div class="field">
+
+<label>Stock Site</label>
+
+<select id="stockSite">
+
+<option>Adobe Stock</option>
+<option>Shutterstock</option>
+<option>Freepik</option>
+<option>iStock</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Title Style</label>
+
+<select id="titleStyle">
+
+<option value="SEO">SEO Optimized</option>
+<option value="Simple">Simple</option>
+<option value="Descriptive">Descriptive</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Description Length</label>
+
+<select id="descriptionLength">
+
+<option value="Short">Short</option>
+<option value="Medium">Medium</option>
+<option value="Long">Long</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Keyword Count</label>
+
+<input
+  id="keywordCount"
+  type="number"
+  min="5"
+  max="50"
+  value="35"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Custom Instructions</label>
+
+<textarea
+  id="customInstructions"
+  placeholder="Example: Use commercial stock photography keywords."
+></textarea>
+
+</div>
+
+
+<button
+  class="btn btn-red"
+  style="width:100%"
+  onclick="saveSettings()"
+>
+  💾 Save Settings
+</button>
+
+</div>
+
+</div>
+
+</aside>
+
+
+<!-- EDIT MODAL -->
+
+<div
+  class="modal"
+  id="editModal"
+>
+
+<div class="modal-box">
+
+<div class="modal-head">
+
+<strong>Edit Metadata</strong>
+
+<button
+  class="close"
+  onclick="closeEdit()"
+>
+  ×
+</button>
+
+</div>
+
+<div class="modal-body">
+
+<div class="field">
+
+<label>Title</label>
+
+<input id="editTitle">
+
+</div>
+
+<div class="field">
+
+<label>Description</label>
+
+<textarea id="editDescription"></textarea>
+
+</div>
+
+<div class="field">
+
+<label>Keywords</label>
+
+<textarea id="editKeywords"></textarea>
+
+</div>
+
+<div class="field">
+
+<label>Category</label>
+
+<input id="editCategory">
+
+</div>
+
+</div>
+
+<div class="modal-footer">
+
+<button
+  class="btn"
+  onclick="closeEdit()"
+>
+  Cancel
+</button>
+
+<button
+  class="btn btn-red"
+  onclick="saveEdit()"
+>
+  Save Changes
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SUPPORT -->
+
+<div class="support">
+
+<div
+  class="support-panel"
+  id="supportPanel"
+>
+
+<h3>Need Support?</h3>
+
+<p>
+  Contact StockMeta AI support directly on WhatsApp.
+</p>
+
+<a
+  class="whatsapp"
+  href="https://wa.me/8801968696236?text=Hello%20StockMeta%20AI%20Support"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  💬 WhatsApp Support
+</a>
+
+</div>
+
+<button
+  class="support-btn"
+  onclick="toggleSupport()"
+>
+  💬 Support
+</button>
+
+</div>
+
 
 <script>
 
 /* =========================================================
-   STOCKMETA AI
-   FAST MODE + SMART QUEUE
-   ========================================================= */
+   CONFIG
+========================================================= */
+
+const GEMINI_MODEL = "gemini-2.5-flash";
+
+/*
+  Groq vision model.
+  This is the model used for image understanding.
+*/
+const GROQ_MODEL = "qwen/qwen3.6-27b";
 
 const MAX_IMAGES = 500;
 
-const GEMINI_ENDPOINT =
-    "https://generativelanguage.googleapis.com/v1beta/models/";
+/*
+  Gemini + Groq workers together.
+  Increase carefully because provider rate limits still apply.
+*/
+const CONCURRENCY = 4;
 
-const GROQ_ENDPOINT =
-    "https://api.groq.com/openai/v1/chat/completions";
+const MAX_IMAGE_SIZE = 1600;
+const JPEG_QUALITY = 0.82;
+const MAX_RETRIES = 2;
 
 
 /* =========================================================
-   JSON SCHEMA
-   ========================================================= */
+   STORAGE
+========================================================= */
 
-const METADATA_SCHEMA = {
+const GEMINI_KEY_STORAGE =
+  "stockmeta_gemini25_flash_keys";
 
-    type: "object",
+const GROQ_KEY_STORAGE =
+  "stockmeta_groq_keys";
 
-    properties: {
-
-        title: {
-            type: "string",
-            description:
-                "A concise commercial stock image title."
-        },
-
-        description: {
-            type: "string",
-            description:
-                "A natural stock description describing the main visual content, subject, setting and useful visual context."
-        },
-
-        category: {
-            type: "string",
-            enum: [
-                "Animals",
-                "Buildings and Architecture",
-                "Business",
-                "Drinks",
-                "The Environment",
-                "Food",
-                "Graphic Resources",
-                "Hobbies and Leisure",
-                "Industry",
-                "Landscape",
-                "Lifestyle",
-                "People",
-                "Plants and Flowers",
-                "Science",
-                "Social Issues",
-                "Sports",
-                "Technology",
-                "Transportation",
-                "Travel"
-            ]
-        },
-
-        keywords: {
-            type: "array",
-            items: {
-                type: "string"
-            },
-            description:
-                "Relevant stock-search keywords ordered from most important to least important."
-        }
-
-    },
-
-    required: [
-        "title",
-        "description",
-        "category",
-        "keywords"
-    ],
-
-    additionalProperties: false
-};
+const SETTINGS_STORAGE =
+  "stockmeta_settings";
 
 
 /* =========================================================
    STATE
-   ========================================================= */
+========================================================= */
 
-const state = {
+let images = [];
 
-    items: [],
+let geminiKeys = [""];
+let groqKeys = [""];
 
-    running: false,
+let editingIndex = null;
 
-    stopRequested: false,
+let generationRunning = false;
 
-    workers: {
+let generatedCount = 0;
+let failedCount = 0;
 
-        gemini: {
-            busy: false,
-            cooldownUntil: 0,
-            consecutive429: 0,
-            disabled: false,
-            completed: 0
-        },
-
-        groq: {
-            busy: false,
-            cooldownUntil: 0,
-            consecutive429: 0,
-            disabled: false,
-            completed: 0
-        }
-
-    }
-
-};
+let geminiPointer = 0;
+let groqPointer = 0;
 
 
 /* =========================================================
    ELEMENTS
-   ========================================================= */
+========================================================= */
 
 const fileInput =
-    document.getElementById("fileInput");
+  document.getElementById("fileInput");
 
-const dropZone =
-    document.getElementById("dropZone");
+const uploadBox =
+  document.getElementById("uploadBox");
 
-const cards =
-    document.getElementById("cards");
+const grid =
+  document.getElementById("grid");
 
-const startBtn =
-    document.getElementById("startBtn");
+const emptyState =
+  document.getElementById("emptyState");
 
-const stopBtn =
-    document.getElementById("stopBtn");
+const counter =
+  document.getElementById("counter");
 
-const csvBtn =
-    document.getElementById("csvBtn");
+const progress =
+  document.getElementById("progress");
 
-const retryBtn =
-    document.getElementById("retryBtn");
-
-const clearBtn =
-    document.getElementById("clearBtn");
-
-const geminiKeyInput =
-    document.getElementById("geminiKey");
-
-const groqKeyInput =
-    document.getElementById("groqKey");
-
-const geminiModelInput =
-    document.getElementById("geminiModel");
-
-const groqModelInput =
-    document.getElementById("groqModel");
-
-const keywordCountInput =
-    document.getElementById("keywordCount");
-
-const preferredProviderInput =
-    document.getElementById("preferredProvider");
-
-const modeInput =
-    document.getElementById("mode");
-
-const requestDelayInput =
-    document.getElementById("requestDelay");
+const generateAllBtn =
+  document.getElementById("generateAllBtn");
 
 
 /* =========================================================
-   LOCAL STORAGE
-   ========================================================= */
+   INIT
+========================================================= */
 
-geminiKeyInput.value =
-    localStorage.getItem("stockmeta_gemini_key") || "";
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-groqKeyInput.value =
-    localStorage.getItem("stockmeta_groq_key") || "";
+    loadSettings();
+    loadSavedApiKeys();
 
-geminiModelInput.value =
-    localStorage.getItem("stockmeta_gemini_model") ||
-    "gemini-2.5-flash";
+    renderProviderKeys("gemini");
+    renderProviderKeys("groq");
 
-groqModelInput.value =
-    localStorage.getItem("stockmeta_groq_model") ||
-    "qwen/qwen3.8-27b";
+    updateUI();
 
-keywordCountInput.value =
-    localStorage.getItem("stockmeta_keywords") ||
-    "35";
+  }
+);
+
+
+/* =========================================================
+   PROVIDER TABS
+========================================================= */
+
+function switchProvider(provider){
+
+  const geminiTab =
+    document.getElementById("geminiTab");
+
+  const groqTab =
+    document.getElementById("groqTab");
+
+  const geminiSection =
+    document.getElementById("geminiSection");
+
+  const groqSection =
+    document.getElementById("groqSection");
+
+  if(provider === "gemini"){
+
+    geminiTab.classList.add("active");
+    groqTab.classList.remove("active");
+
+    geminiSection.classList.add("active");
+    groqSection.classList.remove("active");
+
+  }else{
+
+    groqTab.classList.add("active");
+    geminiTab.classList.remove("active");
+
+    groqSection.classList.add("active");
+    geminiSection.classList.remove("active");
+
+  }
+}
+
+
+/* =========================================================
+   API KEY STORAGE
+========================================================= */
+
+function loadSavedApiKeys(){
+
+  try{
+
+    const geminiSaved =
+      localStorage.getItem(GEMINI_KEY_STORAGE);
+
+    const groqSaved =
+      localStorage.getItem(GROQ_KEY_STORAGE);
+
+    if(geminiSaved){
+
+      const parsed =
+        JSON.parse(geminiSaved);
+
+      if(Array.isArray(parsed) && parsed.length){
+        geminiKeys = parsed;
+      }
+
+    }
+
+    if(groqSaved){
+
+      const parsed =
+        JSON.parse(groqSaved);
+
+      if(Array.isArray(parsed) && parsed.length){
+        groqKeys = parsed;
+      }
+
+    }
+
+  }catch(error){
+
+    console.warn(
+      "Could not load saved API keys",
+      error
+    );
+
+  }
+}
+
+
+function renderProviderKeys(provider){
+
+  const container =
+    document.getElementById(
+      provider === "gemini"
+        ? "geminiKeys"
+        : "groqKeys"
+    );
+
+  const keys =
+    provider === "gemini"
+      ? geminiKeys
+      : groqKeys;
+
+  container.innerHTML = "";
+
+  keys.forEach((key,index)=>{
+
+    const row =
+      document.createElement("div");
+
+    row.className = "api-row";
+
+    const input =
+      document.createElement("input");
+
+    input.type = "password";
+    input.value = key;
+    input.placeholder =
+      provider === "gemini"
+        ? "Enter Gemini API Key"
+        : "Enter Groq API Key";
+
+    /*
+      IMPORTANT:
+      Typing does NOT save to localStorage.
+    */
+
+    input.oninput = function(){
+
+      if(provider === "gemini"){
+        geminiKeys[index] =
+          this.value.trim();
+      }else{
+        groqKeys[index] =
+          this.value.trim();
+      }
+
+    };
+
+    row.appendChild(input);
+
+    if(keys.length > 1){
+
+      const remove =
+        document.createElement("button");
+
+      remove.className = "api-remove";
+      remove.textContent = "✕";
+
+      remove.onclick = function(){
+
+        removeApiKey(provider,index);
+
+      };
+
+      row.appendChild(remove);
+
+    }
+
+    container.appendChild(row);
+
+  });
+}
+
+
+function addApiKey(provider){
+
+  if(provider === "gemini"){
+
+    geminiKeys.push("");
+    renderProviderKeys("gemini");
+
+  }else{
+
+    groqKeys.push("");
+    renderProviderKeys("groq");
+
+  }
+}
+
+
+function removeApiKey(provider,index){
+
+  if(provider === "gemini"){
+
+    geminiKeys.splice(index,1);
+
+    if(!geminiKeys.length){
+      geminiKeys.push("");
+    }
+
+    renderProviderKeys("gemini");
+
+  }else{
+
+    groqKeys.splice(index,1);
+
+    if(!groqKeys.length){
+      groqKeys.push("");
+    }
+
+    renderProviderKeys("groq");
+
+  }
+}
+
+
+/*
+  ONLY this function permanently saves API keys.
+*/
+
+function saveAllApiKeys(){
+
+  const cleanGemini =
+    geminiKeys
+      .map(k => k.trim())
+      .filter(Boolean);
+
+  const cleanGroq =
+    groqKeys
+      .map(k => k.trim())
+      .filter(Boolean);
+
+  localStorage.setItem(
+    GEMINI_KEY_STORAGE,
+    JSON.stringify(cleanGemini)
+  );
+
+  localStorage.setItem(
+    GROQ_KEY_STORAGE,
+    JSON.stringify(cleanGroq)
+  );
+
+  document.getElementById("keyStatus").textContent =
+    `Saved: ${cleanGemini.length} Gemini key(s) + ${cleanGroq.length} Groq key(s).`;
+
+  alert(
+    `API Keys saved successfully!\n\n` +
+    `Gemini: ${cleanGemini.length}\n` +
+    `Groq: ${cleanGroq.length}`
+  );
+}
+
+
+/* =========================================================
+   GET ACTIVE KEYS
+========================================================= */
+
+function getSavedKeys(provider){
+
+  const storageKey =
+    provider === "gemini"
+      ? GEMINI_KEY_STORAGE
+      : GROQ_KEY_STORAGE;
+
+  try{
+
+    const saved =
+      localStorage.getItem(storageKey);
+
+    if(saved){
+
+      const parsed =
+        JSON.parse(saved);
+
+      if(Array.isArray(parsed)){
+        return parsed.filter(Boolean);
+      }
+
+    }
+
+  }catch{}
+
+  return [];
+}
+
+
+/*
+  If user has typed keys but hasn't clicked Save,
+  they are still usable in the current session.
+*/
+
+function getSessionKeys(provider){
+
+  const saved =
+    getSavedKeys(provider);
+
+  const current =
+    provider === "gemini"
+      ? geminiKeys
+      : groqKeys;
+
+  if(saved.length){
+    return saved;
+  }
+
+  return current
+    .map(k => k.trim())
+    .filter(Boolean);
+}
+
+
+/* =========================================================
+   TEST API KEYS
+========================================================= */
+
+async function testApiKeys(provider){
+
+  const keys =
+    getSessionKeys(provider);
+
+  if(!keys.length){
+
+    alert(
+      `Please enter at least one ${provider} API key first.`
+    );
+
+    return;
+  }
+
+  const testKey = keys[0];
+
+  const buttonText =
+    provider === "gemini"
+      ? "Gemini"
+      : "Groq";
+
+  try{
+
+    if(provider === "gemini"){
+
+      await callGeminiTextTest(testKey);
+
+    }else{
+
+      await callGroqTextTest(testKey);
+
+    }
+
+    alert(
+      `${buttonText} API key test successful!`
+    );
+
+  }catch(error){
+
+    alert(
+      `${buttonText} test failed:\n\n${getFriendlyError(error)}`
+    );
+
+  }
+}
+
+
+async function callGeminiTextTest(key){
+
+  const endpoint =
+    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(key)}`;
+
+  const response =
+    await fetch(endpoint,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+
+        contents:[{
+
+          parts:[{
+            text:"Reply with exactly: OK"
+          }]
+
+        }],
+
+        generationConfig:{
+          temperature:0
+        }
+
+      })
+
+    });
+
+  const text =
+    await response.text();
+
+  if(!response.ok){
+
+    throw new Error(
+      `API ${response.status}: ${text}`
+    );
+
+  }
+
+  return true;
+}
+
+
+async function callGroqTextTest(key){
+
+  const response =
+    await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method:"POST",
+
+        headers:{
+          "Authorization":`Bearer ${key}`,
+          "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+          model:GROQ_MODEL,
+
+          messages:[
+
+            {
+              role:"user",
+              content:"Reply with exactly: OK"
+            }
+
+          ],
+
+          temperature:0,
+          max_tokens:5
+
+        })
+
+      }
+    );
+
+  const text =
+    await response.text();
+
+  if(!response.ok){
+
+    throw new Error(
+      `Groq API ${response.status}: ${text}`
+    );
+
+  }
+
+  return true;
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function openSettings(){
+
+  document
+    .getElementById("overlay")
+    .classList.add("show");
+
+  document
+    .getElementById("settings")
+    .classList.add("open");
+
+}
+
+function closeSettings(){
+
+  document
+    .getElementById("overlay")
+    .classList.remove("show");
+
+  document
+    .getElementById("settings")
+    .classList.remove("open");
+
+}
 
 
 function saveSettings(){
 
-    localStorage.setItem(
-        "stockmeta_gemini_key",
-        geminiKeyInput.value.trim()
-    );
+  const settings = {
 
-    localStorage.setItem(
-        "stockmeta_groq_key",
-        groqKeyInput.value.trim()
-    );
+    stockSite:
+      document.getElementById("stockSite").value,
 
-    localStorage.setItem(
-        "stockmeta_gemini_model",
-        geminiModelInput.value
-    );
+    titleStyle:
+      document.getElementById("titleStyle").value,
 
-    localStorage.setItem(
-        "stockmeta_groq_model",
-        groqModelInput.value
-    );
+    descriptionLength:
+      document.getElementById("descriptionLength").value,
 
-    localStorage.setItem(
-        "stockmeta_keywords",
-        keywordCountInput.value
-    );
+    keywordCount:
+      document.getElementById("keywordCount").value,
 
-    updateAPIStatus();
+    customInstructions:
+      document.getElementById("customInstructions").value
+
+  };
+
+  localStorage.setItem(
+    SETTINGS_STORAGE,
+    JSON.stringify(settings)
+  );
+
+  alert("Settings saved!");
+
+  closeSettings();
 }
 
 
-[
-    geminiKeyInput,
-    groqKeyInput,
-    geminiModelInput,
-    groqModelInput,
-    keywordCountInput
-].forEach(el => {
+function loadSettings(){
 
-    el.addEventListener(
-        "change",
-        saveSettings
+  const saved =
+    localStorage.getItem(
+      SETTINGS_STORAGE
     );
 
-});
+  if(!saved) return;
 
+  try{
 
-function updateAPIStatus(){
+    const s =
+      JSON.parse(saved);
 
-    const geminiOK =
-        !!geminiKeyInput.value.trim();
+    if(s.stockSite)
+      document.getElementById("stockSite").value =
+        s.stockSite;
 
-    const groqOK =
-        !!groqKeyInput.value.trim();
+    if(s.titleStyle)
+      document.getElementById("titleStyle").value =
+        s.titleStyle;
 
-    document.getElementById("geminiStatus").textContent =
-        geminiOK
-            ? "✓ API key configured"
-            : "Not configured";
+    if(s.descriptionLength)
+      document.getElementById("descriptionLength").value =
+        s.descriptionLength;
 
-    document.getElementById("geminiStatus").style.color =
-        geminiOK ? "#55e88a" : "#777";
+    if(s.keywordCount)
+      document.getElementById("keywordCount").value =
+        s.keywordCount;
 
-    document.getElementById("groqStatus").textContent =
-        groqOK
-            ? "✓ API key configured"
-            : "Not configured";
+    if(s.customInstructions)
+      document.getElementById("customInstructions").value =
+        s.customInstructions;
 
-    document.getElementById("groqStatus").style.color =
-        groqOK ? "#55e88a" : "#777";
+  }catch{}
+
 }
-
-updateAPIStatus();
 
 
 /* =========================================================
-   FILE UPLOAD
-   ========================================================= */
+   FILE PICKER
+========================================================= */
+
+function openFilePicker(){
+
+  if(images.length >= MAX_IMAGES){
+
+    alert(
+      `Maximum ${MAX_IMAGES} images allowed.`
+    );
+
+    return;
+
+  }
+
+  fileInput.click();
+
+}
+
 
 fileInput.addEventListener(
-    "change",
-    e => addFiles(e.target.files)
+  "change",
+  event => {
+
+    handleFiles(event.target.files);
+
+    fileInput.value = "";
+
+  }
 );
 
 
-[
-    "dragenter",
-    "dragover"
-].forEach(eventName => {
+/* =========================================================
+   DRAG DROP
+========================================================= */
 
-    dropZone.addEventListener(
-        eventName,
-        e => {
+uploadBox.addEventListener(
+  "dragover",
+  event => {
 
-            e.preventDefault();
+    event.preventDefault();
 
-            dropZone.classList.add("drag");
+    uploadBox.classList.add("drag");
 
-        }
-    );
-
-});
-
-
-[
-    "dragleave",
-    "drop"
-].forEach(eventName => {
-
-    dropZone.addEventListener(
-        eventName,
-        e => {
-
-            e.preventDefault();
-
-            dropZone.classList.remove("drag");
-
-        }
-    );
-
-});
-
-
-dropZone.addEventListener(
-    "drop",
-    e => {
-
-        addFiles(e.dataTransfer.files);
-
-    }
+  }
 );
 
 
-async function addFiles(fileList){
+uploadBox.addEventListener(
+  "dragleave",
+  () => {
 
-    const files =
-        Array.from(fileList || []);
+    uploadBox.classList.remove("drag");
 
-    if(!files.length)
-        return;
+  }
+);
 
-    const remaining =
-        MAX_IMAGES - state.items.length;
 
-    if(remaining <= 0){
+uploadBox.addEventListener(
+  "drop",
+  event => {
 
-        alert(
-            "Maximum 500 images reached."
-        );
+    event.preventDefault();
 
-        return;
+    uploadBox.classList.remove("drag");
+
+    handleFiles(
+      event.dataTransfer.files
+    );
+
+  }
+);
+
+
+/* =========================================================
+   HANDLE FILES
+========================================================= */
+
+function handleFiles(fileList){
+
+  const files =
+    Array.from(fileList);
+
+  if(!files.length) return;
+
+  const remaining =
+    MAX_IMAGES - images.length;
+
+  if(remaining <= 0){
+
+    alert(
+      `Maximum ${MAX_IMAGES} images allowed.`
+    );
+
+    return;
+
+  }
+
+  const selected =
+    files.slice(0,remaining);
+
+  let added = 0;
+
+  selected.forEach(file => {
+
+    if(
+      !/^image\/(png|jpeg|jpg|webp)$/i
+      .test(file.type)
+    ){
+
+      return;
+
     }
 
-    const accepted =
-        files
-            .filter(file =>
-                file.type.startsWith("image/")
-            )
-            .slice(0, remaining);
+    const url =
+      URL.createObjectURL(file);
 
-    for(const file of accepted){
+    images.push({
 
-        const preview =
-            URL.createObjectURL(file);
+      file:file,
 
-        state.items.push({
+      url:url,
 
-            id:
-                crypto.randomUUID(),
+      name:file.name,
 
-            file,
+      status:"waiting",
 
-            preview,
+      metadata:null,
 
-            status:"queued",
+      error:"",
 
-            provider:null,
+      optimizedFile:null
 
-            attempts:0,
+    });
 
-            result:null,
+    added++;
 
-            error:null,
+  });
 
-            retryAt:0
 
-        });
+  if(files.length > remaining){
 
-    }
+    alert(
+      `Only ${MAX_IMAGES} images are allowed.`
+    );
 
-    render();
+  }
+
+
+  if(!added){
+
+    alert(
+      "No supported image files found."
+    );
+
+  }
+
+
+  updateUI();
 
 }
 
 
 /* =========================================================
-   IMAGE COMPRESSION
-   ========================================================= */
+   UI
+========================================================= */
 
-async function prepareImage(file){
+function updateUI(){
 
-    const bitmap =
-        await createImageBitmap(file);
+  counter.textContent =
+    `${images.length} / ${MAX_IMAGES} images`;
 
-    const maxSize = 1600;
+  emptyState.style.display =
+    images.length
+      ? "none"
+      : "block";
 
-    let width =
-        bitmap.width;
+  updateProgress();
 
-    let height =
-        bitmap.height;
+  renderCards();
 
-    const scale =
-        Math.min(
-            1,
-            maxSize / Math.max(width,height)
-        );
+}
 
-    width =
-        Math.round(width * scale);
 
-    height =
-        Math.round(height * scale);
+function updateProgress(){
 
-    const canvas =
-        document.createElement("canvas");
+  const total =
+    images.length;
 
-    canvas.width =
-        width;
+  const done =
+    images.filter(
+      x => x.status === "success"
+    ).length;
 
-    canvas.height =
-        height;
+  const failed =
+    images.filter(
+      x => x.status === "error"
+    ).length;
 
-    const ctx =
-        canvas.getContext("2d");
+  const loading =
+    images.filter(
+      x => x.status === "loading"
+    ).length;
 
-    ctx.drawImage(
-        bitmap,
-        0,
-        0,
-        width,
-        height
+  if(!total){
+
+    progress.textContent = "";
+
+    return;
+
+  }
+
+  progress.textContent =
+    `✓ ${done}  •  ✕ ${failed}  •  ⏳ ${loading}`;
+
+}
+
+
+/* =========================================================
+   RENDER CARDS
+========================================================= */
+
+function renderCards(){
+
+  grid.innerHTML = "";
+
+  images.forEach(
+    (item,index) => {
+
+      const card =
+        document.createElement("div");
+
+      card.className = "card";
+
+
+      const statusClass =
+        item.status === "loading"
+          ? "loading"
+          : item.status === "success"
+          ? "success"
+          : item.status === "error"
+          ? "error"
+          : "";
+
+
+      let metadataHTML = "";
+
+
+      if(item.metadata){
+
+        const m =
+          item.metadata;
+
+        metadataHTML = `
+
+          <div class="meta show">
+
+            <div class="meta-item">
+
+              <div class="meta-label">
+                Title
+              </div>
+
+              <div class="meta-value">
+                ${escapeHTML(m.title || "")}
+              </div>
+
+            </div>
+
+
+            <div class="meta-item">
+
+              <div class="meta-label">
+                Description
+              </div>
+
+              <div class="meta-value">
+                ${escapeHTML(m.description || "")}
+              </div>
+
+            </div>
+
+
+            <div class="meta-item">
+
+              <div class="meta-label">
+                Keywords
+              </div>
+
+              <div class="keywords">
+
+                ${(m.keywords || [])
+                  .map(
+                    k =>
+                      `<span class="keyword">
+                        ${escapeHTML(k)}
+                      </span>`
+                  )
+                  .join("")}
+
+              </div>
+
+            </div>
+
+
+            <div class="meta-item">
+
+              <div class="meta-label">
+                Category
+              </div>
+
+              <div class="meta-value">
+                ${escapeHTML(m.category || "")}
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+
+
+      let actionHTML;
+
+
+      if(item.metadata){
+
+        actionHTML = `
+
+          <button
+            class="btn"
+            onclick="editMetadata(${index})"
+          >
+            ✏ Edit
+          </button>
+
+          <button
+            class="btn"
+            onclick="copyMetadata(${index})"
+          >
+            📋 Copy
+          </button>
+
+        `;
+
+      }else{
+
+        actionHTML = `
+
+          <button
+            class="btn"
+            onclick="generateOne(${index})"
+            ${item.status === "loading"
+              ? "disabled"
+              : ""}
+          >
+            ✨ Generate
+          </button>
+
+          <button
+            class="btn"
+            onclick="removeImage(${index})"
+          >
+            🗑 Remove
+          </button>
+
+        `;
+
+      }
+
+
+      card.innerHTML = `
+
+        <img
+          class="card-image"
+          src="${item.url}"
+          alt=""
+        >
+
+        <div class="card-body">
+
+          <div class="card-name">
+            ${escapeHTML(item.name)}
+          </div>
+
+          <div
+            class="status ${statusClass}"
+          >
+            ${getStatusText(item)}
+          </div>
+
+          ${metadataHTML}
+
+          <div class="card-actions">
+            ${actionHTML}
+          </div>
+
+        </div>
+
+      `;
+
+
+      grid.appendChild(card);
+
+    }
+  );
+
+}
+
+
+function getStatusText(item){
+
+  if(item.status === "loading")
+    return "⏳ Generating...";
+
+  if(item.status === "success")
+    return "✓ Metadata generated";
+
+  if(item.status === "error")
+    return `✕ Failed — ${escapeHTML(item.error || "Try again")}`;
+
+  return "Ready — click Generate";
+
+}
+
+
+/* =========================================================
+   GENERATE ALL
+========================================================= */
+
+async function generateAll(){
+
+  if(generationRunning)
+    return;
+
+
+  if(!images.length){
+
+    alert(
+      "Please upload at least one image first."
     );
 
-    return new Promise(
-        resolve => {
+    return;
 
-            canvas.toBlob(
-                blob => {
+  }
 
-                    const reader =
-                        new FileReader();
 
-                    reader.onload =
-                        () => {
+  const gemini =
+    getSessionKeys("gemini");
 
-                            resolve({
-                                dataURL:
-                                    reader.result,
-                                mime:
-                                    "image/jpeg"
-                            });
+  const groq =
+    getSessionKeys("groq");
 
-                        };
 
-                    reader.readAsDataURL(blob);
+  if(!gemini.length && !groq.length){
 
-                },
-                "image/jpeg",
-                .82
+    alert(
+      "Please add at least one Gemini or Groq API key in Settings first."
+    );
+
+    openSettings();
+
+    return;
+
+  }
+
+
+  generationRunning = true;
+
+  generateAllBtn.disabled = true;
+
+  generateAllBtn.textContent =
+    "⏳ Generating...";
+
+
+  generatedCount = 0;
+  failedCount = 0;
+
+  geminiPointer = 0;
+  groqPointer = 0;
+
+
+  const queue =
+    images
+      .map(
+        (item,index) => ({
+          item,
+          index
+        })
+      )
+      .filter(
+        x => x.item.status !== "success"
+      );
+
+
+  let nextIndex = 0;
+
+
+  /*
+    Continuous queue.
+
+    IMPORTANT:
+    Worker doesn't wait for another worker.
+    As soon as one finishes, it takes the next image.
+  */
+
+  async function worker(){
+
+    while(true){
+
+      const position =
+        nextIndex++;
+
+      if(position >= queue.length)
+        return;
+
+      const index =
+        queue[position].index;
+
+      await generateImage(
+        index,
+        gemini,
+        groq
+      );
+
+    }
+
+  }
+
+
+  const workerCount =
+    Math.min(
+      CONCURRENCY,
+      queue.length
+    );
+
+
+  const workers =
+    [];
+
+
+  for(
+    let i = 0;
+    i < workerCount;
+    i++
+  ){
+
+    workers.push(
+      worker()
+    );
+
+  }
+
+
+  await Promise.all(workers);
+
+
+  generationRunning = false;
+
+  generateAllBtn.disabled = false;
+
+  generateAllBtn.textContent =
+    "✨ Generate Metadata";
+
+
+  updateUI();
+
+
+  const success =
+    images.filter(
+      x => x.status === "success"
+    ).length;
+
+  const failed =
+    images.filter(
+      x => x.status === "error"
+    ).length;
+
+
+  alert(
+    `Generation complete.\n\n` +
+    `✓ Success: ${success}\n` +
+    `✕ Failed: ${failed}`
+  );
+
+}
+
+
+/* =========================================================
+   GENERATE ONE
+========================================================= */
+
+async function generateOne(index){
+
+  if(
+    images[index]?.status === "loading"
+  )
+    return;
+
+
+  const gemini =
+    getSessionKeys("gemini");
+
+  const groq =
+    getSessionKeys("groq");
+
+
+  if(!gemini.length && !groq.length){
+
+    alert(
+      "Please add a Gemini or Groq API key first."
+    );
+
+    openSettings();
+
+    return;
+
+  }
+
+
+  await generateImage(
+    index,
+    gemini,
+    groq
+  );
+
+  updateUI();
+
+}
+
+
+/* =========================================================
+   SMART AI ROUTER
+========================================================= */
+
+async function generateImage(
+  index,
+  geminiKeysList,
+  groqKeysList
+){
+
+  const item =
+    images[index];
+
+  if(!item)
+    return;
+
+
+  item.status = "loading";
+  item.error = "";
+
+  renderCards();
+  updateProgress();
+
+
+  let lastError = null;
+
+
+  /*
+    Decide which provider to use.
+
+    Alternates Gemini and Groq so both
+    engines work together.
+  */
+
+  let preferredProvider =
+    index % 2 === 0
+      ? "gemini"
+      : "groq";
+
+
+  /*
+    If preferred provider has no keys,
+    automatically use the other one.
+  */
+
+  if(
+    preferredProvider === "gemini" &&
+    !geminiKeysList.length
+  ){
+
+    preferredProvider = "groq";
+
+  }
+
+  if(
+    preferredProvider === "groq" &&
+    !groqKeysList.length
+  ){
+
+    preferredProvider = "gemini";
+
+  }
+
+
+  const providers = [
+    preferredProvider,
+    preferredProvider === "gemini"
+      ? "groq"
+      : "gemini"
+  ];
+
+
+  for(
+    const provider
+    of providers
+  ){
+
+    const keys =
+      provider === "gemini"
+        ? geminiKeysList
+        : groqKeysList;
+
+
+    if(!keys.length)
+      continue;
+
+
+    /*
+      Try every key.
+    */
+
+    for(
+      let keyIndex = 0;
+      keyIndex < keys.length;
+      keyIndex++
+    ){
+
+      const key =
+        getNextKey(provider,keys);
+
+
+      /*
+        Retry transient errors.
+      */
+
+      for(
+        let retry = 0;
+        retry <= MAX_RETRIES;
+        retry++
+      ){
+
+        try{
+
+          if(!item.optimizedFile){
+
+            item.optimizedFile =
+              await optimizeImage(
+                item.file
+              );
+
+          }
+
+
+          let metadata;
+
+
+          if(provider === "gemini"){
+
+            metadata =
+              await callGemini(
+                item.optimizedFile,
+                key
+              );
+
+          }else{
+
+            metadata =
+              await callGroq(
+                item.optimizedFile,
+                item.name,
+                key
+              );
+
+          }
+
+
+          item.metadata =
+            normalizeMetadata(
+              metadata
             );
 
+          item.status =
+            "success";
+
+          item.error = "";
+
+          generatedCount++;
+
+
+          renderCards();
+          updateProgress();
+
+
+          return;
+
+        }catch(error){
+
+          lastError = error;
+
+          console.warn(
+            `${provider} error:`,
+            error
+          );
+
+
+          /*
+            If transient error,
+            wait a short time and retry.
+          */
+
+          if(
+            isRetryableError(error) &&
+            retry < MAX_RETRIES
+          ){
+
+            const waitTime =
+              retry === 0
+                ? 1000
+                : 2000;
+
+
+            item.error =
+              `${provider} busy — retrying...`;
+
+
+            renderCards();
+
+
+            await sleep(
+              waitTime
+            );
+
+
+          }else{
+
+            break;
+
+          }
+
         }
+
+      }
+
+    }
+
+  }
+
+
+  item.status = "error";
+
+  item.metadata = null;
+
+  item.error =
+    getFriendlyError(lastError);
+
+  failedCount++;
+
+
+  renderCards();
+  updateProgress();
+
+}
+
+
+/* =========================================================
+   KEY ROTATION
+========================================================= */
+
+function getNextKey(
+  provider,
+  keys
+){
+
+  if(!keys.length)
+    return null;
+
+
+  let pointer;
+
+
+  if(provider === "gemini"){
+
+    pointer =
+      geminiPointer;
+
+    geminiPointer =
+      (geminiPointer + 1)
+      % keys.length;
+
+  }else{
+
+    pointer =
+      groqPointer;
+
+    groqPointer =
+      (groqPointer + 1)
+      % keys.length;
+
+  }
+
+
+  return keys[pointer];
+
+}
+
+
+/* =========================================================
+   GEMINI VISION
+========================================================= */
+
+async function callGemini(
+  file,
+  key
+){
+
+  const base64 =
+    await fileToBase64(file);
+
+
+  const prompt =
+    buildPrompt();
+
+
+  const endpoint =
+    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(key)}`;
+
+
+  const response =
+    await fetch(
+      endpoint,
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
+
+        body:
+          JSON.stringify({
+
+            contents:[{
+
+              parts:[
+
+                {
+                  text:prompt
+                },
+
+                {
+                  inline_data:{
+                    mime_type:
+                      file.type,
+                    data:
+                      base64
+                  }
+                }
+
+              ]
+
+            }],
+
+            generationConfig:{
+
+              temperature:0.35,
+
+              responseMimeType:
+                "application/json"
+
+            }
+
+          })
+
+      }
     );
+
+
+  const responseText =
+    await response.text();
+
+
+  if(!response.ok){
+
+    let message =
+      responseText;
+
+    try{
+
+      const json =
+        JSON.parse(
+          responseText
+        );
+
+      message =
+        json?.error?.message ||
+        responseText;
+
+    }catch{}
+
+
+    throw new Error(
+      `Gemini API ${response.status}: ${message}`
+    );
+
+  }
+
+
+  let data;
+
+  try{
+
+    data =
+      JSON.parse(
+        responseText
+      );
+
+  }catch{
+
+    throw new Error(
+      "Gemini returned invalid response."
+    );
+
+  }
+
+
+  const text =
+    data
+      ?.candidates
+      ?.[0]
+      ?.content
+      ?.parts
+      ?.[0]
+      ?.text;
+
+
+  if(!text){
+
+    throw new Error(
+      "Gemini returned no metadata."
+    );
+
+  }
+
+
+  return parseJSON(text);
+
+}
+
+
+/* =========================================================
+   GROQ VISION
+========================================================= */
+
+async function callGroq(
+  file,
+  fileName,
+  key
+){
+
+  const base64 =
+    await fileToBase64(file);
+
+
+  const prompt =
+    buildPrompt();
+
+
+  const response =
+    await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+
+        method:"POST",
+
+        headers:{
+
+          "Authorization":
+            `Bearer ${key}`,
+
+          "Content-Type":
+            "application/json"
+
+        },
+
+        body:
+          JSON.stringify({
+
+            model:GROQ_MODEL,
+
+            messages:[
+
+              {
+                role:"system",
+
+                content:
+                  "You are an expert stock image metadata generator. Analyze the image carefully and return accurate commercial stock metadata."
+              },
+
+              {
+                role:"user",
+
+                content:[
+
+                  {
+                    type:"text",
+
+                    text:
+                      `${prompt}\n\nImage File Name: ${fileName}`
+                  },
+
+                  {
+                    type:"image_url",
+
+                    image_url:{
+                      url:
+                        `data:${file.type};base64,${base64}`
+                    }
+                  }
+
+                ]
+
+              }
+
+            ],
+
+            temperature:0.35,
+
+            response_format:{
+              type:"json_object"
+            }
+
+          })
+
+      }
+    );
+
+
+  const responseText =
+    await response.text();
+
+
+  if(!response.ok){
+
+    let message =
+      responseText;
+
+    try{
+
+      const json =
+        JSON.parse(
+          responseText
+        );
+
+      message =
+        json?.error?.message ||
+        responseText;
+
+    }catch{}
+
+
+    throw new Error(
+      `Groq API ${response.status}: ${message}`
+    );
+
+  }
+
+
+  let data;
+
+  try{
+
+    data =
+      JSON.parse(
+        responseText
+      );
+
+  }catch{
+
+    throw new Error(
+      "Groq returned invalid response."
+    );
+
+  }
+
+
+  const text =
+    data
+      ?.choices
+      ?.[0]
+      ?.message
+      ?.content;
+
+
+  if(!text){
+
+    throw new Error(
+      "Groq returned no metadata."
+    );
+
+  }
+
+
+  return parseJSON(text);
 
 }
 
 
 /* =========================================================
    PROMPT
-   ========================================================= */
+========================================================= */
 
-function buildPrompt(keywordCount){
+function buildPrompt(){
 
-return `
-Analyze the supplied image for commercial stock metadata.
+  const stock =
+    document.getElementById(
+      "stockSite"
+    ).value;
 
-Generate stock-ready metadata.
 
-Rules:
+  const titleStyle =
+    document.getElementById(
+      "titleStyle"
+    ).value;
 
-1. Title:
-- Clear and descriptive.
-- Natural English.
-- No unnecessary punctuation.
-- Do not mention "AI".
-- Do not invent details.
 
-2. Description:
-- Natural English.
-- Describe the visible subject, action, environment,
-  composition and useful commercial context.
-- Do not write keyword spam.
-- Do not mention this instruction.
+  const descriptionLength =
+    document.getElementById(
+      "descriptionLength"
+    ).value;
 
-3. Category:
-Choose exactly one category from the supplied enum.
 
-4. Keywords:
-- Generate exactly ${keywordCount} highly relevant keywords when possible.
-- Single words are preferred where natural.
-- Use short phrases when necessary.
-- Put the strongest search terms first.
-- Do not duplicate keywords.
-- Do not add irrelevant generic spam.
-- Do not invent people, brands, locations or objects that are not visible.
+  let keywordCount =
+    Number(
+      document.getElementById(
+        "keywordCount"
+      ).value
+    ) || 35;
 
-Return ONLY the requested structured JSON object.
+
+  keywordCount =
+    Math.max(
+      5,
+      Math.min(
+        50,
+        keywordCount
+      )
+    );
+
+
+  const custom =
+    document.getElementById(
+      "customInstructions"
+    ).value.trim();
+
+
+  return `
+
+You are an expert stock photography metadata specialist.
+
+Analyze the provided image carefully.
+
+Generate metadata suitable for ${stock}.
+
+TITLE:
+Use ${titleStyle} title style.
+Make it accurate, natural, searchable and commercially useful.
+Do not invent objects or concepts that are not visible.
+
+DESCRIPTION:
+Write a ${descriptionLength} stock image description.
+Describe only what is visible.
+
+KEYWORDS:
+Generate exactly ${keywordCount} relevant keywords.
+Put the most important keywords first.
+Use commercially useful stock keywords.
+If the image is PNG, isolated or transparent, include those terms only when visually appropriate.
+Do not include irrelevant keywords.
+
+CATEGORY:
+Choose the most suitable stock category.
+
+Return ONLY valid JSON:
+
+{
+  "title": "string",
+  "description": "string",
+  "keywords": ["keyword1", "keyword2"],
+  "category": "string"
+}
+
+Additional instructions:
+${custom || "None"}
+
 `;
 
+}
+
+
+/* =========================================================
+   NORMALIZE
+========================================================= */
+
+function normalizeMetadata(data){
+
+  let keywords =
+    data?.keywords || [];
+
+
+  if(typeof keywords === "string"){
+
+    keywords =
+      keywords
+        .split(",")
+        .map(
+          k => k.trim()
+        )
+        .filter(Boolean);
+
+  }
+
+
+  keywords =
+    Array.isArray(keywords)
+      ? keywords
+      : [];
+
+
+  return {
+
+    title:
+      String(
+        data?.title || ""
+      ),
+
+    description:
+      String(
+        data?.description || ""
+      ),
+
+    keywords:
+
+      keywords
+        .map(
+          k => String(k).trim()
+        )
+        .filter(Boolean),
+
+    category:
+      String(
+        data?.category ||
+        "General"
+      )
+
+  };
 
 }
 
 
 /* =========================================================
-   HTTP ERROR
-   ========================================================= */
+   JSON PARSER
+========================================================= */
 
-class APIError extends Error{
+function parseJSON(str){
 
-    constructor(
-        message,
-        status,
-        retryAfter = 0,
-        provider = ""
-    ){
+  try{
 
-        super(message);
+    return JSON.parse(str);
 
-        this.status =
-            status;
+  }catch{
 
-        this.retryAfter =
-            retryAfter;
+    const clean =
+      str
+        .replace(/```json/gi,"")
+        .replace(/```/g,"")
+        .trim();
 
-        this.provider =
-            provider;
-
-    }
-
-}
-
-
-/* =========================================================
-   RETRY-AFTER
-   ========================================================= */
-
-function parseRetryAfter(response){
-
-    const value =
-        response.headers.get(
-            "retry-after"
-        );
-
-    if(!value)
-        return 0;
-
-    const seconds =
-        Number(value);
-
-    if(Number.isFinite(seconds))
-        return Math.max(
-            0,
-            Math.ceil(seconds * 1000)
-        );
-
-    const date =
-        Date.parse(value);
-
-    if(!Number.isNaN(date)){
-
-        return Math.max(
-            0,
-            date - Date.now()
-        );
-
-    }
-
-    return 0;
-
-}
-
-
-/* =========================================================
-   JSON EXTRACTION
-   ========================================================= */
-
-function safeJSONParse(text){
-
-    if(typeof text !== "string")
-        throw new Error(
-            "AI returned empty response."
-        );
-
-    let cleaned =
-        text.trim();
-
-    cleaned =
-        cleaned
-            .replace(/^```json\s*/i,"")
-            .replace(/^```\s*/i,"")
-            .replace(/\s*```$/i,"")
-            .trim();
 
     try{
 
-        return JSON.parse(cleaned);
+      return JSON.parse(clean);
 
-    }catch(e){}
+    }catch{
 
-    const first =
-        cleaned.indexOf("{");
+      const start =
+        clean.indexOf("{");
 
-    const last =
-        cleaned.lastIndexOf("}");
+      const end =
+        clean.lastIndexOf("}");
 
-    if(
-        first !== -1 &&
-        last > first
-    ){
+      if(
+        start !== -1 &&
+        end !== -1
+      ){
 
-        try{
+        return JSON.parse(
+          clean.substring(
+            start,
+            end + 1
+          )
+        );
 
-            return JSON.parse(
-                cleaned.slice(
-                    first,
-                    last + 1
+      }
+
+      throw new Error(
+        "AI returned invalid JSON."
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   IMAGE OPTIMIZATION
+========================================================= */
+
+function fileToBase64(file){
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        () => {
+
+          const result =
+            reader.result;
+
+          resolve(
+            result.split(",")[1]
+          );
+
+        };
+
+
+      reader.onerror =
+        reject;
+
+
+      reader.readAsDataURL(file);
+
+    }
+  );
+
+}
+
+
+function optimizeImage(file){
+
+  if(
+    file.size < 1200000
+  ){
+
+    return Promise.resolve(
+      file
+    );
+
+  }
+
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const img =
+        new Image();
+
+
+      const url =
+        URL.createObjectURL(
+          file
+        );
+
+
+      img.onload =
+        () => {
+
+          URL.revokeObjectURL(
+            url
+          );
+
+
+          let width =
+            img.naturalWidth;
+
+
+          let height =
+            img.naturalHeight;
+
+
+          if(
+            Math.max(
+              width,
+              height
+            ) > MAX_IMAGE_SIZE
+          ){
+
+            const scale =
+              MAX_IMAGE_SIZE /
+              Math.max(
+                width,
+                height
+              );
+
+
+            width =
+              Math.round(
+                width * scale
+              );
+
+
+            height =
+              Math.round(
+                height * scale
+              );
+
+          }
+
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+
+          canvas.width =
+            width;
+
+          canvas.height =
+            height;
+
+
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
+
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          canvas.toBlob(
+
+            blob => {
+
+              if(!blob){
+
+                reject(
+                  new Error(
+                    "Image optimization failed."
+                  )
+                );
+
+                return;
+
+              }
+
+
+              resolve(
+
+                new File(
+                  [blob],
+                  file.name
+                    .replace(
+                      /\.[^.]+$/,
+                      ".jpg"
+                    ),
+
+                  {
+                    type:
+                      "image/jpeg"
+                  }
+
                 )
-            );
 
-        }catch(e){}
-
-    }
-
-    throw new Error(
-        "Invalid JSON returned by AI."
-    );
-
-}
-
-
-/* =========================================================
-   RESULT VALIDATION
-   ========================================================= */
-
-function validateResult(data){
-
-    if(!data || typeof data !== "object")
-        throw new Error(
-            "Metadata result is not an object."
-        );
-
-    if(
-        typeof data.title !== "string" ||
-        !data.title.trim()
-    )
-        throw new Error(
-            "Missing title."
-        );
-
-    if(
-        typeof data.description !== "string" ||
-        !data.description.trim()
-    )
-        throw new Error(
-            "Missing description."
-        );
-
-    if(
-        typeof data.category !== "string" ||
-        !data.category.trim()
-    )
-        throw new Error(
-            "Missing category."
-        );
-
-    if(!Array.isArray(data.keywords))
-        throw new Error(
-            "Keywords must be an array."
-        );
-
-    const keywords =
-        data.keywords
-            .map(x =>
-                String(x).trim()
-            )
-            .filter(Boolean);
-
-    const unique =
-        [...new Set(
-            keywords.map(x =>
-                x.toLowerCase()
-            )
-        )];
-
-    if(unique.length < 5)
-        throw new Error(
-            "Too few valid keywords."
-        );
-
-    data.keywords =
-        keywords;
-
-    return data;
-
-}
-
-
-/* =========================================================
-   GEMINI
-   ========================================================= */
-
-async function callGemini(item){
-
-    const key =
-        geminiKeyInput.value.trim();
-
-    if(!key)
-        throw new APIError(
-            "Gemini API key is missing.",
-            401,
-            0,
-            "gemini"
-        );
-
-    const model =
-        geminiModelInput.value;
-
-    const image =
-        await prepareImage(
-            item.file
-        );
-
-    const keywordCount =
-        Math.max(
-            10,
-            Math.min(
-                50,
-                Number(
-                    keywordCountInput.value
-                ) || 35
-            )
-        );
-
-    const body = {
-
-        contents:[
-
-            {
-
-                role:"user",
-
-                parts:[
-
-                    {
-                        text:
-                            buildPrompt(
-                                keywordCount
-                            )
-                    },
-
-                    {
-                        inline_data:{
-                            mime_type:
-                                image.mime,
-                            data:
-                                image.dataURL.split(",")[1]
-                        }
-                    }
-
-                ]
-
-            }
-
-        ],
-
-        generationConfig:{
-
-            temperature:.2,
-
-            responseMimeType:
-                "application/json",
-
-            responseSchema:
-                METADATA_SCHEMA
-
-        }
-
-    };
-
-
-    const response =
-        await fetch(
-            GEMINI_ENDPOINT +
-            encodeURIComponent(model) +
-            ":generateContent?key=" +
-            encodeURIComponent(key),
-            {
-
-                method:"POST",
-
-                headers:{
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body:
-                    JSON.stringify(body)
-
-            }
-        );
-
-
-    if(!response.ok){
-
-        const retryAfter =
-            parseRetryAfter(
-                response
-            );
-
-        let text =
-            await response.text();
-
-        let message =
-            "Gemini request failed.";
-
-        try{
-
-            const json =
-                JSON.parse(text);
-
-            message =
-                json?.error?.message ||
-                message;
-
-        }catch(e){}
-
-        throw new APIError(
-            message,
-            response.status,
-            retryAfter,
-            "gemini"
-        );
-
-    }
-
-
-    const json =
-        await response.json();
-
-    const text =
-        json
-            ?.candidates?.[0]
-            ?.content
-            ?.parts
-            ?.map(x => x.text || "")
-            .join("")
-            .trim();
-
-
-    if(!text)
-        throw new Error(
-            "Gemini returned an empty response."
-        );
-
-
-    return validateResult(
-        safeJSONParse(text)
-    );
-
-}
-
-
-/* =========================================================
-   GROQ
-   ========================================================= */
-
-async function callGroq(item){
-
-    const key =
-        groqKeyInput.value.trim();
-
-    if(!key)
-        throw new APIError(
-            "Groq API key is missing.",
-            401,
-            0,
-            "groq"
-        );
-
-    const model =
-        groqModelInput.value;
-
-    const image =
-        await prepareImage(
-            item.file
-        );
-
-    const keywordCount =
-        Math.max(
-            10,
-            Math.min(
-                50,
-                Number(
-                    keywordCountInput.value
-                ) || 35
-            )
-        );
-
-
-    const isStrict =
-        model ===
-        "qwen/qwen3.8-27b";
-
-
-    const body = {
-
-        model,
-
-        temperature:.2,
-
-        reasoning_effort:"none",
-
-        messages:[
-
-            {
-
-                role:"system",
-
-                content:
-                    "Return only valid JSON. No markdown. No explanation."
+              );
 
             },
 
-            {
+            "image/jpeg",
 
-                role:"user",
+            JPEG_QUALITY
 
-                content:[
-
-                    {
-
-                        type:"text",
-
-                        text:
-                            buildPrompt(
-                                keywordCount
-                            )
-
-                    },
-
-                    {
-
-                        type:"image_url",
-
-                        image_url:{
-                            url:
-                                image.dataURL
-                        }
-
-                    }
-
-                ]
-
-            }
-
-        ]
-
-    };
-
-
-    if(isStrict){
-
-        body.response_format = {
-
-            type:"json_schema",
-
-            json_schema:{
-
-                name:"stock_metadata",
-
-                strict:true,
-
-                schema:
-                    METADATA_SCHEMA
-
-            }
+          );
 
         };
 
-    }else{
 
-        body.response_format = {
+      img.onerror =
+        () => {
 
-            type:"json_object"
+          URL.revokeObjectURL(
+            url
+          );
+
+          reject(
+            new Error(
+              "Failed to load image."
+            )
+          );
 
         };
 
-    }
 
-
-    const response =
-        await fetch(
-            GROQ_ENDPOINT,
-            {
-
-                method:"POST",
-
-                headers:{
-
-                    "Content-Type":
-                        "application/json",
-
-                    "Authorization":
-                        "Bearer " + key
-
-                },
-
-                body:
-                    JSON.stringify(body)
-
-            }
-        );
-
-
-    if(!response.ok){
-
-        const retryAfter =
-            parseRetryAfter(
-                response
-            );
-
-        const text =
-            await response.text();
-
-        let message =
-            "Groq request failed.";
-
-        try{
-
-            const json =
-                JSON.parse(text);
-
-            message =
-                json?.error?.message ||
-                message;
-
-        }catch(e){}
-
-        throw new APIError(
-            message,
-            response.status,
-            retryAfter,
-            "groq"
-        );
-
-    }
-
-
-    const json =
-        await response.json();
-
-    const text =
-        json
-            ?.choices?.[0]
-            ?.message
-            ?.content
-            ?.trim();
-
-
-    if(!text)
-        throw new Error(
-            "Groq returned an empty response."
-        );
-
-
-    return validateResult(
-        safeJSONParse(text)
-    );
-
-}
-
-
-/* =========================================================
-   PROVIDER AVAILABILITY
-   ========================================================= */
-
-function hasProviderKey(provider){
-
-    if(provider === "gemini")
-        return !!geminiKeyInput.value.trim();
-
-    if(provider === "groq")
-        return !!groqKeyInput.value.trim();
-
-    return false;
-
-}
-
-
-function providerAvailable(provider){
-
-    const worker =
-        state.workers[provider];
-
-    if(worker.disabled)
-        return false;
-
-    if(!hasProviderKey(provider))
-        return false;
-
-    if(worker.busy)
-        return false;
-
-    if(Date.now() <
-       worker.cooldownUntil)
-        return false;
-
-    return true;
-
-}
-
-
-/* =========================================================
-   SMART PROVIDER SELECTION
-   ========================================================= */
-
-function chooseProvider(item){
-
-    const preferred =
-        preferredProviderInput.value;
-
-
-    const available = [
-
-        providerAvailable("gemini")
-            ? "gemini"
-            : null,
-
-        providerAvailable("groq")
-            ? "groq"
-            : null
-
-    ].filter(Boolean);
-
-
-    if(!available.length)
-        return null;
-
-
-    if(
-        preferred !== "auto" &&
-        available.includes(preferred)
-    ){
-
-        return preferred;
-
-    }
-
-
-    /*
-      Choose provider with fewer completed jobs.
-      This keeps the two providers balanced.
-    */
-
-    available.sort(
-        (a,b) =>
-            state.workers[a].completed -
-            state.workers[b].completed
-    );
-
-
-    return available[0];
-
-}
-
-
-/* =========================================================
-   RETRY CALCULATION
-   ========================================================= */
-
-function exponentialBackoff(attempt){
-
-    const base =
-        1500;
-
-    const value =
-        base *
-        Math.pow(
-            2,
-            Math.max(
-                0,
-                attempt - 1
-            )
-        );
-
-    const jitter =
-        Math.floor(
-            Math.random() * 1000
-        );
-
-    return Math.min(
-        30000,
-        value + jitter
-    );
-
-}
-
-
-/* =========================================================
-   HANDLE 429
-   ========================================================= */
-
-function handleRateLimit(
-    provider,
-    error
-){
-
-    const worker =
-        state.workers[provider];
-
-    worker.consecutive429++;
-
-    const serverWait =
-        error.retryAfter || 0;
-
-    const localWait =
-        exponentialBackoff(
-            worker.consecutive429
-        );
-
-    const wait =
-        Math.max(
-            serverWait,
-            localWait
-        );
-
-    worker.cooldownUntil =
-        Date.now() + wait;
-
-
-    /*
-      If repeated 429 happens, temporarily
-      disable this provider for this run.
-    */
-
-    if(
-        worker.consecutive429 >= 3 &&
-        !serverWait
-    ){
-
-        worker.disabled = true;
-
-    }
-
-
-    updateProviderUI();
-
-
-    return wait;
-
-}
-
-
-/* =========================================================
-   TRANSIENT ERROR
-   ========================================================= */
-
-function isRetryable(error){
-
-    if(
-        error instanceof APIError
-    ){
-
-        return [
-            408,
-            409,
-            425,
-            429,
-            500,
-            502,
-            503,
-            504
-        ].includes(
-            error.status
-        );
-
-    }
-
-    return true;
-
-}
-
-
-/* =========================================================
-   PROCESS ONE ITEM
-   ========================================================= */
-
-async function processItem(
-    item,
-    provider
-){
-
-    item.status =
-        "processing";
-
-    item.provider =
-        provider;
-
-    item.error =
-        null;
-
-    render();
-
-
-    const worker =
-        state.workers[provider];
-
-    worker.busy =
-        true;
-
-    updateProviderUI();
-
-
-    try{
-
-        const customDelay =
-            Number(
-                requestDelayInput.value
-            ) || 0;
-
-        if(customDelay > 0){
-
-            await sleep(
-                customDelay
-            );
-
-        }
-
-
-        let result;
-
-
-        if(provider === "gemini"){
-
-            result =
-                await callGemini(
-                    item
-                );
-
-        }else{
-
-            result =
-                await callGroq(
-                    item
-                );
-
-        }
-
-
-        item.result =
-            result;
-
-        item.status =
-            "done";
-
-        item.attempts++;
-
-        worker.completed++;
-
-        worker.consecutive429 =
-            0;
-
-    }catch(error){
-
-        item.attempts++;
-
-
-        if(
-            error instanceof APIError &&
-            error.status === 429
-        ){
-
-            const wait =
-                handleRateLimit(
-                    provider,
-                    error
-                );
-
-            item.status =
-                "retry";
-
-            item.retryAt =
-                Date.now() + wait;
-
-            item.error =
-                "Rate limited. Waiting " +
-                formatDuration(wait) +
-                " before retry.";
-
-        }else{
-
-            /*
-              Retry only transient errors.
-            */
-
-            if(
-                isRetryable(error) &&
-                item.attempts < 3
-            ){
-
-                const wait =
-                    error instanceof APIError &&
-                    error.retryAfter
-                        ? error.retryAfter
-                        : exponentialBackoff(
-                            item.attempts
-                        );
-
-                item.status =
-                    "retry";
-
-                item.retryAt =
-                    Date.now() + wait;
-
-                item.error =
-                    "Temporary error. Retrying in " +
-                    formatDuration(wait) +
-                    ".";
-
-            }else{
-
-                item.status =
-                    "error";
-
-                item.error =
-                    error?.message ||
-                    "Unknown error.";
-
-            }
-
-        }
-
-    }finally{
-
-        worker.busy =
-            false;
-
-        updateProviderUI();
-
-        render();
-
-    }
-
-}
-
-
-/* =========================================================
-   SMART QUEUE
-   ========================================================= */
-
-async function runSmartQueue(){
-
-    if(state.running)
-        return;
-
-
-    const queued =
-        state.items.filter(
-            x =>
-                x.status === "queued" ||
-                x.status === "retry"
-        );
-
-
-    if(!queued.length){
-
-        alert(
-            "No images in queue."
-        );
-
-        return;
-
-    }
-
-
-    if(
-        !hasProviderKey("gemini") &&
-        !hasProviderKey("groq")
-    ){
-
-        alert(
-            "Add at least one Gemini or Groq API key."
-        );
-
-        return;
-
-    }
-
-
-    state.running =
-        true;
-
-    state.stopRequested =
-        false;
-
-    state.workers.gemini.disabled =
-        false;
-
-    state.workers.groq.disabled =
-        false;
-
-    startBtn.disabled =
-        true;
-
-    stopBtn.disabled =
-        false;
-
-    retryBtn.disabled =
-        true;
-
-
-    /*
-      Two provider loops run simultaneously.
-      Each provider has only ONE active request.
-      This is the main protection against quota spikes.
-    */
-
-    const workers = [];
-
-
-    if(hasProviderKey("gemini")){
-
-        workers.push(
-            providerWorker("gemini")
-        );
-
-    }
-
-
-    if(hasProviderKey("groq")){
-
-        workers.push(
-            providerWorker("groq")
-        );
-
-    }
-
-
-    await Promise.all(
-        workers
-    );
-
-
-    state.running =
-        false;
-
-    startBtn.disabled =
-        false;
-
-    stopBtn.disabled =
-        true;
-
-    updateProviderUI();
-
-    render();
-
-}
-
-
-/* =========================================================
-   PROVIDER WORKER
-   ========================================================= */
-
-async function providerWorker(provider){
-
-    const worker =
-        state.workers[provider];
-
-
-    while(
-        state.running &&
-        !state.stopRequested
-    ){
-
-        if(worker.disabled){
-
-            /*
-              Provider is temporarily disabled because
-              of repeated quota errors.
-            */
-
-            return;
-
-        }
-
-
-        if(
-            Date.now() <
-            worker.cooldownUntil
-        ){
-
-            await sleep(
-                Math.min(
-                    1000,
-                    worker.cooldownUntil -
-                    Date.now()
-                )
-            );
-
-            continue;
-
-        }
-
-
-        /*
-          Pick next available item.
-
-          We do NOT allow the same item to be picked
-          by both providers.
-        */
-
-        const item =
-            getNextQueueItem();
-
-
-        if(!item){
-
-            /*
-              There may still be retry items waiting
-              for their Retry-After time.
-            */
-
-            const future =
-                state.items
-                    .filter(
-                        x =>
-                            x.status === "retry"
-                    )
-                    .sort(
-                        (a,b) =>
-                            a.retryAt -
-                            b.retryAt
-                    )[0];
-
-
-            if(!future)
-                return;
-
-
-            const wait =
-                Math.max(
-                    250,
-                    future.retryAt -
-                    Date.now()
-                );
-
-
-            await sleep(
-                Math.min(
-                    wait,
-                    1500
-                )
-            );
-
-            continue;
-
-        }
-
-
-        await processItem(
-            item,
-            provider
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   QUEUE ITEM
-   ========================================================= */
-
-function getNextQueueItem(){
-
-    /*
-      Retry items whose retry time has arrived
-      are prioritized.
-    */
-
-    const now =
-        Date.now();
-
-
-    const readyRetry =
-        state.items.find(
-            item =>
-                item.status === "retry" &&
-                item.retryAt <= now
-        );
-
-
-    if(readyRetry){
-
-        return readyRetry;
-
-    }
-
-
-    const queued =
-        state.items.find(
-            item =>
-                item.status === "queued"
-        );
-
-
-    return queued || null;
-
-}
-
-
-/* =========================================================
-   START
-   ========================================================= */
-
-startBtn.addEventListener(
-    "click",
-    runSmartQueue
-);
-
-
-/* =========================================================
-   STOP
-   ========================================================= */
-
-stopBtn.addEventListener(
-    "click",
-    () => {
-
-        state.stopRequested =
-            true;
-
-        stopBtn.disabled =
-            true;
-
-        document.getElementById(
-            "progressText"
-        ).textContent =
-            "Stopping after active requests finish...";
-
-    }
-);
-
-
-/* =========================================================
-   RETRY FAILED
-   ========================================================= */
-
-retryBtn.addEventListener(
-    "click",
-    () => {
-
-        state.items.forEach(
-            item => {
-
-                if(item.status === "error"){
-
-                    item.status =
-                        "queued";
-
-                    item.error =
-                        null;
-
-                    item.retryAt =
-                        0;
-
-                }
-
-            }
-        );
-
-        render();
-
-        runSmartQueue();
-
-    }
-);
-
-
-/* =========================================================
-   CLEAR
-   ========================================================= */
-
-clearBtn.addEventListener(
-    "click",
-    () => {
-
-        if(state.running){
-
-            alert(
-                "Stop generation first."
-            );
-
-            return;
-
-        }
-
-
-        state.items.forEach(
-            item => {
-
-                try{
-                    URL.revokeObjectURL(
-                        item.preview
-                    );
-                }catch(e){}
-
-            }
-        );
-
-
-        state.items =
-            [];
-
-        state.workers.gemini =
-            {
-                busy:false,
-                cooldownUntil:0,
-                consecutive429:0,
-                disabled:false,
-                completed:0
-            };
-
-        state.workers.groq =
-            {
-                busy:false,
-                cooldownUntil:0,
-                consecutive429:0,
-                disabled:false,
-                completed:0
-            };
-
-
-        render();
-
-    }
-);
-
-
-/* =========================================================
-   CSV
-   ========================================================= */
-
-csvBtn.addEventListener(
-    "click",
-    exportCSV
-);
-
-
-function csvEscape(value){
-
-    const str =
-        String(
-            value ?? ""
-        );
-
-    return '"' +
-        str.replace(
-            /"/g,
-            '""'
-        ) +
-        '"';
-
-}
-
-
-function exportCSV(){
-
-    const completed =
-        state.items.filter(
-            item =>
-                item.status === "done" &&
-                item.result
-        );
-
-
-    if(!completed.length){
-
-        alert(
-            "No completed metadata available."
-        );
-
-        return;
-
-    }
-
-
-    const rows = [];
-
-
-    rows.push([
-
-        "Filename",
-        "Title",
-        "Description",
-        "Keywords",
-        "Category"
-
-    ]);
-
-
-    completed.forEach(
-        item => {
-
-            const result =
-                item.result;
-
-
-            rows.push([
-
-                item.file.name,
-
-                result.title,
-
-                result.description,
-
-                result.keywords.join(", "),
-
-                result.category
-
-            ]);
-
-        }
-    );
-
-
-    const csv =
-        "\uFEFF" +
-        rows
-            .map(
-                row =>
-                    row
-                        .map(csvEscape)
-                        .join(",")
-            )
-            .join("\r\n");
-
-
-    const blob =
-        new Blob(
-            [csv],
-            {
-                type:
-                    "text/csv;charset=utf-8;"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const a =
-        document.createElement("a");
-
-    a.href =
+      img.src =
         url;
 
-    a.download =
-        "stockmeta-ai-metadata.csv";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    setTimeout(
-        () =>
-            URL.revokeObjectURL(url),
-        1000
-    );
+    }
+  );
 
 }
 
 
 /* =========================================================
-   RENDER
-   ========================================================= */
+   ERROR HANDLING
+========================================================= */
 
-function render(){
+function isRetryableError(error){
 
-    const total =
-        state.items.length;
-
-    const done =
-        state.items.filter(
-            x => x.status === "done"
-        ).length;
-
-    const processing =
-        state.items.filter(
-            x => x.status === "processing"
-        ).length;
-
-    const failed =
-        state.items.filter(
-            x => x.status === "error"
-        ).length;
-
-    const queued =
-        state.items.filter(
-            x =>
-                x.status === "queued" ||
-                x.status === "retry"
-        ).length;
+  if(!error)
+    return false;
 
 
-    document.getElementById(
-        "totalCount"
-    ).textContent =
-        total;
-
-    document.getElementById(
-        "doneCount"
-    ).textContent =
-        done;
-
-    document.getElementById(
-        "processingCount"
-    ).textContent =
-        processing;
-
-    document.getElementById(
-        "failedCount"
-    ).textContent =
-        failed;
-
-    document.getElementById(
-        "queueCount"
-    ).textContent =
-        queued;
-
-    document.getElementById(
-        "queueText"
-    ).textContent =
-        queued +
-        " images";
+  const msg =
+    error.message
+      .toLowerCase();
 
 
-    const percent =
-        total
-            ? Math.round(
-                ((done + failed) / total) *
-                100
-            )
-            : 0;
+  return (
+
+    msg.includes("429") ||
+
+    msg.includes("quota") ||
+
+    msg.includes("rate limit") ||
+
+    msg.includes("rate_limit") ||
+
+    msg.includes("503") ||
+
+    msg.includes("500") ||
+
+    msg.includes("502") ||
+
+    msg.includes("504") ||
+
+    msg.includes("overloaded") ||
+
+    msg.includes("temporarily") ||
+
+    msg.includes("network") ||
+
+    msg.includes("timeout")
+
+  );
+
+}
 
 
-    document.getElementById(
-        "progressBar"
-    ).style.width =
-        percent + "%";
+function getFriendlyError(error){
+
+  if(!error)
+    return "Unknown error";
 
 
-    document.getElementById(
-        "progressPercent"
-    ).textContent =
-        percent + "%";
+  const msg =
+    error.message || "";
 
 
-    if(state.running){
-
-        document.getElementById(
-            "progressText"
-        ).textContent =
-            "Smart Queue running...";
-
-    }else if(total){
-
-        document.getElementById(
-            "progressText"
-        ).textContent =
-            done +
-            " completed • " +
-            failed +
-            " failed";
-
-    }else{
-
-        document.getElementById(
-            "progressText"
-        ).textContent =
-            "Ready";
-
-    }
+  const lower =
+    msg.toLowerCase();
 
 
-    csvBtn.disabled =
-        done === 0;
+  if(
+    msg.includes("401") ||
+    lower.includes("invalid api key") ||
+    lower.includes("api_key_invalid")
+  ){
 
-    retryBtn.disabled =
-        failed === 0 ||
-        state.running;
+    return "Invalid API Key";
 
-
-    if(!state.items.length){
-
-        cards.innerHTML =
-            `<div class="empty">
-                Upload images to start.
-            </div>`;
-
-        return;
-
-    }
+  }
 
 
-    cards.innerHTML =
-        state.items
-            .map(
-                renderCard
-            )
-            .join("");
+  if(
+    msg.includes("403")
+  ){
+
+    return "API access denied";
+
+  }
+
+
+  if(
+    msg.includes("429") ||
+    lower.includes("quota") ||
+    lower.includes("rate limit")
+  ){
+
+    return "Rate limit / Quota exceeded";
+
+  }
+
+
+  if(
+    msg.includes("503")
+  ){
+
+    return "AI service temporarily busy";
+
+  }
+
+
+  if(
+    msg.includes("500") ||
+    msg.includes("502") ||
+    msg.includes("504")
+  ){
+
+    return "AI server error";
+
+  }
+
+
+  if(
+    lower.includes("network")
+  ){
+
+    return "Network error";
+
+  }
+
+
+  return msg.length > 70
+    ? msg.substring(0,70) + "..."
+    : msg;
 
 }
 
 
 /* =========================================================
-   CARD
-   ========================================================= */
-
-function renderCard(item){
-
-    const result =
-        item.result;
-
-
-    let statusText =
-        "Queued";
-
-
-    if(item.status === "processing")
-        statusText =
-            "Processing";
-
-    if(item.status === "done")
-        statusText =
-            "Done";
-
-    if(item.status === "error")
-        statusText =
-            "Error";
-
-    if(item.status === "retry")
-        statusText =
-            "Waiting";
-
-
-    const statusClass =
-        item.status === "done"
-            ? "done"
-            : item.status === "error"
-                ? "error"
-                : item.status === "processing"
-                    ? "processing"
-                    : item.status === "retry"
-                        ? "retry"
-                        : "";
-
-
-    const keywords =
-        result?.keywords
-            ? result.keywords.join(", ")
-            : "";
-
-
-    return `
-
-        <div class="card">
-
-            <img
-                class="cardImage"
-                src="${item.preview}"
-                alt=""
-            >
-
-            <div class="cardBody">
-
-                <div class="cardTop">
-
-                    <div
-                        class="fileName"
-                        title="${escapeHTML(item.file.name)}"
-                    >
-                        ${escapeHTML(item.file.name)}
-                    </div>
-
-                    <div
-                        class="status ${statusClass}"
-                    >
-                        ${statusText}
-                    </div>
-
-                </div>
-
-                ${
-                    result
-                    ? `
-
-                        <div class="metaRow">
-
-                            <div class="metaLabel">
-                                Title
-                            </div>
-
-                            <div class="metaText">
-                                ${escapeHTML(
-                                    result.title
-                                )}
-                            </div>
-
-                        </div>
-
-                        <div class="metaRow">
-
-                            <div class="metaLabel">
-                                Description
-                            </div>
-
-                            <div class="metaText">
-                                ${escapeHTML(
-                                    result.description
-                                )}
-                            </div>
-
-                        </div>
-
-                        <div class="metaRow">
-
-                            <div class="metaLabel">
-                                Category
-                            </div>
-
-                            <div class="metaText">
-                                ${escapeHTML(
-                                    result.category
-                                )}
-                            </div>
-
-                        </div>
-
-                        <div class="metaRow">
-
-                            <div class="metaLabel">
-                                Keywords
-                            </div>
-
-                            <div class="metaText keywords">
-                                ${escapeHTML(
-                                    keywords
-                                )}
-                            </div>
-
-                        </div>
-
-                    `
-                    : ""
-                }
-
-                ${
-                    item.error
-                    ? `
-                        <div class="cardError">
-                            ${escapeHTML(
-                                item.error
-                            )}
-                        </div>
-                    `
-                    : ""
-                }
-
-                ${
-                    item.provider
-                    ? `
-                        <div class="small">
-                            Provider:
-                            ${item.provider}
-                            • Attempts:
-                            ${item.attempts}
-                        </div>
-                    `
-                    : ""
-                }
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   PROVIDER UI
-   ========================================================= */
-
-function updateProviderUI(){
-
-    updateProvider(
-        "gemini",
-        "geminiDot",
-        "geminiInfo"
-    );
-
-    updateProvider(
-        "groq",
-        "groqDot",
-        "groqInfo"
-    );
-
-}
-
-
-function updateProvider(
-    provider,
-    dotId,
-    infoId
-){
-
-    const worker =
-        state.workers[provider];
-
-    const dot =
-        document.getElementById(
-            dotId
-        );
-
-    const info =
-        document.getElementById(
-            infoId
-        );
-
-
-    dot.className =
-        "dot";
-
-
-    if(worker.disabled){
-
-        dot.classList.add(
-            "off"
-        );
-
-        info.textContent =
-            "Temporarily disabled due to repeated rate limits.";
-
-        return;
-
-    }
-
-
-    if(worker.busy){
-
-        dot.classList.add(
-            "on"
-        );
-
-        info.textContent =
-            "Processing request...";
-
-        return;
-
-    }
-
-
-    if(
-        Date.now() <
-        worker.cooldownUntil
-    ){
-
-        dot.classList.add(
-            "wait"
-        );
-
-        info.textContent =
-            "Cooling down for " +
-            formatDuration(
-                worker.cooldownUntil -
-                Date.now()
-            );
-
-        return;
-
-    }
-
-
-    if(!hasProviderKey(provider)){
-
-        dot.classList.add(
-            "off"
-        );
-
-        info.textContent =
-            "API key not configured.";
-
-        return;
-
-    }
-
-
-    dot.classList.add(
-        "on"
-    );
-
-    info.textContent =
-        "Ready • Completed: " +
-        worker.completed;
-
-}
-
-
-/* =========================================================
-   UTILS
-   ========================================================= */
+   HELPERS
+========================================================= */
 
 function sleep(ms){
 
-    return new Promise(
-        resolve =>
-            setTimeout(
-                resolve,
-                ms
-            )
-    );
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        ms
+      )
+  );
 
 }
 
 
-function formatDuration(ms){
+function escapeHTML(str){
 
-    const sec =
-        Math.ceil(
-            ms / 1000
-        );
-
-    if(sec < 60)
-        return sec + "s";
-
-    const min =
-        Math.floor(
-            sec / 60
-        );
-
-    const rem =
-        sec % 60;
-
-    return min +
-        "m " +
-        rem +
-        "s";
-
-}
-
-
-function escapeHTML(value){
-
-    return String(
-        value ?? ""
+  return String(str)
+    .replace(
+      /&/g,
+      "&amp;"
     )
     .replace(
-        /&/g,
-        "&amp;"
+      /</g,
+      "&lt;"
     )
     .replace(
-        /</g,
-        "&lt;"
+      />/g,
+      "&gt;"
     )
     .replace(
-        />/g,
-        "&gt;"
+      /"/g,
+      "&quot;"
     )
     .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
+      /'/g,
+      "&#039;"
     );
 
 }
 
 
 /* =========================================================
-   LIVE PROVIDER COUNTDOWN
-   ========================================================= */
+   IMAGE MANAGEMENT
+========================================================= */
 
-setInterval(
-    () => {
+function removeImage(index){
 
-        updateProviderUI();
+  if(images[index]?.url){
 
-        if(state.items.length)
-            render();
+    URL.revokeObjectURL(
+      images[index].url
+    );
 
-    },
-    1000
-);
+  }
+
+  images.splice(
+    index,
+    1
+  );
+
+  updateUI();
+
+}
+
+
+function clearAll(){
+
+  images.forEach(
+    item => {
+
+      if(item.url){
+
+        URL.revokeObjectURL(
+          item.url
+        );
+
+      }
+
+    }
+  );
+
+  images = [];
+
+  updateUI();
+
+}
 
 
 /* =========================================================
-   INITIAL
-   ========================================================= */
+   EDIT METADATA
+========================================================= */
 
-updateProviderUI();
+function editMetadata(index){
 
-render();
+  editingIndex =
+    index;
+
+
+  const m =
+    images[index].metadata;
+
+
+  document.getElementById(
+    "editTitle"
+  ).value =
+    m.title || "";
+
+
+  document.getElementById(
+    "editDescription"
+  ).value =
+    m.description || "";
+
+
+  document.getElementById(
+    "editKeywords"
+  ).value =
+    (m.keywords || [])
+      .join(", ");
+
+
+  document.getElementById(
+    "editCategory"
+  ).value =
+    m.category || "";
+
+
+  document.getElementById(
+    "editModal"
+  ).classList.add(
+    "show"
+  );
+
+}
+
+
+function closeEdit(){
+
+  document.getElementById(
+    "editModal"
+  ).classList.remove(
+    "show"
+  );
+
+  editingIndex =
+    null;
+
+}
+
+
+function saveEdit(){
+
+  if(
+    editingIndex === null
+  )
+    return;
+
+
+  const m =
+    images[
+      editingIndex
+    ].metadata;
+
+
+  m.title =
+    document.getElementById(
+      "editTitle"
+    ).value.trim();
+
+
+  m.description =
+    document.getElementById(
+      "editDescription"
+    ).value.trim();
+
+
+  m.keywords =
+    document.getElementById(
+      "editKeywords"
+    ).value
+      .split(",")
+      .map(
+        k => k.trim()
+      )
+      .filter(Boolean);
+
+
+  m.category =
+    document.getElementById(
+      "editCategory"
+    ).value.trim();
+
+
+  closeEdit();
+
+  renderCards();
+
+}
+
+
+/* =========================================================
+   COPY
+========================================================= */
+
+async function copyMetadata(index){
+
+  const m =
+    images[index].metadata;
+
+
+  const text =
+    `Title: ${m.title}
+Description: ${m.description}
+Keywords: ${m.keywords.join(", ")}
+Category: ${m.category}`;
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      text
+    );
+
+    alert(
+      "Metadata copied to clipboard!"
+    );
+
+  }catch{
+
+    alert(
+      "Could not copy metadata."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   EXPORT CSV
+========================================================= */
+
+function exportCSV(){
+
+  const successItems =
+    images.filter(
+      x => x.metadata
+    );
+
+
+  if(!successItems.length){
+
+    alert(
+      "No generated metadata to export."
+    );
+
+    return;
+
+  }
+
+
+  let csv =
+    "Filename,Title,Description,Keywords,Category\n";
+
+
+  successItems.forEach(
+    item => {
+
+      const m =
+        item.metadata;
+
+
+      const fn =
+        `"${String(item.name)
+          .replace(
+            /"/g,
+            '""'
+          )}"`;
+
+
+      const t =
+        `"${String(m.title)
+          .replace(
+            /"/g,
+            '""'
+          )}"`;
+
+
+      const d =
+        `"${String(m.description)
+          .replace(
+            /"/g,
+            '""'
+          )}"`;
+
+
+      const k =
+        `"${String(
+          m.keywords.join(", ")
+        ).replace(
+          /"/g,
+          '""'
+        )}"`;
+
+
+      const c =
+        `"${String(m.category)
+          .replace(
+            /"/g,
+            '""'
+          )}"`;
+
+
+      csv +=
+        `${fn},${t},${d},${k},${c}\n`;
+
+    }
+  );
+
+
+  const blob =
+    new Blob(
+      [csv],
+      {
+        type:
+          "text/csv;charset=utf-8;"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const a =
+    document.createElement(
+      "a"
+    );
+
+
+  a.href =
+    url;
+
+
+  a.download =
+    "stock_metadata.csv";
+
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+
+  URL.revokeObjectURL(
+    url
+  );
+
+}
+
+
+/* =========================================================
+   SUPPORT
+========================================================= */
+
+function toggleSupport(){
+
+  document
+    .getElementById(
+      "supportPanel"
+    )
+    .classList.toggle(
+      "show"
+    );
+
+}
 
 </script>
 
