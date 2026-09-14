@@ -19,11 +19,11 @@
   --border:#292929;
   --red:#ff3030;
   --red2:#ff5555;
-  --text:#fff;
-  --muted:#9b9b9b;
-  --green:#36d98b;
+  --green:#35d98b;
   --yellow:#ffc857;
   --blue:#4da3ff;
+  --text:#fff;
+  --muted:#999;
 }
 
 body{
@@ -69,11 +69,10 @@ header{
   width:35px;
   height:35px;
   border-radius:10px;
+  background:var(--red);
   display:flex;
   align-items:center;
   justify-content:center;
-  background:var(--red);
-  font-size:18px;
 }
 
 .logo span{
@@ -82,22 +81,21 @@ header{
 
 .headerRight{
   display:flex;
-  gap:10px;
-  align-items:center;
+  gap:8px;
 }
 
 .btn{
   border:1px solid var(--border);
   background:#151515;
   color:#fff;
-  padding:10px 16px;
+  padding:10px 15px;
   border-radius:9px;
   transition:.2s;
 }
 
 .btn:hover{
+  background:#1d1d1d;
   border-color:#444;
-  background:#1c1c1c;
 }
 
 .btn.red{
@@ -110,18 +108,18 @@ header{
 }
 
 .btn.green{
-  background:#123e2c;
-  border-color:#1b704e;
-}
-
-.btn.yellow{
-  background:#3d3015;
-  border-color:#80651f;
+  background:#123d2c;
+  border-color:#216e4d;
 }
 
 .btn.blue{
-  background:#122d49;
-  border-color:#245a91;
+  background:#102d49;
+  border-color:#245b91;
+}
+
+.btn.yellow{
+  background:#403215;
+  border-color:#7b631f;
 }
 
 .btn:disabled{
@@ -151,7 +149,6 @@ main{
 
 .hero p{
   color:var(--muted);
-  font-size:15px;
 }
 
 .uploadBox{
@@ -170,7 +167,7 @@ main{
 
 .uploadIcon{
   font-size:42px;
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
 
 .uploadBox h2{
@@ -186,25 +183,18 @@ main{
   display:none!important;
 }
 
-.controls{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin:22px 0;
-}
-
 .controlPanel{
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;
   padding:16px;
-  margin-bottom:20px;
+  margin:22px 0;
 }
 
 .controlTop{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   gap:15px;
   flex-wrap:wrap;
 }
@@ -214,34 +204,31 @@ main{
 }
 
 .controlSub{
-  color:var(--muted);
+  color:#777;
   font-size:12px;
   margin-top:4px;
 }
 
-.queueStats{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
-  margin-bottom:20px;
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
 }
 
-.stat{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:16px;
+.batchInfo{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
 }
 
-.statLabel{
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:7px;
-}
-
-.statValue{
-  font-size:23px;
-  font-weight:800;
+.badge{
+  background:#171717;
+  border:1px solid #292929;
+  color:#aaa;
+  padding:6px 9px;
+  border-radius:7px;
+  font-size:11px;
 }
 
 .progressWrap{
@@ -251,7 +238,7 @@ main{
 .progressHeader{
   display:flex;
   justify-content:space-between;
-  color:var(--muted);
+  color:#aaa;
   font-size:13px;
   margin-bottom:8px;
 }
@@ -267,13 +254,67 @@ main{
 .progressBar{
   width:0%;
   height:100%;
-  background:linear-gradient(90deg,var(--red),#ff7a7a);
+  background:linear-gradient(
+    90deg,
+    var(--red),
+    #ff7d7d
+  );
   transition:width:.3s;
+}
+
+.queueStats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+}
+
+.stat{
+  background:#111;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:15px;
+}
+
+.statLabel{
+  font-size:11px;
+  color:#777;
+  margin-bottom:6px;
+}
+
+.statValue{
+  font-size:23px;
+  font-weight:800;
+}
+
+.logBox{
+  margin-top:15px;
+  background:#080808;
+  border:1px solid #222;
+  border-radius:10px;
+  height:120px;
+  overflow:auto;
+  padding:11px;
+  font-family:Consolas,monospace;
+  font-size:11px;
+}
+
+.logLine{
+  margin-bottom:4px;
+  color:#888;
+}
+
+.logLine.success{
+  color:#48d995;
+}
+
+.logLine.error{
+  color:#ff6666;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  grid-template-columns:
+    repeat(auto-fill,minmax(320px,1fr));
   gap:15px;
 }
 
@@ -301,13 +342,13 @@ main{
 
 .status{
   position:absolute;
-  top:10px;
   right:10px;
+  top:10px;
   padding:6px 9px;
+  background:#151515;
+  border:1px solid #292929;
   border-radius:7px;
-  background:#181818;
   font-size:11px;
-  border:1px solid var(--border);
 }
 
 .status.success{
@@ -323,7 +364,7 @@ main{
 }
 
 .status.waiting{
-  color:#aaa;
+  color:#888;
 }
 
 .cardBody{
@@ -342,18 +383,18 @@ main{
 .meta{
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:9px;
 }
 
 .metaItem{
   background:#151515;
   border:1px solid #222;
-  border-radius:9px;
+  border-radius:8px;
   padding:10px;
 }
 
 .metaLabel{
-  color:#888;
+  color:#777;
   font-size:10px;
   text-transform:uppercase;
   margin-bottom:5px;
@@ -372,7 +413,7 @@ main{
 .cardActions{
   display:flex;
   gap:8px;
-  margin-top:12px;
+  margin-top:10px;
 }
 
 .cardActions button{
@@ -383,7 +424,7 @@ main{
 
 .empty{
   text-align:center;
-  color:#777;
+  color:#666;
   padding:70px 20px;
   border:1px dashed #252525;
   border-radius:14px;
@@ -392,7 +433,7 @@ main{
 .settingsOverlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.7);
+  background:rgba(0,0,0,.72);
   z-index:100;
   display:none;
 }
@@ -405,8 +446,8 @@ main{
   position:absolute;
   right:0;
   top:0;
+  width:min(470px,100%);
   height:100%;
-  width:min(460px,100%);
   background:#0c0c0c;
   border-left:1px solid var(--border);
   padding:25px;
@@ -418,7 +459,7 @@ main{
 }
 
 .field{
-  margin-bottom:17px;
+  margin-bottom:18px;
 }
 
 .field label{
@@ -433,7 +474,7 @@ main{
   width:100%;
   background:#151515;
   border:1px solid #2b2b2b;
-  color:white;
+  color:#fff;
   padding:11px;
   border-radius:8px;
   outline:none;
@@ -453,18 +494,11 @@ main{
   flex:1;
 }
 
-.help{
-  color:#777;
-  font-size:11px;
-  line-height:1.5;
-  margin-top:6px;
-}
-
 .keyList{
   display:flex;
   flex-direction:column;
   gap:7px;
-  margin-top:10px;
+  margin-top:9px;
 }
 
 .keyItem{
@@ -484,6 +518,13 @@ main{
   text-overflow:ellipsis;
 }
 
+.help{
+  color:#777;
+  font-size:11px;
+  line-height:1.5;
+  margin-top:6px;
+}
+
 .toast{
   position:fixed;
   bottom:25px;
@@ -494,7 +535,7 @@ main{
   border-radius:10px;
   z-index:200;
   display:none;
-  max-width:350px;
+  max-width:360px;
   font-size:13px;
 }
 
@@ -502,66 +543,24 @@ main{
   display:block;
 }
 
-.logBox{
-  margin-top:18px;
-  background:#080808;
-  border:1px solid #222;
-  border-radius:10px;
-  padding:12px;
-  height:120px;
-  overflow:auto;
-  font-family:Consolas,monospace;
-  font-size:11px;
-  color:#999;
-}
-
-.logLine{
-  margin-bottom:4px;
-}
-
-.logLine.error{
-  color:#ff6868;
-}
-
-.logLine.success{
-  color:#50dc98;
-}
-
-.batchInfo{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:12px;
-}
-
-.badge{
-  background:#171717;
-  border:1px solid #292929;
-  color:#aaa;
-  padding:6px 9px;
-  border-radius:7px;
-  font-size:11px;
-}
-
 @media(max-width:850px){
+
   .queueStats{
     grid-template-columns:repeat(2,1fr);
   }
 
   .hero h1{
-    font-size:31px;
-  }
-
-  header{
-    padding:0 15px;
+    font-size:32px;
   }
 
   main{
     padding:20px 14px 60px;
   }
+
 }
 
 @media(max-width:500px){
+
   .queueStats{
     grid-template-columns:1fr 1fr;
   }
@@ -570,9 +569,10 @@ main{
     grid-template-columns:1fr;
   }
 
-  .uploadBox{
-    padding:35px 15px;
+  header{
+    padding:0 14px;
   }
+
 }
 </style>
 </head>
@@ -580,29 +580,62 @@ main{
 <body>
 
 <header>
+
   <div class="logo">
     <div class="logoIcon">✦</div>
     StockMeta <span>AI</span>
   </div>
 
   <div class="headerRight">
-    <button class="btn" onclick="openSettings()">⚙ Settings</button>
+
+    <button
+      class="btn"
+      onclick="openSettings()"
+    >
+      ⚙ Settings
+    </button>
+
   </div>
+
 </header>
+
 
 <main>
 
   <section class="hero">
-    <h1>Stock Metadata <span>AI</span></h1>
-    <p>Generate titles, descriptions, keywords and categories for your stock images.</p>
+
+    <h1>
+      Stock Metadata <span>AI</span>
+    </h1>
+
+    <p>
+      Generate stock titles, descriptions, keywords and categories automatically.
+    </p>
+
   </section>
 
-  <section class="uploadBox" id="uploadBox">
-    <div class="uploadIcon">☁</div>
-    <h2>Upload your images</h2>
-    <p>PNG, JPG, JPEG or WEBP · Up to 500 images</p>
 
-    <button class="btn red" onclick="document.getElementById('fileInput').click()">
+  <!-- UPLOAD -->
+
+  <section
+    class="uploadBox"
+    id="uploadBox"
+  >
+
+    <div class="uploadIcon">☁</div>
+
+    <h2>
+      Upload your images
+    </h2>
+
+    <p>
+      PNG, JPG, JPEG or WEBP · Up to 500 images
+    </p>
+
+    <button
+      class="btn red"
+      onclick="document.getElementById('fileInput').click()"
+    >
       Select Images
     </button>
 
@@ -613,248 +646,507 @@ main{
       accept="image/png,image/jpeg,image/jpg,image/webp"
       multiple
     >
+
   </section>
 
-  <section class="controlPanel" id="controlPanel" style="display:none">
+
+  <!-- CONTROL PANEL -->
+
+  <section
+    class="controlPanel"
+    id="controlPanel"
+    style="display:none"
+  >
 
     <div class="controlTop">
+
       <div>
-        <div class="controlTitle">Smart Queue</div>
-        <div class="controlSub">
-          Rate-limit protected generation queue
+
+        <div class="controlTitle">
+          Smart Queue
         </div>
+
+        <div class="controlSub">
+          Parallel processing + rate-limit protection
+        </div>
+
       </div>
 
+
       <div class="controls">
-        <button class="btn red" id="generateBtn" onclick="startGeneration()">
+
+        <button
+          class="btn red"
+          id="generateBtn"
+          onclick="startGeneration()"
+        >
           ▶ Generate All
         </button>
 
-        <button class="btn yellow" id="pauseBtn" onclick="togglePause()" disabled>
+        <button
+          class="btn yellow"
+          id="pauseBtn"
+          onclick="togglePause()"
+          disabled
+        >
           ⏸ Pause
         </button>
 
-        <button class="btn" id="stopBtn" onclick="stopGeneration()" disabled>
+        <button
+          class="btn"
+          id="stopBtn"
+          onclick="stopGeneration()"
+          disabled
+        >
           ■ Stop
         </button>
 
-        <button class="btn blue" onclick="retryFailed()">
+        <button
+          class="btn blue"
+          onclick="retryFailed()"
+        >
           ↻ Retry Failed
         </button>
 
-        <button class="btn" onclick="clearAll()">
+        <button
+          class="btn green"
+          onclick="exportCSV()"
+        >
+          ↓ Export CSV
+        </button>
+
+        <button
+          class="btn"
+          onclick="clearAll()"
+        >
           Clear
         </button>
+
       </div>
+
     </div>
+
 
     <div class="batchInfo">
-      <div class="badge" id="providerBadge">Provider: Auto</div>
-      <div class="badge" id="batchBadge">Batch: 5</div>
-      <div class="badge" id="delayBadge">Delay: 2500ms</div>
-      <div class="badge">Max: 500 Images</div>
+
+      <div
+        class="badge"
+        id="providerBadge"
+      >
+        Provider: Auto
+      </div>
+
+      <div
+        class="badge"
+        id="batchBadge"
+      >
+        Parallel: 3
+      </div>
+
+      <div
+        class="badge"
+        id="delayBadge"
+      >
+        Delay: 1500ms
+      </div>
+
+      <div class="badge">
+        Max: 500 Images
+      </div>
+
     </div>
 
+
     <div class="progressWrap">
+
       <div class="progressHeader">
-        <span id="progressText">Ready</span>
-        <span id="progressPercent">0%</span>
+
+        <span id="progressText">
+          Ready
+        </span>
+
+        <span id="progressPercent">
+          0%
+        </span>
+
       </div>
 
       <div class="progress">
-        <div class="progressBar" id="progressBar"></div>
+
+        <div
+          class="progressBar"
+          id="progressBar"
+        ></div>
+
       </div>
+
     </div>
+
 
     <div class="queueStats">
 
       <div class="stat">
         <div class="statLabel">TOTAL</div>
-        <div class="statValue" id="totalCount">0</div>
+        <div
+          class="statValue"
+          id="totalCount"
+        >0</div>
       </div>
 
       <div class="stat">
         <div class="statLabel">WAITING</div>
-        <div class="statValue" id="waitingCount">0</div>
+        <div
+          class="statValue"
+          id="waitingCount"
+        >0</div>
       </div>
 
       <div class="stat">
         <div class="statLabel">PROCESSING</div>
-        <div class="statValue" id="processingCount">0</div>
+        <div
+          class="statValue"
+          id="processingCount"
+        >0</div>
       </div>
 
       <div class="stat">
         <div class="statLabel">SUCCESS</div>
-        <div class="statValue" id="successCount">0</div>
+        <div
+          class="statValue"
+          id="successCount"
+        >0</div>
       </div>
 
       <div class="stat">
         <div class="statLabel">FAILED</div>
-        <div class="statValue" id="failedCount">0</div>
+        <div
+          class="statValue"
+          id="failedCount"
+        >0</div>
       </div>
 
     </div>
 
-    <div class="logBox" id="logBox"></div>
+
+    <div
+      class="logBox"
+      id="logBox"
+    ></div>
 
   </section>
 
-  <section id="imageGrid" class="grid"></section>
 
-  <div id="emptyState" class="empty">
+  <section
+    id="imageGrid"
+    class="grid"
+  ></section>
+
+
+  <div
+    id="emptyState"
+    class="empty"
+  >
     Upload images to start generating stock metadata.
   </div>
 
 </main>
 
+
 <!-- SETTINGS -->
 
-<div class="settingsOverlay" id="settingsOverlay">
+<div
+  class="settingsOverlay"
+  id="settingsOverlay"
+>
 
   <div class="settings">
 
     <div class="controlTop">
-      <h2>Settings</h2>
-      <button class="btn" onclick="closeSettings()">✕</button>
+
+      <h2>
+        Settings
+      </h2>
+
+      <button
+        class="btn"
+        onclick="closeSettings()"
+      >
+        ✕
+      </button>
+
     </div>
 
+
+    <!-- GEMINI -->
+
     <div class="field">
-      <label>Gemini API Keys</label>
+
+      <label>
+        Gemini API Keys
+      </label>
 
       <div class="apiRow">
+
         <input
           id="geminiKeyInput"
           type="password"
           placeholder="Paste Gemini API key"
         >
 
-        <button class="btn" onclick="addKey('gemini')">Add</button>
+        <button
+          class="btn"
+          onclick="addKey('gemini')"
+        >
+          Add
+        </button>
+
       </div>
 
-      <div class="keyList" id="geminiKeys"></div>
+      <div
+        class="keyList"
+        id="geminiKeys"
+      ></div>
 
-      <div class="help">
-        Multiple keys can be added. The queue rotates keys automatically.
-      </div>
     </div>
 
+
+    <!-- GROQ -->
+
     <div class="field">
-      <label>Groq API Keys</label>
+
+      <label>
+        Groq API Keys
+      </label>
 
       <div class="apiRow">
+
         <input
           id="groqKeyInput"
           type="password"
           placeholder="Paste Groq API key"
         >
 
-        <button class="btn" onclick="addKey('groq')">Add</button>
+        <button
+          class="btn"
+          onclick="addKey('groq')"
+        >
+          Add
+        </button>
+
       </div>
 
-      <div class="keyList" id="groqKeys"></div>
+      <div
+        class="keyList"
+        id="groqKeys"
+      ></div>
+
     </div>
 
+
+    <!-- PROVIDER -->
+
     <div class="field">
-      <label>Preferred Provider</label>
+
+      <label>
+        Preferred Provider
+      </label>
 
       <select id="providerSelect">
-        <option value="auto">Auto — Gemini + Groq</option>
-        <option value="gemini">Gemini Only</option>
-        <option value="groq">Groq Only</option>
+
+        <option value="auto">
+          Auto — Gemini + Groq
+        </option>
+
+        <option value="gemini">
+          Gemini Only
+        </option>
+
+        <option value="groq">
+          Groq Only
+        </option>
+
       </select>
+
     </div>
 
-    <div class="field">
-      <label>Batch Size</label>
 
-      <select id="batchSize">
-        <option value="1">1 image</option>
-        <option value="3">3 images</option>
-        <option value="5" selected>5 images</option>
-        <option value="8">8 images</option>
-        <option value="10">10 images</option>
+    <!-- PARALLEL -->
+
+    <div class="field">
+
+      <label>
+        Parallel Images
+      </label>
+
+      <select id="parallelCount">
+
+        <option value="1">
+          1 — Safest
+        </option>
+
+        <option value="2">
+          2 — Safe
+        </option>
+
+        <option value="3" selected>
+          3 — Recommended
+        </option>
+
+        <option value="4">
+          4 — Fast
+        </option>
+
+        <option value="5">
+          5 — Aggressive
+        </option>
+
       </select>
 
       <div class="help">
-        Smaller batches are safer for rate limits. Recommended: 3–5.
+        3 is recommended. Higher values can cause 429 rate-limit errors.
       </div>
+
     </div>
 
+
+    <!-- DELAY -->
+
     <div class="field">
-      <label>Delay Between Requests</label>
+
+      <label>
+        Delay Between Requests
+      </label>
 
       <select id="requestDelay">
-        <option value="1000">1 second</option>
-        <option value="2000">2 seconds</option>
-        <option value="2500" selected>2.5 seconds</option>
-        <option value="4000">4 seconds</option>
-        <option value="5000">5 seconds</option>
-        <option value="8000">8 seconds</option>
+
+        <option value="500">
+          0.5 second
+        </option>
+
+        <option value="1000">
+          1 second
+        </option>
+
+        <option value="1500" selected>
+          1.5 seconds
+        </option>
+
+        <option value="2000">
+          2 seconds
+        </option>
+
+        <option value="3000">
+          3 seconds
+        </option>
+
+        <option value="5000">
+          5 seconds
+        </option>
+
       </select>
+
     </div>
 
+
+    <!-- KEYWORDS -->
+
     <div class="field">
-      <label>Keyword Count</label>
+
+      <label>
+        Keyword Count
+      </label>
 
       <select id="keywordCount">
-        <option value="20">20</option>
-        <option value="25">25</option>
-        <option value="30">30</option>
-        <option value="35" selected>35</option>
-        <option value="40">40</option>
-        <option value="45">45</option>
-        <option value="50">50</option>
+
+        <option value="20">
+          20
+        </option>
+
+        <option value="25">
+          25
+        </option>
+
+        <option value="30">
+          30
+        </option>
+
+        <option value="35" selected>
+          35
+        </option>
+
+        <option value="40">
+          40
+        </option>
+
+        <option value="45">
+          45
+        </option>
+
+        <option value="50">
+          50
+        </option>
+
       </select>
+
     </div>
 
-    <div class="field">
-      <button class="btn red" style="width:100%" onclick="saveSettings()">
-        Save Settings
-      </button>
-    </div>
 
-    <div class="help">
-      ⚠ API keys stored in browser localStorage are not secure for a public
-      production website. For a public site, use a backend/serverless API.
+    <button
+      class="btn red"
+      style="width:100%"
+      onclick="saveSettings()"
+    >
+      Save Settings
+    </button>
+
+
+    <div class="help" style="margin-top:15px">
+
+      ⚠ API keys stored in browser localStorage
+      are not secure for a public website.
+      A backend/serverless API is recommended.
+
     </div>
 
   </div>
 
 </div>
 
-<div class="toast" id="toast"></div>
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
 
 <script>
 
 /* =========================================================
-   STOCKMETA AI
-   SMART BATCH QUEUE
-   RATE LIMIT PROTECTION
+   CONFIG
    ========================================================= */
 
 const CONFIG = {
 
-  MAX_IMAGES: 500,
+  MAX_IMAGES:500,
 
-  MAX_IMAGE_SIZE: 1600,
+  MAX_IMAGE_SIZE:1600,
 
-  JPEG_QUALITY: 0.82,
+  JPEG_QUALITY:.82,
 
-  MAX_RETRIES: 3,
+  MAX_RETRIES:3,
 
-  DEFAULT_DELAY: 2500,
+  GEMINI_MODEL:"gemini-2.5-flash",
 
-  DEFAULT_BATCH: 5,
+  GROQ_MODEL:"qwen/qwen3.6-27b",
 
-  GEMINI_MODEL: "gemini-2.5-flash",
+  GEMINI_STORAGE:
+    "stockmeta_gemini_keys_v4",
 
-  GROQ_MODEL: "qwen/qwen3.6-27b",
+  GROQ_STORAGE:
+    "stockmeta_groq_keys_v4",
 
-  GEMINI_STORAGE: "stockmeta_gemini_keys_v3",
-
-  GROQ_STORAGE: "stockmeta_groq_keys_v3",
-
-  SETTINGS_STORAGE: "stockmeta_settings_v3"
+  SETTINGS_STORAGE:
+    "stockmeta_settings_v4"
 
 };
 
@@ -863,25 +1155,28 @@ const CONFIG = {
    STATE
    ========================================================= */
 
-let images = [];
+let images=[];
 
-let geminiKeys = [];
-let groqKeys = [];
+let geminiKeys=[];
+let groqKeys=[];
 
-let geminiPointer = 0;
-let groqPointer = 0;
+let geminiPointer=0;
+let groqPointer=0;
 
-let isRunning = false;
-let isPaused = false;
-let stopRequested = false;
+let isRunning=false;
+let isPaused=false;
+let stopRequested=false;
 
-let currentIndex = 0;
+let settings={
 
-let settings = {
-  provider: "auto",
-  batchSize: 5,
-  delay: 2500,
-  keywordCount: 35
+  provider:"auto",
+
+  parallel:3,
+
+  delay:1500,
+
+  keywordCount:35
+
 };
 
 
@@ -889,62 +1184,115 @@ let settings = {
    DOM
    ========================================================= */
 
-const fileInput = document.getElementById("fileInput");
-const uploadBox = document.getElementById("uploadBox");
-const imageGrid = document.getElementById("imageGrid");
-const emptyState = document.getElementById("emptyState");
+const fileInput=
+  document.getElementById("fileInput");
 
-const controlPanel = document.getElementById("controlPanel");
+const uploadBox=
+  document.getElementById("uploadBox");
 
-const totalCount = document.getElementById("totalCount");
-const waitingCount = document.getElementById("waitingCount");
-const processingCount = document.getElementById("processingCount");
-const successCount = document.getElementById("successCount");
-const failedCount = document.getElementById("failedCount");
+const imageGrid=
+  document.getElementById("imageGrid");
 
-const progressBar = document.getElementById("progressBar");
-const progressText = document.getElementById("progressText");
-const progressPercent = document.getElementById("progressPercent");
+const emptyState=
+  document.getElementById("emptyState");
 
-const generateBtn = document.getElementById("generateBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-const stopBtn = document.getElementById("stopBtn");
+const controlPanel=
+  document.getElementById("controlPanel");
 
-const logBox = document.getElementById("logBox");
+const totalCount=
+  document.getElementById("totalCount");
+
+const waitingCount=
+  document.getElementById("waitingCount");
+
+const processingCount=
+  document.getElementById("processingCount");
+
+const successCount=
+  document.getElementById("successCount");
+
+const failedCount=
+  document.getElementById("failedCount");
+
+const progressBar=
+  document.getElementById("progressBar");
+
+const progressText=
+  document.getElementById("progressText");
+
+const progressPercent=
+  document.getElementById("progressPercent");
+
+const generateBtn=
+  document.getElementById("generateBtn");
+
+const pauseBtn=
+  document.getElementById("pauseBtn");
+
+const stopBtn=
+  document.getElementById("stopBtn");
+
+const logBox=
+  document.getElementById("logBox");
 
 
 /* =========================================================
-   INIT
+   LOAD
    ========================================================= */
 
 loadSettings();
 loadKeys();
+
 renderKeyLists();
+updateBadges();
+updateStats();
 
-fileInput.addEventListener("change", e => {
-  handleFiles([...e.target.files]);
-});
 
-uploadBox.addEventListener("dragover", e => {
-  e.preventDefault();
-  uploadBox.classList.add("drag");
-});
+/* =========================================================
+   FILE INPUT
+   ========================================================= */
 
-uploadBox.addEventListener("dragleave", () => {
-  uploadBox.classList.remove("drag");
-});
+fileInput.addEventListener(
+  "change",
+  e=>{
+    handleFiles([...e.target.files]);
+  }
+);
 
-uploadBox.addEventListener("drop", e => {
 
-  e.preventDefault();
+/* =========================================================
+   DRAG DROP
+   ========================================================= */
 
-  uploadBox.classList.remove("drag");
+uploadBox.addEventListener(
+  "dragover",
+  e=>{
+    e.preventDefault();
+    uploadBox.classList.add("drag");
+  }
+);
 
-  const files = [...e.dataTransfer.files];
+uploadBox.addEventListener(
+  "dragleave",
+  ()=>{
+    uploadBox.classList.remove("drag");
+  }
+);
 
-  handleFiles(files);
+uploadBox.addEventListener(
+  "drop",
+  e=>{
 
-});
+    e.preventDefault();
+
+    uploadBox.classList.remove("drag");
+
+    handleFiles(
+      [...e.dataTransfer.files]
+    );
+
+  }
+);
 
 
 /* =========================================================
@@ -955,29 +1303,43 @@ function loadSettings(){
 
   try{
 
-    const saved = JSON.parse(
-      localStorage.getItem(CONFIG.SETTINGS_STORAGE)
-    );
+    const saved=
+      JSON.parse(
+        localStorage.getItem(
+          CONFIG.SETTINGS_STORAGE
+        )
+      );
 
     if(saved){
-      settings = {
+
+      settings={
         ...settings,
         ...saved
       };
+
     }
 
   }catch(e){}
 
-  document.getElementById("providerSelect").value =
+
+  document.getElementById(
+    "providerSelect"
+  ).value=
     settings.provider;
 
-  document.getElementById("batchSize").value =
-    settings.batchSize;
+  document.getElementById(
+    "parallelCount"
+  ).value=
+    settings.parallel;
 
-  document.getElementById("requestDelay").value =
+  document.getElementById(
+    "requestDelay"
+  ).value=
     settings.delay;
 
-  document.getElementById("keywordCount").value =
+  document.getElementById(
+    "keywordCount"
+  ).value=
     settings.keywordCount;
 
 }
@@ -985,28 +1347,47 @@ function loadSettings(){
 
 function saveSettings(){
 
-  settings.provider =
-    document.getElementById("providerSelect").value;
+  settings.provider=
+    document.getElementById(
+      "providerSelect"
+    ).value;
 
-  settings.batchSize =
-    Number(document.getElementById("batchSize").value);
+  settings.parallel=
+    Number(
+      document.getElementById(
+        "parallelCount"
+      ).value
+    );
 
-  settings.delay =
-    Number(document.getElementById("requestDelay").value);
+  settings.delay=
+    Number(
+      document.getElementById(
+        "requestDelay"
+      ).value
+    );
 
-  settings.keywordCount =
-    Number(document.getElementById("keywordCount").value);
+  settings.keywordCount=
+    Number(
+      document.getElementById(
+        "keywordCount"
+      ).value
+    );
+
 
   localStorage.setItem(
     CONFIG.SETTINGS_STORAGE,
     JSON.stringify(settings)
   );
 
+
   updateBadges();
 
-  showToast("Settings saved");
-
   closeSettings();
+
+  showToast(
+    "Settings saved"
+  );
+
 }
 
 
@@ -1017,17 +1398,34 @@ function saveSettings(){
 function loadKeys(){
 
   try{
-    geminiKeys =
-      JSON.parse(localStorage.getItem(CONFIG.GEMINI_STORAGE)) || [];
+
+    geminiKeys=
+      JSON.parse(
+        localStorage.getItem(
+          CONFIG.GEMINI_STORAGE
+        )
+      ) || [];
+
   }catch(e){
-    geminiKeys = [];
+
+    geminiKeys=[];
+
   }
 
+
   try{
-    groqKeys =
-      JSON.parse(localStorage.getItem(CONFIG.GROQ_STORAGE)) || [];
+
+    groqKeys=
+      JSON.parse(
+        localStorage.getItem(
+          CONFIG.GROQ_STORAGE
+        )
+      ) || [];
+
   }catch(e){
-    groqKeys = [];
+
+    groqKeys=[];
+
   }
 
 }
@@ -1050,21 +1448,31 @@ function saveKeys(){
 
 function addKey(provider){
 
-  const input =
-    provider === "gemini"
-      ? document.getElementById("geminiKeyInput")
-      : document.getElementById("groqKeyInput");
+  const input=
+    provider==="gemini"
+      ? document.getElementById(
+          "geminiKeyInput"
+        )
+      : document.getElementById(
+          "groqKeyInput"
+        );
 
-  const key = input.value.trim();
+
+  const key=
+    input.value.trim();
+
 
   if(!key){
 
-    showToast("Enter an API key first");
+    showToast(
+      "Enter an API key"
+    );
 
     return;
   }
 
-  if(provider === "gemini"){
+
+  if(provider==="gemini"){
 
     if(!geminiKeys.includes(key)){
       geminiKeys.push(key);
@@ -1078,29 +1486,40 @@ function addKey(provider){
 
   }
 
-  input.value = "";
+
+  input.value="";
 
   saveKeys();
-  renderKeyLists();
 
-  showToast(
-    provider === "gemini"
-      ? "Gemini key added"
-      : "Groq key added"
-  );
+  renderKeyLists();
 
 }
 
 
-function removeKey(provider,index){
+function removeKey(
+  provider,
+  index
+){
 
-  if(provider === "gemini"){
-    geminiKeys.splice(index,1);
+  if(provider==="gemini"){
+
+    geminiKeys.splice(
+      index,
+      1
+    );
+
   }else{
-    groqKeys.splice(index,1);
+
+    groqKeys.splice(
+      index,
+      1
+    );
+
   }
 
+
   saveKeys();
+
   renderKeyLists();
 
 }
@@ -1108,64 +1527,105 @@ function removeKey(provider,index){
 
 function renderKeyLists(){
 
-  const g =
-    document.getElementById("geminiKeys");
+  const g=
+    document.getElementById(
+      "geminiKeys"
+    );
 
-  const q =
-    document.getElementById("groqKeys");
-
-  g.innerHTML = "";
-
-  geminiKeys.forEach((key,index)=>{
-
-    const div = document.createElement("div");
-
-    div.className = "keyItem";
-
-    div.innerHTML = `
-      <span>Gemini ${index + 1} • ${maskKey(key)}</span>
-      <button class="btn" onclick="removeKey('gemini',${index})">✕</button>
-    `;
-
-    g.appendChild(div);
-
-  });
+  const q=
+    document.getElementById(
+      "groqKeys"
+    );
 
 
-  q.innerHTML = "";
+  g.innerHTML="";
 
-  groqKeys.forEach((key,index)=>{
 
-    const div = document.createElement("div");
+  geminiKeys.forEach(
+    (key,index)=>{
 
-    div.className = "keyItem";
+      const div=
+        document.createElement(
+          "div"
+        );
 
-    div.innerHTML = `
-      <span>Groq ${index + 1} • ${maskKey(key)}</span>
-      <button class="btn" onclick="removeKey('groq',${index})">✕</button>
-    `;
+      div.className="keyItem";
 
-    q.appendChild(div);
+      div.innerHTML=`
 
-  });
+        <span>
+          Gemini ${index+1}
+          • ${maskKey(key)}
+        </span>
+
+        <button
+          class="btn"
+          onclick="removeKey('gemini',${index})"
+        >
+          ✕
+        </button>
+
+      `;
+
+      g.appendChild(div);
+
+    }
+  );
+
+
+  q.innerHTML="";
+
+
+  groqKeys.forEach(
+    (key,index)=>{
+
+      const div=
+        document.createElement(
+          "div"
+        );
+
+      div.className="keyItem";
+
+      div.innerHTML=`
+
+        <span>
+          Groq ${index+1}
+          • ${maskKey(key)}
+        </span>
+
+        <button
+          class="btn"
+          onclick="removeKey('groq',${index})"
+        >
+          ✕
+        </button>
+
+      `;
+
+      q.appendChild(div);
+
+    }
+  );
 
 }
 
 
 function maskKey(key){
 
-  if(key.length < 10)
+  if(key.length<10)
     return "••••••";
 
-  return key.slice(0,5) +
-    "••••••" +
-    key.slice(-4);
+  return(
+    key.slice(0,5)+
+    "••••••"+
+    key.slice(-4)
+  );
 
 }
 
 
 /* =========================================================
-   FILE HANDLING
+   FILES
    ========================================================= */
 
 async function handleFiles(files){
@@ -1173,47 +1633,56 @@ async function handleFiles(files){
   if(!files.length)
     return;
 
-  if(images.length >= CONFIG.MAX_IMAGES){
 
-    showToast("Maximum 500 images allowed");
+  const available=
+    CONFIG.MAX_IMAGES-
+    images.length;
+
+
+  if(available<=0){
+
+    showToast(
+      "Maximum 500 images reached"
+    );
 
     return;
   }
 
-  const available =
-    CONFIG.MAX_IMAGES - images.length;
 
-  const selected =
+  const selected=
     files
-      .filter(file => file.type.startsWith("image/"))
+      .filter(
+        file=>
+          file.type.startsWith("image/")
+      )
       .slice(0,available);
 
-  if(!selected.length){
-
-    showToast("Please select image files");
-
-    return;
-  }
 
   showToast(
-    `Adding ${selected.length} image${selected.length > 1 ? "s" : ""}...`
+    `Adding ${selected.length} images...`
   );
 
 
-  for(const file of selected){
+  for(
+    const file of selected
+  ){
 
     try{
 
-      const optimized =
+      const optimized=
         await optimizeImage(file);
+
 
       images.push({
 
-        id: crypto.randomUUID(),
+        id:crypto.randomUUID(),
 
         file,
 
-        url: URL.createObjectURL(file),
+        url:
+          URL.createObjectURL(
+            file
+          ),
 
         optimized,
 
@@ -1248,245 +1717,411 @@ async function handleFiles(files){
 
 
 /* =========================================================
-   IMAGE OPTIMIZATION
+   IMAGE OPTIMIZER
    ========================================================= */
 
 function optimizeImage(file){
 
-  return new Promise((resolve,reject)=>{
+  return new Promise(
+    (resolve,reject)=>{
 
-    const img = new Image();
+      const img=
+        new Image();
 
-    const reader = new FileReader();
+      const reader=
+        new FileReader();
 
-    reader.onload = e => {
 
-      img.onload = () => {
+      reader.onload=e=>{
 
-        let width = img.width;
-        let height = img.height;
+        img.onload=()=>{
 
-        const max = CONFIG.MAX_IMAGE_SIZE;
+          let width=
+            img.width;
 
-        if(width > max || height > max){
+          let height=
+            img.height;
 
-          const ratio =
-            Math.min(max / width, max / height);
 
-          width =
-            Math.round(width * ratio);
+          const max=
+            CONFIG.MAX_IMAGE_SIZE;
 
-          height =
-            Math.round(height * ratio);
 
-        }
+          if(
+            width>max ||
+            height>max
+          ){
 
-        const canvas =
-          document.createElement("canvas");
-
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx =
-          canvas.getContext("2d");
-
-        ctx.drawImage(
-          img,
-          0,
-          0,
-          width,
-          height
-        );
-
-        canvas.toBlob(
-          blob => {
-
-            if(!blob){
-
-              reject(
-                new Error("Image optimization failed")
+            const ratio=
+              Math.min(
+                max/width,
+                max/height
               );
 
-              return;
-            }
+            width=
+              Math.round(
+                width*ratio
+              );
 
-            resolve(blob);
+            height=
+              Math.round(
+                height*ratio
+              );
 
-          },
-          "image/jpeg",
-          CONFIG.JPEG_QUALITY
-        );
+          }
+
+
+          const canvas=
+            document.createElement(
+              "canvas"
+            );
+
+
+          canvas.width=width;
+          canvas.height=height;
+
+
+          const ctx=
+            canvas.getContext(
+              "2d"
+            );
+
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          canvas.toBlob(
+            blob=>{
+
+              if(!blob){
+
+                reject(
+                  new Error(
+                    "Optimization failed"
+                  )
+                );
+
+                return;
+              }
+
+
+              resolve(blob);
+
+            },
+            "image/jpeg",
+            CONFIG.JPEG_QUALITY
+          );
+
+        };
+
+
+        img.onerror=()=>
+          reject(
+            new Error(
+              "Invalid image"
+            )
+          );
+
+
+        img.src=
+          e.target.result;
 
       };
 
-      img.onerror =
-        () => reject(new Error("Invalid image"));
 
-      img.src = e.target.result;
+      reader.onerror=()=>
+        reject(
+          new Error(
+            "Could not read image"
+          )
+        );
 
-    };
 
-    reader.onerror =
-      () => reject(new Error("Could not read image"));
+      reader.readAsDataURL(file);
 
-    reader.readAsDataURL(file);
-
-  });
+    }
+  );
 
 }
 
 
 /* =========================================================
-   RENDER
+   RENDER ALL
    ========================================================= */
 
 function renderAll(){
 
-  imageGrid.innerHTML = "";
+  imageGrid.innerHTML="";
 
-  emptyState.style.display =
-    images.length ? "none" : "block";
 
-  controlPanel.style.display =
-    images.length ? "block" : "none";
+  emptyState.style.display=
+    images.length
+      ? "none"
+      : "block";
 
-  images.forEach((image,index)=>{
 
-    const card =
-      document.createElement("div");
+  controlPanel.style.display=
+    images.length
+      ? "block"
+      : "none";
 
-    card.className = "card";
 
-    card.id = `card-${image.id}`;
+  images.forEach(
+    (image,index)=>{
 
-    card.innerHTML = createCardHTML(image,index);
+      const card=
+        document.createElement(
+          "div"
+        );
 
-    imageGrid.appendChild(card);
+      card.className="card";
 
-  });
+      card.id=
+        `card-${image.id}`;
+
+
+      card.innerHTML=
+        createCardHTML(
+          image,
+          index
+        );
+
+
+      imageGrid.appendChild(
+        card
+      );
+
+    }
+  );
+
 
   updateBadges();
 
 }
 
 
-function createCardHTML(image,index){
+/* =========================================================
+   CARD
+   ========================================================= */
 
-  const statusText =
-    image.status === "success"
+function createCardHTML(
+  image,
+  index
+){
+
+  const statusText=
+    image.status==="success"
       ? "✓ Success"
-      : image.status === "loading"
+      : image.status==="loading"
       ? "● Processing"
-      : image.status === "error"
+      : image.status==="error"
       ? "✕ Failed"
       : "Waiting";
 
 
-  const result =
+  const result=
     image.result || {};
 
 
-  return `
+  return`
 
     <div class="imageArea">
 
-      <img src="${image.url}" alt="">
+      <img
+        src="${image.url}"
+        alt=""
+      >
 
-      <div class="status ${image.status}">
+      <div
+        class="status ${image.status}"
+      >
         ${statusText}
       </div>
 
     </div>
 
+
     <div class="cardBody">
 
-      <div class="fileName" title="${escapeHTML(image.name)}">
+      <div
+        class="fileName"
+        title="${escapeHTML(image.name)}"
+      >
         ${escapeHTML(image.name)}
       </div>
 
+
       ${
         image.result
-        ? `
-          <div class="meta">
 
-            <div class="metaItem">
-              <div class="metaLabel">Title</div>
-              <div class="metaText">
-                ${escapeHTML(result.title || "")}
-              </div>
-            </div>
+        ?
 
-            <div class="metaItem">
-              <div class="metaLabel">Description</div>
-              <div class="metaText">
-                ${escapeHTML(result.description || "")}
-              </div>
-            </div>
-
-            <div class="metaItem">
-              <div class="metaLabel">Category</div>
-              <div class="metaText">
-                ${escapeHTML(result.category || "")}
-              </div>
-            </div>
-
-            <div class="metaItem">
-              <div class="metaLabel">Keywords</div>
-              <div class="metaText keywords">
-                ${escapeHTML(
-                  Array.isArray(result.keywords)
-                  ? result.keywords.join(", ")
-                  : result.keywords || ""
-                )}
-              </div>
-            </div>
-
-          </div>
         `
-        : image.error
-        ? `
+
+        <div class="meta">
+
           <div class="metaItem">
-            <div class="metaLabel">Error</div>
-            <div class="metaText" style="color:#ff6868">
-              ${escapeHTML(image.error)}
+
+            <div class="metaLabel">
+              Title
             </div>
+
+            <div class="metaText">
+              ${escapeHTML(
+                result.title
+              )}
+            </div>
+
           </div>
+
+
+          <div class="metaItem">
+
+            <div class="metaLabel">
+              Description
+            </div>
+
+            <div class="metaText">
+              ${escapeHTML(
+                result.description
+              )}
+            </div>
+
+          </div>
+
+
+          <div class="metaItem">
+
+            <div class="metaLabel">
+              Category
+            </div>
+
+            <div class="metaText">
+              ${escapeHTML(
+                result.category
+              )}
+            </div>
+
+          </div>
+
+
+          <div class="metaItem">
+
+            <div class="metaLabel">
+              Keywords
+            </div>
+
+            <div class="metaText keywords">
+              ${escapeHTML(
+                Array.isArray(
+                  result.keywords
+                )
+                ? result.keywords.join(", ")
+                : result.keywords || ""
+              )}
+            </div>
+
+          </div>
+
+        </div>
+
         `
-        : `
-          <div class="metaItem">
-            <div class="metaText" style="color:#777">
-              Waiting for generation...
-            </div>
+
+        :
+
+        image.error
+
+        ?
+
+        `
+
+        <div class="metaItem">
+
+          <div class="metaLabel">
+            Error
           </div>
+
+          <div
+            class="metaText"
+            style="color:#ff6868"
+          >
+            ${escapeHTML(
+              image.error
+            )}
+          </div>
+
+        </div>
+
+        `
+
+        :
+
+        `
+
+        <div class="metaItem">
+
+          <div
+            class="metaText"
+            style="color:#777"
+          >
+            Waiting for generation...
+          </div>
+
+        </div>
+
         `
       }
+
 
       <div class="cardActions">
 
         ${
-          image.status === "error"
-          ? `
-            <button
-              class="btn blue"
-              onclick="retrySingle(${index})"
-            >
-              Retry
-            </button>
+          image.status==="error"
+
+          ?
+
           `
-          : ""
+
+          <button
+            class="btn blue"
+            onclick="retrySingle(${index})"
+          >
+            Retry
+          </button>
+
+          `
+
+          :
+
+          ""
         }
+
 
         ${
           image.result
-          ? `
-            <button
-              class="btn"
-              onclick="copyMetadata(${index})"
-            >
-              Copy
-            </button>
+
+          ?
+
           `
-          : ""
+
+          <button
+            class="btn"
+            onclick="copyMetadata(${index})"
+          >
+            Copy
+          </button>
+
+          `
+
+          :
+
+          ""
         }
 
       </div>
@@ -1499,150 +2134,181 @@ function createCardHTML(image,index){
 
 
 /* =========================================================
-   GENERATION
+   SMART PARALLEL GENERATION
    ========================================================= */
 
 async function startGeneration(){
 
   if(isRunning){
 
-    showToast("Generation is already running");
+    showToast(
+      "Generation already running"
+    );
 
     return;
   }
+
 
   if(!images.length){
 
-    showToast("Upload images first");
+    showToast(
+      "Upload images first"
+    );
 
     return;
   }
 
-  if(!geminiKeys.length && !groqKeys.length){
 
-    showToast("Add at least one API key in Settings");
+  if(
+    !geminiKeys.length &&
+    !groqKeys.length
+  ){
 
     openSettings();
 
+    showToast(
+      "Add an API key first"
+    );
+
     return;
   }
 
 
-  isRunning = true;
-  isPaused = false;
-  stopRequested = false;
+  isRunning=true;
 
-  generateBtn.disabled = true;
-  pauseBtn.disabled = false;
-  stopBtn.disabled = false;
+  isPaused=false;
+
+  stopRequested=false;
+
+
+  generateBtn.disabled=true;
+
+  pauseBtn.disabled=false;
+
+  stopBtn.disabled=false;
+
 
   log(
-    `Starting smart queue: ${images.length} images`,
+    `Starting ${images.length} image smart queue`,
     "success"
   );
 
 
-  const queue =
+  const queue=
     images
-      .map((img,index)=>index)
-      .filter(index =>
-        images[index].status !== "success"
+      .map(
+        (_,index)=>index
+      )
+      .filter(
+        index=>
+          images[index].status!=="success"
       );
 
 
-  currentIndex = 0;
+  let pointer=0;
 
 
-  while(currentIndex < queue.length){
+  /*
+    SMART PARALLEL LOOP
 
-    if(stopRequested)
-      break;
+    Example parallel=3:
 
+    Worker 1 → image
+    Worker 2 → image
+    Worker 3 → image
+
+    Then next group.
+
+    This is much faster than processing
+    every image completely sequentially.
+  */
+
+
+  while(
+    pointer<queue.length &&
+    !stopRequested
+  ){
 
     await waitIfPaused();
 
 
-    const batch =
+    const batch=
       queue.slice(
-        currentIndex,
-        currentIndex + settings.batchSize
+        pointer,
+        pointer+settings.parallel
       );
 
 
     log(
-      `Batch ${Math.floor(currentIndex / settings.batchSize) + 1}: ${batch.length} images`
+      `Running ${batch.length} images in parallel`
     );
 
 
-    /*
-      Important:
-      We process the batch SEQUENTIALLY.
-      This prevents 5–10 simultaneous requests.
-    */
-
-    for(const index of batch){
-
-      if(stopRequested)
-        break;
-
-      await waitIfPaused();
-
-      await processImage(index);
-
-      updateStats();
-
-      /*
-        Delay AFTER each successful/failed request.
-        This protects RPM limits.
-      */
-
-      if(!stopRequested){
-
-        await sleep(
-          settings.delay
-        );
-
-      }
-
-    }
+    await Promise.all(
+      batch.map(
+        index=>
+          processImage(index)
+      )
+    );
 
 
-    currentIndex += batch.length;
+    pointer+=batch.length;
+
 
     updateStats();
+
+
+    /*
+      Small cooldown between parallel groups.
+    */
+
+    if(
+      pointer<queue.length &&
+      !stopRequested
+    ){
+
+      await sleep(
+        settings.delay
+      );
+
+    }
 
   }
 
 
-  isRunning = false;
+  isRunning=false;
 
-  generateBtn.disabled = false;
-  pauseBtn.disabled = true;
-  stopBtn.disabled = true;
+  generateBtn.disabled=false;
 
-  pauseBtn.textContent = "⏸ Pause";
+  pauseBtn.disabled=true;
+
+  stopBtn.disabled=true;
+
+  pauseBtn.textContent=
+    "⏸ Pause";
 
 
   if(stopRequested){
 
-    log(
-      "Queue stopped by user"
-    );
-
-    progressText.textContent =
+    progressText.textContent=
       "Stopped";
 
+    log(
+      "Queue stopped"
+    );
+
   }else{
+
+    progressText.textContent=
+      "Completed";
 
     log(
       "Queue completed",
       "success"
     );
 
-    progressText.textContent =
-      "Completed";
-
   }
+
 
   updateStats();
 
@@ -1650,45 +2316,52 @@ async function startGeneration(){
 
 
 /* =========================================================
-   PROCESS ONE IMAGE
+   PROCESS IMAGE
    ========================================================= */
 
 async function processImage(index){
 
-  const image =
+  const image=
     images[index];
+
 
   if(!image)
     return;
 
-  if(image.status === "success")
+
+  if(image.status==="success")
     return;
 
 
-  image.status = "loading";
-  image.error = null;
-  image.attempts = 0;
+  image.status="loading";
+
+  image.error=null;
+
+  image.attempts=0;
+
 
   renderCard(index);
 
   updateStats();
 
 
-  const providers =
+  const providers=
     getProviderOrder(index);
 
 
-  let lastError = null;
+  let lastError=null;
 
 
-  for(const provider of providers){
+  for(
+    const provider of providers
+  ){
 
     if(stopRequested)
       return;
 
 
-    const keys =
-      provider === "gemini"
+    const keys=
+      provider==="gemini"
       ? geminiKeys
       : groqKeys;
 
@@ -1697,99 +2370,94 @@ async function processImage(index){
       continue;
 
 
-    for(let attempt=0;
-        attempt<=CONFIG.MAX_RETRIES;
-        attempt++){
+    for(
+      let attempt=0;
+      attempt<=CONFIG.MAX_RETRIES;
+      attempt++
+    ){
 
       if(stopRequested)
         return;
 
 
-      image.attempts =
-        attempt + 1;
-
-      updateStats();
+      image.attempts=
+        attempt+1;
 
 
       try{
 
         log(
-          `${image.name} → ${provider.toUpperCase()} attempt ${attempt + 1}`
+          `${image.name} → ${provider} → attempt ${attempt+1}`
         );
 
 
-        const result =
-          provider === "gemini"
+        const result=
+          provider==="gemini"
           ? await callGemini(image)
           : await callGroq(image);
 
 
-        image.result =
+        image.result=
           normalizeResult(result);
 
-        image.status =
+
+        image.status=
           "success";
 
-        image.provider =
+
+        image.provider=
           provider;
 
-        image.error = null;
+
+        image.error=null;
 
 
         log(
-          `${image.name} → success (${provider})`,
+          `${image.name} → success`,
           "success"
         );
 
 
         renderCard(index);
 
+        updateStats();
+
         return;
 
 
       }catch(error){
 
-        lastError = error;
-
-        const retryable =
-          isRetryableError(error);
+        lastError=error;
 
 
         log(
-          `${image.name} → ${provider} → ${error.message}`,
+          `${image.name} → ${error.message}`,
           "error"
         );
 
 
-        /*
-          Permanent error:
-          Do not waste retries.
-        */
-
-        if(!retryable){
-
-          break;
-
-        }
-
-
-        /*
-          If this was the final attempt,
-          move to next provider.
-        */
-
-        if(attempt >= CONFIG.MAX_RETRIES){
+        if(
+          !isRetryableError(
+            error
+          )
+        ){
 
           break;
 
         }
 
 
-        /*
-          Retry-After aware delay.
-        */
+        if(
+          attempt>=
+          CONFIG.MAX_RETRIES
+        ){
 
-        const delay =
+          break;
+
+        }
+
+
+        const delay=
           calculateRetryDelay(
             error,
             attempt
@@ -1797,7 +2465,7 @@ async function processImage(index){
 
 
         log(
-          `Waiting ${Math.ceil(delay / 1000)}s before retry`
+          `${image.name} → retry in ${Math.ceil(delay/1000)}s`
         );
 
 
@@ -1810,10 +2478,12 @@ async function processImage(index){
   }
 
 
-  image.status = "error";
+  image.status="error";
 
-  image.error =
-    getFriendlyError(lastError);
+  image.error=
+    getFriendlyError(
+      lastError
+    );
 
 
   renderCard(index);
@@ -1827,28 +2497,38 @@ async function processImage(index){
 
 function getProviderOrder(index){
 
-  if(settings.provider === "gemini")
-    return ["gemini"];
+  if(
+    settings.provider==="gemini"
+  ){
 
-  if(settings.provider === "groq")
-    return ["groq"];
-
-
-  /*
-    Auto mode:
-    Use the provider with available keys.
-    Alternate preference to distribute load.
-  */
-
-  if(index % 2 === 0){
-
-    return ["gemini","groq"];
-
-  }else{
-
-    return ["groq","gemini"];
+    return["gemini"];
 
   }
+
+
+  if(
+    settings.provider==="groq"
+  ){
+
+    return["groq"];
+
+  }
+
+
+  if(index%2===0){
+
+    return[
+      "gemini",
+      "groq"
+    ];
+
+  }
+
+
+  return[
+    "groq",
+    "gemini"
+  ];
 
 }
 
@@ -1862,49 +2542,53 @@ async function callGemini(image){
   if(!geminiKeys.length){
 
     throw new Error(
-      "No Gemini API key available"
+      "No Gemini API key"
     );
 
   }
 
 
-  const key =
+  const key=
     geminiKeys[
-      geminiPointer % geminiKeys.length
+      geminiPointer %
+      geminiKeys.length
     ];
+
 
   geminiPointer++;
 
 
-  const base64 =
-    await blobToBase64(image.optimized);
+  const base64=
+    await blobToBase64(
+      image.optimized
+    );
 
 
-  const prompt =
-    buildPrompt();
-
-
-  const controller =
+  const controller=
     new AbortController();
 
 
-  const timeout =
+  const timeout=
     setTimeout(
-      () => controller.abort(),
+      ()=>controller.abort(),
       120000
     );
 
 
   try{
 
-    const response =
+    const response=
       await fetch(
+
         `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.GEMINI_MODEL}:generateContent?key=${encodeURIComponent(key)}`,
+
         {
+
           method:"POST",
 
           headers:{
-            "Content-Type":"application/json"
+            "Content-Type":
+              "application/json"
           },
 
           signal:controller.signal,
@@ -1918,14 +2602,21 @@ async function callGemini(image){
                 parts:[
 
                   {
-                    text:prompt
+                    text:
+                      buildPrompt()
                   },
 
                   {
                     inline_data:{
-                      mime_type:"image/jpeg",
-                      data:base64
+
+                      mime_type:
+                        "image/jpeg",
+
+                      data:
+                        base64
+
                     }
+
                   }
 
                 ]
@@ -1935,20 +2626,27 @@ async function callGemini(image){
             ],
 
             generationConfig:{
-              temperature:0.3,
-              responseMimeType:"application/json"
+
+              temperature:.3,
+
+              responseMimeType:
+                "application/json"
+
             }
 
           })
 
         }
+
       );
 
 
     if(!response.ok){
 
-      const body =
-        await safeReadJSON(response);
+      const body=
+        await safeReadJSON(
+          response
+        );
 
       throw createApiError(
         response,
@@ -1958,16 +2656,17 @@ async function callGemini(image){
     }
 
 
-    const data =
+    const data=
       await response.json();
 
 
-    const text =
+    const text=
       data
         ?.candidates?.[0]
-        ?.content
-        ?.parts
-        ?.map(p => p.text || "")
+        ?.content?.parts
+        ?.map(
+          p=>p.text||""
+        )
         .join("")
         .trim();
 
@@ -2002,64 +2701,68 @@ async function callGroq(image){
   if(!groqKeys.length){
 
     throw new Error(
-      "No Groq API key available"
+      "No Groq API key"
     );
 
   }
 
 
-  const key =
+  const key=
     groqKeys[
-      groqPointer % groqKeys.length
+      groqPointer %
+      groqKeys.length
     ];
+
 
   groqPointer++;
 
 
-  const base64 =
-    await blobToBase64(image.optimized);
+  const base64=
+    await blobToBase64(
+      image.optimized
+    );
 
 
-  const dataURL =
-    `data:image/jpeg;base64,${base64}`;
-
-
-  const prompt =
-    buildPrompt();
-
-
-  const controller =
+  const controller=
     new AbortController();
 
 
-  const timeout =
+  const timeout=
     setTimeout(
-      () => controller.abort(),
+      ()=>controller.abort(),
       120000
     );
 
 
   try{
 
-    const response =
+    const response=
       await fetch(
+
         "https://api.groq.com/openai/v1/chat/completions",
+
         {
 
           method:"POST",
 
           headers:{
-            "Content-Type":"application/json",
-            "Authorization":`Bearer ${key}`
+
+            "Content-Type":
+              "application/json",
+
+            "Authorization":
+              `Bearer ${key}`
+
           },
 
           signal:controller.signal,
 
           body:JSON.stringify({
 
-            model:CONFIG.GROQ_MODEL,
+            model:
+              CONFIG.GROQ_MODEL,
 
-            temperature:0.3,
+            temperature:.3,
 
             response_format:{
               type:"json_object"
@@ -2068,20 +2771,31 @@ async function callGroq(image){
             messages:[
 
               {
+
                 role:"user",
 
                 content:[
 
                   {
+
                     type:"text",
-                    text:prompt
+
+                    text:
+                      buildPrompt()
+
                   },
 
                   {
+
                     type:"image_url",
+
                     image_url:{
-                      url:dataURL
+
+                      url:
+                        `data:image/jpeg;base64,${base64}`
+
                     }
+
                   }
 
                 ]
@@ -2093,13 +2807,16 @@ async function callGroq(image){
           })
 
         }
+
       );
 
 
     if(!response.ok){
 
-      const body =
-        await safeReadJSON(response);
+      const body=
+        await safeReadJSON(
+          response
+        );
 
       throw createApiError(
         response,
@@ -2109,11 +2826,11 @@ async function callGroq(image){
     }
 
 
-    const data =
+    const data=
       await response.json();
 
 
-    const text =
+    const text=
       data
         ?.choices?.[0]
         ?.message
@@ -2148,7 +2865,9 @@ async function callGroq(image){
 
 function buildPrompt(){
 
-  return `You are an expert stock photography metadata generator.
+  return`
+
+You are an expert stock photography metadata generator.
 
 Analyze the uploaded image carefully.
 
@@ -2158,7 +2877,7 @@ Required format:
 
 {
   "title": "A clear commercial stock title",
-  "description": "A useful natural description for stock marketplaces",
+  "description": "A useful natural stock description",
   "category": "One suitable stock category",
   "keywords": [
     "keyword1",
@@ -2169,58 +2888,71 @@ Required format:
 Rules:
 
 1. Generate exactly ${settings.keywordCount} unique keywords.
-2. Keywords must be highly relevant to the image.
-3. Use commercially useful stock keywords.
-4. Put the most important keywords first.
-5. Do not use duplicate keywords.
-6. Avoid irrelevant generic words.
-7. Do not mention AI.
-8. Do not include camera brands unless clearly visible.
-9. Do not invent people, objects or locations that cannot be seen.
-10. Title should be concise and natural.
-11. Description should be useful for Adobe Stock, Shutterstock and similar marketplaces.
-12. Return JSON only.
-13. Do not use markdown fences.
-14. Keywords should be individual strings.`;
+2. Put the strongest keywords first.
+3. Keywords must describe only what is visible or strongly implied.
+4. Avoid irrelevant keywords.
+5. Avoid duplicate keywords.
+6. Do not mention AI.
+7. Do not invent people, places or objects.
+8. Title must be concise and natural.
+9. Description must be useful for Adobe Stock, Shutterstock and similar marketplaces.
+10. Return JSON only.
+11. No markdown.
+12. Keywords must be individual strings.
+
+`;
 
 }
 
 
 /* =========================================================
-   JSON PARSER
+   JSON
    ========================================================= */
 
 function parseAIJSON(text){
 
-  let cleaned =
+  let cleaned=
     text
-      .replace(/```json/gi,"")
-      .replace(/```/g,"")
+      .replace(
+        /```json/gi,
+        ""
+      )
+      .replace(
+        /```/g,
+        ""
+      )
       .trim();
 
 
   try{
 
-    return JSON.parse(cleaned);
+    return JSON.parse(
+      cleaned
+    );
 
   }catch(e){}
 
 
-  const first =
+  const first=
     cleaned.indexOf("{");
 
-  const last =
+  const last=
     cleaned.lastIndexOf("}");
 
 
-  if(first !== -1 && last !== -1){
-
-    const possible =
-      cleaned.slice(first,last + 1);
+  if(
+    first!==-1 &&
+    last!==-1
+  ){
 
     try{
 
-      return JSON.parse(possible);
+      return JSON.parse(
+        cleaned.slice(
+          first,
+          last+1
+        )
+      );
 
     }catch(e){}
 
@@ -2228,62 +2960,75 @@ function parseAIJSON(text){
 
 
   throw new Error(
-    "AI returned invalid JSON"
+    "Invalid JSON from AI"
   );
 
 }
 
 
 /* =========================================================
-   NORMALIZE RESULT
+   NORMALIZE
    ========================================================= */
 
-function normalizeResult(result){
+function normalizeResult(
+  result
+){
 
-  const title =
-    String(result?.title || "")
-      .trim();
-
-  const description =
-    String(result?.description || "")
-      .trim();
-
-  const category =
-    String(result?.category || "")
-      .trim();
+  const title=
+    String(
+      result?.title || ""
+    ).trim();
 
 
-  let keywords =
+  const description=
+    String(
+      result?.description || ""
+    ).trim();
+
+
+  const category=
+    String(
+      result?.category || ""
+    ).trim();
+
+
+  let keywords=
     result?.keywords || [];
 
 
-  if(typeof keywords === "string"){
+  if(
+    typeof keywords==="string"
+  ){
 
-    keywords =
+    keywords=
       keywords
         .split(",")
-        .map(x => x.trim())
+        .map(
+          x=>x.trim()
+        )
         .filter(Boolean);
 
   }
 
 
-  keywords =
-    [...new Set(
-      keywords
-        .map(x => String(x).trim())
-        .filter(Boolean)
-    )];
+  keywords=
+    [
+      ...new Set(
+        keywords
+          .map(
+            x=>String(x).trim()
+          )
+          .filter(Boolean)
+      )
+    ];
 
 
-  /*
-    Keep exactly requested number
-    when possible.
-  */
+  if(
+    keywords.length>
+    settings.keywordCount
+  ){
 
-  if(keywords.length > settings.keywordCount){
-
-    keywords =
+    keywords=
       keywords.slice(
         0,
         settings.keywordCount
@@ -2292,11 +3037,16 @@ function normalizeResult(result){
   }
 
 
-  return {
+  return{
+
     title,
+
     description,
+
     category,
+
     keywords
+
   };
 
 }
@@ -2306,29 +3056,30 @@ function normalizeResult(result){
    API ERROR
    ========================================================= */
 
-function createApiError(response,body){
+function createApiError(
+  response,
+  body
+){
 
-  const error =
+  const error=
     new Error(
+
       body?.error?.message ||
       body?.message ||
       `HTTP ${response.status}`
+
     );
 
 
-  error.status =
+  error.status=
     response.status;
 
 
-  error.retryAfter =
+  error.retryAfter=
     getRetryAfter(
       response,
       body
     );
-
-
-  error.body =
-    body;
 
 
   return error;
@@ -2337,16 +3088,15 @@ function createApiError(response,body){
 
 
 /* =========================================================
-   RETRY-AFTER
+   RETRY AFTER
    ========================================================= */
 
-function getRetryAfter(response,body){
+function getRetryAfter(
+  response,
+  body
+){
 
-  /*
-    Standard HTTP Retry-After header.
-  */
-
-  const header =
+  const header=
     response.headers.get(
       "Retry-After"
     );
@@ -2354,28 +3104,28 @@ function getRetryAfter(response,body){
 
   if(header){
 
-    const seconds =
+    const seconds=
       Number(header);
 
-    if(Number.isFinite(seconds)){
 
-      return seconds * 1000;
+    if(
+      Number.isFinite(seconds)
+    ){
+
+      return seconds*1000;
 
     }
 
 
-    /*
-      Retry-After can also be HTTP-date.
-    */
-
-    const date =
+    const date=
       Date.parse(header);
+
 
     if(!Number.isNaN(date)){
 
       return Math.max(
         0,
-        date - Date.now()
+        date-Date.now()
       );
 
     }
@@ -2383,16 +3133,13 @@ function getRetryAfter(response,body){
   }
 
 
-  /*
-    Some APIs include retry information
-    inside the response message.
-  */
-
-  const text =
-    JSON.stringify(body || "");
+  const text=
+    JSON.stringify(
+      body || ""
+    );
 
 
-  const match =
+  const match=
     text.match(
       /retry.?after[^0-9]*(\d+(?:\.\d+)?)/i
     );
@@ -2400,7 +3147,9 @@ function getRetryAfter(response,body){
 
   if(match){
 
-    return Number(match[1]) * 1000;
+    return(
+      Number(match[1])*1000
+    );
 
   }
 
@@ -2411,24 +3160,28 @@ function getRetryAfter(response,body){
 
 
 /* =========================================================
-   RETRY LOGIC
+   RETRY CHECK
    ========================================================= */
 
-function isRetryableError(error){
+function isRetryableError(
+  error
+){
 
   if(!error)
     return true;
 
 
-  const status =
-    Number(error.status || 0);
+  const status=
+    Number(
+      error.status || 0
+    );
 
 
   if(
-    status === 401 ||
-    status === 403 ||
-    status === 400 ||
-    status === 404
+    status===400 ||
+    status===401 ||
+    status===403 ||
+    status===404
   ){
 
     return false;
@@ -2437,10 +3190,10 @@ function isRetryableError(error){
 
 
   if(
-    status === 429 ||
-    status === 408 ||
-    status === 409 ||
-    status >= 500
+    status===408 ||
+    status===409 ||
+    status===429 ||
+    status>=500
   ){
 
     return true;
@@ -2448,12 +3201,13 @@ function isRetryableError(error){
   }
 
 
-  const msg =
-    String(error.message || "")
-      .toLowerCase();
+  const msg=
+    String(
+      error.message || ""
+    ).toLowerCase();
 
 
-  if(
+  return(
     msg.includes("quota") ||
     msg.includes("rate limit") ||
     msg.includes("too many") ||
@@ -2461,26 +3215,22 @@ function isRetryableError(error){
     msg.includes("network") ||
     msg.includes("failed to fetch") ||
     msg.includes("abort")
-  ){
-
-    return true;
-
-  }
-
-
-  return false;
+  );
 
 }
 
 
-function calculateRetryDelay(error,attempt){
+/* =========================================================
+   BACKOFF
+   ========================================================= */
 
-  /*
-    Server requested exact retry delay.
-  */
+function calculateRetryDelay(
+  error,
+  attempt
+){
 
   if(
-    error?.retryAfter != null
+    error?.retryAfter!=null
   ){
 
     return Math.min(
@@ -2491,29 +3241,22 @@ function calculateRetryDelay(error,attempt){
   }
 
 
-  /*
-    Exponential backoff:
-
-    attempt 0 = 3 sec
-    attempt 1 = 6 sec
-    attempt 2 = 12 sec
-
-    + random jitter
-  */
-
-  const base =
-    3000 *
-    Math.pow(2,attempt);
+  const base=
+    3000*
+    Math.pow(
+      2,
+      attempt
+    );
 
 
-  const jitter =
+  const jitter=
     Math.floor(
-      Math.random() * 1500
+      Math.random()*1500
     );
 
 
   return Math.min(
-    base + jitter,
+    base+jitter,
     30000
   );
 
@@ -2521,7 +3264,7 @@ function calculateRetryDelay(error,attempt){
 
 
 /* =========================================================
-   PAUSE / RESUME
+   PAUSE
    ========================================================= */
 
 function togglePause(){
@@ -2530,26 +3273,31 @@ function togglePause(){
     return;
 
 
-  isPaused =
+  isPaused=
     !isPaused;
 
 
   if(isPaused){
 
-    pauseBtn.textContent =
+    pauseBtn.textContent=
       "▶ Resume";
 
-    progressText.textContent =
+    progressText.textContent=
       "Paused";
 
-    log("Queue paused");
+    log(
+      "Queue paused"
+    );
 
   }else{
 
-    pauseBtn.textContent =
+    pauseBtn.textContent=
       "⏸ Pause";
 
-    log("Queue resumed","success");
+    log(
+      "Queue resumed",
+      "success"
+    );
 
   }
 
@@ -2558,7 +3306,10 @@ function togglePause(){
 
 async function waitIfPaused(){
 
-  while(isPaused && !stopRequested){
+  while(
+    isPaused &&
+    !stopRequested
+  ){
 
     await sleep(300);
 
@@ -2577,11 +3328,13 @@ function stopGeneration(){
     return;
 
 
-  stopRequested = true;
+  stopRequested=true;
 
-  isPaused = false;
+  isPaused=false;
 
-  log("Stopping queue...");
+  log(
+    "Stopping queue..."
+  );
 
 }
 
@@ -2592,29 +3345,45 @@ function stopGeneration(){
 
 async function retryFailed(){
 
-  const failed =
-    images.filter(
-      img => img.status === "error"
+  if(isRunning){
+
+    showToast(
+      "Queue is already running"
     );
-
-
-  if(!failed.length){
-
-    showToast("No failed images");
 
     return;
   }
 
 
-  failed.forEach(img => {
+  const failed=
+    images.filter(
+      x=>x.status==="error"
+    );
 
-    img.status = "waiting";
-    img.error = null;
 
-  });
+  if(!failed.length){
+
+    showToast(
+      "No failed images"
+    );
+
+    return;
+  }
+
+
+  failed.forEach(
+    image=>{
+
+      image.status="waiting";
+
+      image.error=null;
+
+    }
+  );
 
 
   renderAll();
+
   updateStats();
 
   await startGeneration();
@@ -2631,20 +3400,21 @@ async function retrySingle(index){
   if(isRunning){
 
     showToast(
-      "Stop the current queue before retrying a single image"
+      "Stop queue first"
     );
 
     return;
   }
 
 
-  if(!geminiKeys.length && !groqKeys.length){
+  images[index].status=
+    "waiting";
 
-    openSettings();
+  images[index].error=
+    null;
 
-    return;
-  }
 
+  renderCard(index);
 
   await processImage(index);
 
@@ -2659,14 +3429,15 @@ async function retrySingle(index){
 
 function renderCard(index){
 
-  const image =
+  const image=
     images[index];
+
 
   if(!image)
     return;
 
 
-  const card =
+  const card=
     document.getElementById(
       `card-${image.id}`
     );
@@ -2674,8 +3445,11 @@ function renderCard(index){
 
   if(card){
 
-    card.innerHTML =
-      createCardHTML(image,index);
+    card.innerHTML=
+      createCardHTML(
+        image,
+        index
+      );
 
   }
 
@@ -2688,66 +3462,72 @@ function renderCard(index){
 
 function updateStats(){
 
-  const total =
+  const total=
     images.length;
 
-  const waiting =
-    images.filter(
-      x => x.status === "waiting"
-    ).length;
 
-  const processing =
+  const waiting=
     images.filter(
-      x => x.status === "loading"
-    ).length;
-
-  const success =
-    images.filter(
-      x => x.status === "success"
-    ).length;
-
-  const failed =
-    images.filter(
-      x => x.status === "error"
+      x=>x.status==="waiting"
     ).length;
 
 
-  totalCount.textContent =
+  const processing=
+    images.filter(
+      x=>x.status==="loading"
+    ).length;
+
+
+  const success=
+    images.filter(
+      x=>x.status==="success"
+    ).length;
+
+
+  const failed=
+    images.filter(
+      x=>x.status==="error"
+    ).length;
+
+
+  totalCount.textContent=
     total;
 
-  waitingCount.textContent =
+  waitingCount.textContent=
     waiting;
 
-  processingCount.textContent =
+  processingCount.textContent=
     processing;
 
-  successCount.textContent =
+  successCount.textContent=
     success;
 
-  failedCount.textContent =
+  failedCount.textContent=
     failed;
 
 
-  const done =
-    success + failed;
+  const done=
+    success+failed;
 
 
-  const percent =
+  const percent=
     total
-      ? Math.round((done / total) * 100)
+      ? Math.round(
+          (done/total)*100
+        )
       : 0;
 
 
-  progressBar.style.width =
+  progressBar.style.width=
     `${percent}%`;
 
-  progressPercent.textContent =
+  progressPercent.textContent=
     `${percent}%`;
 
 
   if(isRunning){
 
-    progressText.textContent =
+    progressText.textContent=
       `${done} / ${total} processed`;
 
   }
@@ -2764,35 +3544,217 @@ function updateStats(){
 
 function updateBadges(){
 
-  const provider =
-    document.getElementById("providerBadge");
-
-  const batch =
-    document.getElementById("batchBadge");
-
-  const delay =
-    document.getElementById("delayBadge");
-
-
-  provider.textContent =
+  document.getElementById(
+    "providerBadge"
+  ).textContent=
     `Provider: ${settings.provider}`;
 
-  batch.textContent =
-    `Batch: ${settings.batchSize}`;
 
-  delay.textContent =
+  document.getElementById(
+    "batchBadge"
+  ).textContent=
+    `Parallel: ${settings.parallel}`;
+
+
+  document.getElementById(
+    "delayBadge"
+  ).textContent=
     `Delay: ${settings.delay}ms`;
 
 }
 
 
 /* =========================================================
-   COPY METADATA
+   CSV EXPORT
+   ========================================================= */
+
+function exportCSV(){
+
+  const completed=
+    images.filter(
+      image=>
+        image.status==="success" &&
+        image.result
+    );
+
+
+  if(!completed.length){
+
+    showToast(
+      "No generated metadata available"
+    );
+
+    return;
+  }
+
+
+  /*
+    Adobe Stock friendly columns.
+  */
+
+  const headers=[
+    "Filename",
+    "Title",
+    "Description",
+    "Keywords",
+    "Category"
+  ];
+
+
+  const rows=
+    completed.map(
+      image=>{
+
+        const result=
+          image.result || {};
+
+
+        const keywords=
+          Array.isArray(
+            result.keywords
+          )
+
+          ?
+
+          result.keywords.join(
+            ", "
+          )
+
+          :
+
+          String(
+            result.keywords || ""
+          );
+
+
+        return[
+
+          image.name || "",
+
+          result.title || "",
+
+          result.description || "",
+
+          keywords,
+
+          result.category || ""
+
+        ];
+
+      }
+    );
+
+
+  function csvEscape(
+    value
+  ){
+
+    return(
+      `"${
+        String(
+          value ?? ""
+        )
+        .replace(
+          /"/g,
+          '""'
+        )
+        .replace(
+          /\r?\n/g,
+          " "
+        )
+      }"`
+    );
+
+  }
+
+
+  /*
+    UTF-8 BOM:
+    Important for Bangla in Excel.
+  */
+
+  const csv=
+    "\uFEFF"+
+    [
+      headers,
+      ...rows
+    ]
+    .map(
+      row=>
+        row
+          .map(csvEscape)
+          .join(",")
+    )
+    .join("\r\n");
+
+
+  const blob=
+    new Blob(
+      [csv],
+      {
+        type:
+          "text/csv;charset=utf-8;"
+      }
+    );
+
+
+  const url=
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const link=
+    document.createElement(
+      "a"
+    );
+
+
+  link.href=url;
+
+
+  const date=
+    new Date()
+      .toISOString()
+      .slice(0,10);
+
+
+  link.download=
+    `StockMeta-AI-${date}.csv`;
+
+
+  document.body.appendChild(
+    link
+  );
+
+
+  link.click();
+
+
+  document.body.removeChild(
+    link
+  );
+
+
+  URL.revokeObjectURL(
+    url
+  );
+
+
+  showToast(
+    `${completed.length} images exported to CSV`
+  );
+
+}
+
+
+/* =========================================================
+   COPY
    ========================================================= */
 
 async function copyMetadata(index){
 
-  const result =
+  const result=
     images[index]?.result;
 
 
@@ -2800,13 +3762,23 @@ async function copyMetadata(index){
     return;
 
 
-  const keywords =
-    Array.isArray(result.keywords)
-    ? result.keywords.join(", ")
-    : result.keywords || "";
+  const keywords=
+    Array.isArray(
+      result.keywords
+    )
+
+    ?
+
+    result.keywords.join(
+      ", "
+    )
+
+    :
+
+    result.keywords || "";
 
 
-  const text =
+  const text=
 `Title: ${result.title}
 
 Description: ${result.description}
@@ -2818,13 +3790,19 @@ Keywords: ${keywords}`;
 
   try{
 
-    await navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(
+      text
+    );
 
-    showToast("Metadata copied");
+    showToast(
+      "Metadata copied"
+    );
 
   }catch(e){
 
-    showToast("Copy failed");
+    showToast(
+      "Copy failed"
+    );
 
   }
 
@@ -2840,37 +3818,43 @@ function clearAll(){
   if(isRunning){
 
     showToast(
-      "Stop generation before clearing"
+      "Stop generation first"
     );
 
     return;
   }
 
 
-  images.forEach(image => {
+  images.forEach(
+    image=>{
 
-    try{
-      URL.revokeObjectURL(image.url);
-    }catch(e){}
+      try{
 
-  });
+        URL.revokeObjectURL(
+          image.url
+        );
+
+      }catch(e){}
+
+    }
+  );
 
 
-  images = [];
+  images=[];
 
-  imageGrid.innerHTML = "";
+  imageGrid.innerHTML="";
 
-  emptyState.style.display =
+  emptyState.style.display=
     "block";
 
-  controlPanel.style.display =
+  controlPanel.style.display=
     "none";
 
+  fileInput.value="";
+
+  logBox.innerHTML="";
+
   updateStats();
-
-  logBox.innerHTML = "";
-
-  fileInput.value = "";
 
 }
 
@@ -2882,8 +3866,12 @@ function clearAll(){
 function openSettings(){
 
   document
-    .getElementById("settingsOverlay")
-    .classList.add("open");
+    .getElementById(
+      "settingsOverlay"
+    )
+    .classList.add(
+      "open"
+    );
 
 }
 
@@ -2891,8 +3879,12 @@ function openSettings(){
 function closeSettings(){
 
   document
-    .getElementById("settingsOverlay")
-    .classList.remove("open");
+    .getElementById(
+      "settingsOverlay"
+    )
+    .classList.remove(
+      "open"
+    );
 
 }
 
@@ -2904,7 +3896,11 @@ function closeSettings(){
 function sleep(ms){
 
   return new Promise(
-    resolve => setTimeout(resolve,ms)
+    resolve=>
+      setTimeout(
+        resolve,
+        ms
+      )
   );
 
 }
@@ -2912,40 +3908,55 @@ function sleep(ms){
 
 function blobToBase64(blob){
 
-  return new Promise((resolve,reject)=>{
+  return new Promise(
+    (resolve,reject)=>{
 
-    const reader =
-      new FileReader();
+      const reader=
+        new FileReader();
 
-    reader.onloadend = () => {
 
-      const result =
-        reader.result;
+      reader.onloadend=()=>{
 
-      const comma =
-        result.indexOf(",");
+        const result=
+          reader.result;
 
-      resolve(
-        comma >= 0
-        ? result.slice(comma + 1)
-        : result
+
+        const comma=
+          result.indexOf(",");
+
+
+        resolve(
+          comma>=0
+          ? result.slice(
+              comma+1
+            )
+          : result
+        );
+
+      };
+
+
+      reader.onerror=()=>
+        reject(
+          new Error(
+            "Could not convert image"
+          )
+        );
+
+
+      reader.readAsDataURL(
+        blob
       );
 
-    };
-
-    reader.onerror =
-      () => reject(
-        new Error("Could not convert image")
-      );
-
-    reader.readAsDataURL(blob);
-
-  });
+    }
+  );
 
 }
 
 
-async function safeReadJSON(response){
+async function safeReadJSON(
+  response
+){
 
   try{
 
@@ -2953,76 +3964,98 @@ async function safeReadJSON(response){
 
   }catch(e){
 
-    return {};
+    return{};
 
   }
 
 }
 
 
-function getFriendlyError(error){
+function getFriendlyError(
+  error
+){
 
   if(!error)
     return "Unknown error";
 
 
-  const status =
-    Number(error.status || 0);
+  const status=
+    Number(
+      error.status || 0
+    );
 
 
-  if(status === 429){
+  if(status===429){
 
-    return "Rate limit / Quota exceeded. The queue will retry after the server delay.";
-
-  }
-
-
-  if(status === 401){
-
-    return "Invalid API key.";
+    return(
+      "Rate limit / Quota exceeded"
+    );
 
   }
 
 
-  if(status === 403){
+  if(status===401){
 
-    return "API access denied or quota unavailable.";
-
-  }
-
-
-  if(status >= 500){
-
-    return "Provider server error.";
+    return(
+      "Invalid API key"
+    );
 
   }
 
 
-  if(
-    String(error.message)
-      .toLowerCase()
-      .includes("network")
-  ){
+  if(status===403){
 
-    return "Network error.";
+    return(
+      "API access denied or quota unavailable"
+    );
 
   }
 
 
-  return error.message ||
-    "Generation failed";
+  if(status>=500){
+
+    return(
+      "Provider server error"
+    );
+
+  }
+
+
+  return(
+    error.message ||
+    "Generation failed"
+  );
 
 }
 
 
-function escapeHTML(value){
+function escapeHTML(
+  value
+){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
@@ -3031,23 +4064,36 @@ function escapeHTML(value){
    LOG
    ========================================================= */
 
-function log(message,type=""){
+function log(
+  message,
+  type=""
+){
 
-  const div =
-    document.createElement("div");
+  const div=
+    document.createElement(
+      "div"
+    );
 
-  div.className =
+
+  div.className=
     `logLine ${type}`;
 
-  const time =
-    new Date().toLocaleTimeString();
 
-  div.textContent =
+  const time=
+    new Date()
+      .toLocaleTimeString();
+
+
+  div.textContent=
     `[${time}] ${message}`;
 
-  logBox.appendChild(div);
 
-  logBox.scrollTop =
+  logBox.appendChild(
+    div
+  );
+
+
+  logBox.scrollTop=
     logBox.scrollHeight;
 
 }
@@ -3059,21 +4105,38 @@ function log(message,type=""){
 
 let toastTimer;
 
-function showToast(message){
 
-  const toast =
-    document.getElementById("toast");
+function showToast(
+  message
+){
 
-  toast.textContent =
+  const toast=
+    document.getElementById(
+      "toast"
+    );
+
+
+  toast.textContent=
     message;
 
-  toast.classList.add("show");
 
-  clearTimeout(toastTimer);
+  toast.classList.add(
+    "show"
+  );
 
-  toastTimer =
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer=
     setTimeout(
-      () => toast.classList.remove("show"),
+      ()=>{
+        toast.classList.remove(
+          "show"
+        );
+      },
       3000
     );
 
@@ -3081,26 +4144,21 @@ function showToast(message){
 
 
 /* =========================================================
-   KEYBOARD / ESC
+   ESC
    ========================================================= */
 
-document.addEventListener("keydown",e=>{
+document.addEventListener(
+  "keydown",
+  e=>{
 
-  if(e.key === "Escape"){
+    if(e.key==="Escape"){
 
-    closeSettings();
+      closeSettings();
+
+    }
 
   }
-
-});
-
-
-/* =========================================================
-   INITIAL UI
-   ========================================================= */
-
-updateStats();
-updateBadges();
+);
 
 </script>
 
